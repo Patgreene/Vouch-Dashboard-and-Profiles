@@ -30,6 +30,8 @@ export default function Profile() {
   // Load profile data
   useEffect(() => {
     async function loadProfile() {
+      if (!id) return;
+
       try {
         setLoading(true);
         console.log("Loading profile with ID:", id);
@@ -48,7 +50,7 @@ export default function Profile() {
 
   // Track page view and run debug
   useEffect(() => {
-    if (profile) {
+    if (profile && id) {
       dataProvider.trackEvent(id, "page_view");
 
       // Run debug after page loads
@@ -57,6 +59,32 @@ export default function Profile() {
       }, 1000);
     }
   }, [id, profile]);
+
+  // Handle URL parameters for expanding specific transcripts
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const transcriptId = urlParams.get("t");
+
+    if (transcriptId) {
+      // Expand the specific transcript
+      setExpandedTranscripts(new Set([transcriptId]));
+
+      // Scroll to transcript after a short delay
+      setTimeout(() => {
+        const element = document.getElementById(`transcript-${transcriptId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 300);
+    }
+  }, []);
+
+  console.log("Profile page loaded with ID:", id);
+
+  // Now handle conditional logic after all hooks
+  if (!id) {
+    return <Navigate to="/not-found" replace />;
+  }
 
   // Show loading state
   if (loading) {
