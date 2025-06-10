@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Profile from "./pages/Profile";
 import ProfileTest from "./pages/ProfileTest";
+import ProfileLinks from "./pages/ProfileLinks";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Index />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/test-profiles" element={<ProfileTest />} />
+        <Route path="/profile-links" element={<ProfileLinks />} />
         {/* Protected admin route - obfuscated URL */}
         <Route path="/admin-stats-d1g3Yt9" element={<AdminDashboard />} />
         <Route path="/not-found" element={<NotFound />} />

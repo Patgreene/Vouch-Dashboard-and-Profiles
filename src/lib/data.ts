@@ -205,7 +205,20 @@ export function getAllProfiles(): Profile[] {
 
 // Get profile by ID
 export function getProfileById(id: string): Profile | undefined {
-  return getAllProfiles().find((profile) => profile.id === id);
+  const allProfiles = getAllProfiles();
+  const profile = allProfiles.find((profile) => profile.id === id);
+
+  console.log(`Looking for profile ID: "${id}"`);
+  console.log(
+    "Available profile IDs:",
+    allProfiles.map((p) => p.id),
+  );
+  console.log(
+    "Profile found:",
+    profile ? `${profile.name} (${profile.id})` : "Not found",
+  );
+
+  return profile;
 }
 
 // Add a new profile
