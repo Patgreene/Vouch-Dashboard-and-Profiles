@@ -34,6 +34,9 @@ export default function SupabaseTest() {
         console.log("✅ Profiles fetch successful:", profilesData);
         setProfiles(profilesData || []);
 
+        // Force React to update UI
+        setTimeout(() => setProfiles(profilesData || []), 100);
+
         // Test 3: Fetch transcripts
         const { data: transcriptsData, error: transcriptsError } =
           await supabase.from("transcripts").select("*");
