@@ -47,7 +47,7 @@ export interface ProfileStats {
 export const sampleProfiles: Profile[] = [
   {
     id: "lara-ruso",
-    name: "Lara Ruso",
+    name: "Danielle Davis",
     title: "Product Designer",
     company: "Meta",
     photo:
