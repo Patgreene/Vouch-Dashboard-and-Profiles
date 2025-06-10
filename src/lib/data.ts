@@ -46,7 +46,7 @@ export interface ProfileStats {
 // Sample data
 export const sampleProfiles: Profile[] = [
   {
-    id: "lara-ruso",
+    id: "danielle-davis",
     name: "Danielle Davis",
     title: "Product Designer",
     company: "Meta",
@@ -168,7 +168,7 @@ export const mockAnalytics: AnalyticsData = {
   totalQuoteViews: 89,
   profileStats: [
     {
-      profileId: "lara-ruso",
+      profileId: "danielle-davis",
       profileName: "Danielle Davis",
       pageViews: 892,
       quoteViews: 67,
