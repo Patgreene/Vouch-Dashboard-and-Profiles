@@ -52,7 +52,10 @@ export function TranscriptCard({
         onClick={toggle}
         className="w-full justify-between p-6 h-auto text-left hover:bg-gray-50 transition-colors"
       >
-        <div className="flex items-start gap-4 flex-1">
+        <div
+          className="flex items-start gap-4 flex-1"
+          style={{ paddingRight: "1px" }}
+        >
           <div className="p-3 bg-vouch-100 rounded-full">
             <User className="h-5 w-5 text-vouch-600" />
           </div>

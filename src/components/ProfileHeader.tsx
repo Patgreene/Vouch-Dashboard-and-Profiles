@@ -1,4 +1,3 @@
-import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Profile } from "@/lib/data";
@@ -30,7 +29,15 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
 
           {/* Profile Info */}
           <div className="flex-1 space-y-3">
-            <div>
+            <div className="flex flex-col">
+              <Button
+                variant="link"
+                size="sm"
+                asChild
+                className="text-vouch-600 hover:text-vouch-700 p-0 ml-auto"
+              >
+                <a href="/">What is Vouch?</a>
+              </Button>
               <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                 {profile.name}
               </h1>
@@ -89,18 +96,6 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                   </a>
                 </Button>
               )}
-
-              <Button
-                variant="link"
-                size="sm"
-                asChild
-                className="text-vouch-600 hover:text-vouch-700 p-0"
-              >
-                <a href="/" className="flex items-center gap-1">
-                  <div>What is Vouch?</div>
-                  <ExternalLink className="h-3 w-3" />
-                </a>
-              </Button>
             </div>
           </div>
         </div>
