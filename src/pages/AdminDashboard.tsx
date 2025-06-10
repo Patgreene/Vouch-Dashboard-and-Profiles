@@ -9,6 +9,8 @@ import {
   TrendingUp,
   ExternalLink,
   Edit,
+  Copy,
+  Check,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -54,6 +56,7 @@ export default function AdminDashboard() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [showProfileForm, setShowProfileForm] = useState(false);
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null);
+  const [copiedProfileId, setCopiedProfileId] = useState<string | null>(null);
   const liveAnalytics = analytics.getAnalyticsSummary();
 
   // Load profiles on component mount
@@ -122,6 +125,36 @@ export default function AdminDashboard() {
   const handleCloseForm = () => {
     setShowProfileForm(false);
     setEditingProfile(null);
+  };
+
+  const handleCopyProfileUrl = async (profileId: string) => {
+    try {
+      const profileUrl = `${window.location.origin}/profile/${profileId}`;
+      await navigator.clipboard.writeText(profileUrl);
+      setCopiedProfileId(profileId);
+
+      // Reset the copied state after 2 seconds
+      setTimeout(() => {
+        setCopiedProfileId(null);
+      }, 2000);
+    } catch (error) {
+      // Fallback for browsers that don't support clipboard API
+      const textArea = document.createElement("textarea");
+      textArea.value = `${window.location.origin}/profile/${profileId}`;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        setCopiedProfileId(profileId);
+        setTimeout(() => {
+          setCopiedProfileId(null);
+        }, 2000);
+      } catch (fallbackError) {
+        console.error("Failed to copy URL:", fallbackError);
+        alert(`Profile URL: ${window.location.origin}/profile/${profileId}`);
+      }
+      document.body.removeChild(textArea);
+    }
   };
 
   return (
@@ -240,6 +273,24 @@ export default function AdminDashboard() {
                         <div className="text-gray-600">Quote Views</div>
                       </div>
                       <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleCopyProfileUrl(profile.id)}
+                          className="relative"
+                        >
+                          {copiedProfileId === profile.id ? (
+                            <>
+                              <Check className="h-4 w-4 mr-1 text-green-600" />
+                              Copied!
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="h-4 w-4 mr-1" />
+                              Copy URL
+                            </>
+                          )}
+                        </Button>
                         {canEditProfile(profile.id) && (
                           <Button
                             variant="outline"
