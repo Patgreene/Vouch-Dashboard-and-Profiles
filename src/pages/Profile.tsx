@@ -12,6 +12,8 @@ import { debugHighlightFeature } from "@/lib/debug";
 
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
   const [expandedTranscripts, setExpandedTranscripts] = useState<Set<string>>(
     new Set(),
   );
@@ -22,12 +24,6 @@ export default function Profile() {
     return <Navigate to="/not-found" replace />;
   }
 
-  const profile = getProfileById(id);
-
-  if (!profile) {
-    return <Navigate to="/not-found" replace />;
-  }
-
   const {
     shareTooltip,
     copiedFeedback,
@@ -35,6 +31,25 @@ export default function Profile() {
     handleTextSelection,
     processHighlightFromUrl,
   } = useHighlight(id);
+
+  // Load profile data
+  useEffect(() => {
+    async function loadProfile() {
+      try {
+        setLoading(true);
+        console.log("Loading profile with ID:", id);
+        const profileData = await dataProvider.getProfileById(id);
+        console.log("Loaded profile data:", profileData);
+        setProfile(profileData);
+      } catch (error) {
+        console.error("Error loading profile:", error);
+        setProfile(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProfile();
+  }, [id]);
 
   // Track page view and run debug
   useEffect(() => {
@@ -47,6 +62,23 @@ export default function Profile() {
       }, 1000);
     }
   }, [id, profile]);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-vouch-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading profile...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show not found if profile doesn't exist
+  if (!profile) {
+    return <Navigate to="/not-found" replace />;
+  }
 
   // Handle URL parameters for expanding specific transcripts
   useEffect(() => {
