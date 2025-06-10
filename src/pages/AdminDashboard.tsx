@@ -18,14 +18,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  getAllProfiles,
-  addProfile,
-  updateProfile,
-  canEditProfile,
-  mockAnalytics,
-  Profile,
-} from "@/lib/data";
+import { mockAnalytics, Profile } from "@/lib/data";
 import { analytics } from "@/lib/analytics";
 import { ProfileForm } from "@/components/ProfileForm";
 import { VouchLogo } from "@/components/VouchLogo";
