@@ -61,11 +61,26 @@ export default function AdminDashboard() {
   const [showProfileForm, setShowProfileForm] = useState(false);
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null);
   const [copiedProfileId, setCopiedProfileId] = useState<string | null>(null);
-  const liveAnalytics = analytics.getAnalyticsSummary();
+  const [liveAnalytics, setLiveAnalytics] = useState({
+    totalPageViews: 0,
+    totalQuoteViews: 0,
+    profileStats: [],
+  });
+  const [loading, setLoading] = useState(true);
 
-  // Load profiles on component mount
+  // Load profiles and analytics on component mount
   useEffect(() => {
-    setProfiles(getAllProfiles());
+    async function loadData() {
+      setLoading(true);
+      const [profilesData, analyticsData] = await Promise.all([
+        dataProvider.getAllProfiles(),
+        dataProvider.getAnalytics(),
+      ]);
+      setProfiles(profilesData);
+      setLiveAnalytics(analyticsData);
+      setLoading(false);
+    }
+    loadData();
   }, []);
 
   // Combine mock data with live analytics
@@ -90,45 +105,61 @@ export default function AdminDashboard() {
     setShowProfileForm(true);
   };
 
-  const handleSaveProfile = (profile: Profile) => {
-    if (editingProfile) {
-      // Update existing profile
-      console.log("Profile updated:", profile);
-      const success = updateProfile(profile);
+  const handleSaveProfile = async (profile: Profile) => {
+    try {
+      console.log(
+        editingProfile ? "Profile updated:" : "New profile created:",
+        profile,
+      );
+      const success = await dataProvider.saveProfile(profile);
 
       if (success) {
-        setProfiles(getAllProfiles());
+        const updatedProfiles = await dataProvider.getAllProfiles();
+        setProfiles(updatedProfiles);
         setShowProfileForm(false);
         setEditingProfile(null);
-        alert(`Profile for ${profile.name} updated successfully!`);
-      } else {
-        alert(
-          `Failed to update profile. Only user-created profiles can be edited.`,
-        );
-      }
-    } else {
-      // Create new profile
-      console.log("New profile created:", profile);
-      const success = addProfile(profile);
 
-      if (success) {
-        setProfiles(getAllProfiles());
-        setShowProfileForm(false);
-        analytics.trackProfileCreated(profile.id);
+        if (!editingProfile) {
+          await dataProvider.trackEvent(profile.id, "profile_created");
+        }
+
         alert(
-          `Profile for ${profile.name} created successfully! You can now view it at /profile/${profile.id}`,
+          `Profile for ${profile.name} ${editingProfile ? "updated" : "created"} successfully! You can now view it at /profile/${profile.id}`,
         );
       } else {
         alert(
-          `Failed to create profile. A profile with ID "${profile.id}" may already exist.`,
+          `Failed to ${editingProfile ? "update" : "create"} profile. ${editingProfile ? "Please try again." : "A profile with this ID may already exist."}`,
         );
       }
+    } catch (error) {
+      alert(
+        `Error ${editingProfile ? "updating" : "creating"} profile. Please try again.`,
+      );
+      console.error("Error saving profile:", error);
     }
   };
 
-  const handleCloseForm = () => {
-    setShowProfileForm(false);
-    setEditingProfile(null);
+  const handleDeleteProfile = async (profile: Profile) => {
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete the profile for "${profile.name}"?\n\nThis action cannot be undone.`,
+    );
+
+    if (isConfirmed) {
+      try {
+        const success = await dataProvider.deleteProfile(profile.id);
+
+        if (success) {
+          const updatedProfiles = await dataProvider.getAllProfiles();
+          setProfiles(updatedProfiles);
+          alert(`Profile for ${profile.name} has been deleted successfully.`);
+        } else {
+          alert(`Failed to delete profile. Please try again.`);
+        }
+      } catch (error) {
+        alert(`Error deleting profile. Please try again.`);
+        console.error("Error deleting profile:", error);
+      }
+    }
   };
 
   const handleDeleteProfile = (profile: Profile) => {
@@ -359,7 +390,7 @@ export default function AdminDashboard() {
                             </>
                           )}
                         </Button>
-                        {canEditProfile(profile.id) && (
+                        {dataProvider.canEditProfile(profile.id) && (
                           <>
                             <Button
                               variant="outline"
