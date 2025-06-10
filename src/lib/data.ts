@@ -47,7 +47,8 @@ export const sampleProfiles: Profile[] = [
     name: "Lara Ruso",
     title: "Product Designer",
     company: "Meta",
-    photo: "/placeholder.svg",
+    photo:
+      "https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F12b15b8f8bff40339e9a75ad3f1509c3",
     linkedIn: "https://linkedin.com/in/lararuso",
     cv: "/cv/lara-ruso.pdf",
     portfolio: "https://lararuso.design",

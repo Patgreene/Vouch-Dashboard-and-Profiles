@@ -71,13 +71,8 @@ export default function Profile() {
       {/* Transcripts Section */}
       <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Peer Reviews
-          </h2>
-          <p className="text-gray-600">
-            What colleagues and managers have said about{" "}
-            {profile.name.split(" ")[0]}
-          </p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Transcripts</h2>
+          <p className="text-gray-600"></p>
         </div>
 
         <div className="space-y-6">

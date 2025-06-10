@@ -1,7 +1,6 @@
-import { ExternalLink, Linkedin, FileText, Globe } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Profile } from "@/lib/data";
 
 interface ProfileHeaderProps {
@@ -36,11 +35,6 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                 {profile.name}
               </h1>
               <p className="text-xl text-gray-600 mt-1">{profile.title}</p>
-              {profile.company && (
-                <Badge variant="secondary" className="mt-2">
-                  {profile.company}
-                </Badge>
-              )}
             </div>
 
             {/* Action Buttons */}
@@ -56,11 +50,8 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                     href={profile.linkedIn}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2"
                   >
-                    <Linkedin className="h-4 w-4" />
                     LinkedIn
-                    <ExternalLink className="h-3 w-3" />
                   </a>
                 </Button>
               )}
@@ -76,11 +67,8 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                     href={profile.cv}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2"
                   >
-                    <FileText className="h-4 w-4" />
                     CV
-                    <ExternalLink className="h-3 w-3" />
                   </a>
                 </Button>
               )}
@@ -96,11 +84,8 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                     href={profile.portfolio}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2"
                   >
-                    <Globe className="h-4 w-4" />
                     Portfolio
-                    <ExternalLink className="h-3 w-3" />
                   </a>
                 </Button>
               )}
@@ -112,7 +97,7 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                 className="text-vouch-600 hover:text-vouch-700 p-0"
               >
                 <a href="/" className="flex items-center gap-1">
-                  What is Vouch?
+                  <div>What is Vouch?</div>
                   <ExternalLink className="h-3 w-3" />
                 </a>
               </Button>
