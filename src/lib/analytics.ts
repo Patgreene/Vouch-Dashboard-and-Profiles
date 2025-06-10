@@ -105,10 +105,15 @@ export const analytics = new AnalyticsTracker();
 
 // Copy link to clipboard with visual feedback
 export async function copyToClipboard(text: string): Promise<boolean> {
+  console.log('Attempting to copy to clipboard:', text);
+
   try {
     await navigator.clipboard.writeText(text);
+    console.log('Successfully copied using navigator.clipboard');
     return true;
   } catch (err) {
+    console.log('Navigator clipboard failed, trying fallback:', err);
+
     // Fallback for older browsers
     const textArea = document.createElement("textarea");
     textArea.value = text;
@@ -120,10 +125,12 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     textArea.select();
 
     try {
-      document.execCommand("copy");
+      const successful = document.execCommand("copy");
       document.body.removeChild(textArea);
-      return true;
+      console.log('Fallback copy result:', successful);
+      return successful;
     } catch (err) {
+      console.log('Fallback copy failed:', err);
       document.body.removeChild(textArea);
       return false;
     }
@@ -137,6 +144,15 @@ export function generateShareUrl(
   highlightStart: number,
   highlightEnd: number,
 ): string {
+  const baseUrl = window.location.origin;
+  const params = new URLSearchParams({
+    t: transcriptId,
+    s: highlightStart.toString(),
+    e: highlightEnd.toString(),
+  });
+
+  return `${baseUrl}/profile/${profileId}?${params.toString()}`;
+}
   const baseUrl = window.location.origin;
   const params = new URLSearchParams({
     t: transcriptId,

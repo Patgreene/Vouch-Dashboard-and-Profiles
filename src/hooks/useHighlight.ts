@@ -52,11 +52,20 @@ export function useHighlight(profileId: string) {
       return;
     }
 
+    // Calculate absolute position within the transcript text
+    const transcriptText = transcriptElement.textContent || "";
+    const selectedText = selection.toString();
+    const beforeSelection = range.cloneRange();
+    beforeSelection.selectNodeContents(transcriptElement);
+    beforeSelection.setEnd(range.startContainer, range.startOffset);
+    const startOffset = beforeSelection.toString().length;
+    const endOffset = startOffset + selectedText.length;
+
     const highlightData: HighlightData = {
       transcriptId,
-      startOffset: range.startOffset,
-      endOffset: range.endOffset,
-      text: selection.toString(),
+      startOffset,
+      endOffset,
+      text: selectedText,
     };
 
     setShareTooltip({
@@ -69,9 +78,25 @@ export function useHighlight(profileId: string) {
 
   // Handle share link generation
   const handleShareLink = useCallback(async () => {
-    if (!shareTooltip.highlightData) return;
+    console.log(
+      "handleShareLink called, tooltip data:",
+      shareTooltip.highlightData,
+    );
 
-    const { transcriptId, startOffset, endOffset } = shareTooltip.highlightData;
+    if (!shareTooltip.highlightData) {
+      console.log("No highlight data available");
+      return;
+    }
+
+    const { transcriptId, startOffset, endOffset, text } =
+      shareTooltip.highlightData;
+    console.log("Generating share URL for:", {
+      transcriptId,
+      startOffset,
+      endOffset,
+      text,
+    });
+
     const shareUrl = generateShareUrl(
       profileId,
       transcriptId,
@@ -79,7 +104,10 @@ export function useHighlight(profileId: string) {
       endOffset,
     );
 
+    console.log("Generated share URL:", shareUrl);
+
     const success = await copyToClipboard(shareUrl);
+    console.log("Copy to clipboard result:", success);
 
     if (success) {
       // Track the quote view
@@ -95,6 +123,11 @@ export function useHighlight(profileId: string) {
 
       // Hide tooltip
       setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
+    } else {
+      console.error("Failed to copy to clipboard");
+      // Still show feedback to let user know something happened
+      setCopiedFeedback(true);
+      setTimeout(() => setCopiedFeedback(false), 2000);
     }
   }, [shareTooltip.highlightData, profileId]);
 
