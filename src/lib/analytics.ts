@@ -8,6 +8,33 @@ export interface AnalyticsEvent {
 
 class AnalyticsTracker {
   private events: AnalyticsEvent[] = [];
+  private readonly STORAGE_KEY = "vouch_analytics";
+
+  constructor() {
+    this.loadEvents();
+  }
+
+  // Load events from localStorage
+  private loadEvents() {
+    try {
+      const stored = localStorage.getItem(this.STORAGE_KEY);
+      if (stored) {
+        this.events = JSON.parse(stored);
+      }
+    } catch (error) {
+      console.error("Error loading analytics from localStorage:", error);
+      this.events = [];
+    }
+  }
+
+  // Save events to localStorage
+  private saveEvents() {
+    try {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.events));
+    } catch (error) {
+      console.error("Error saving analytics to localStorage:", error);
+    }
+  }
 
   // Track page view
   trackPageView(profileId: string) {
@@ -18,6 +45,7 @@ class AnalyticsTracker {
     };
 
     this.events.push(event);
+    this.saveEvents();
 
     // In a real app, you'd send this to your analytics service
     console.log("Analytics: Page view tracked", event);
@@ -36,6 +64,7 @@ class AnalyticsTracker {
     };
 
     this.events.push(event);
+    this.saveEvents();
 
     console.log("Analytics: Quote view tracked", event);
   }
@@ -49,6 +78,7 @@ class AnalyticsTracker {
     };
 
     this.events.push(event);
+    this.saveEvents();
 
     console.log("Analytics: Profile created", event);
   }
