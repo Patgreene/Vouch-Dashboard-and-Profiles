@@ -210,7 +210,7 @@ export function addProfile(profile: Profile): boolean {
 
     // Check if profile with this ID already exists
     const allProfiles = [...sampleProfiles, ...userProfiles];
-    if (allProfiles.find(p => p.id === profile.id)) {
+    if (allProfiles.find((p) => p.id === profile.id)) {
       console.error("Profile with this ID already exists:", profile.id);
       return false;
     }
@@ -231,13 +231,13 @@ export function updateProfile(profile: Profile): boolean {
     const userProfiles: Profile[] = stored ? JSON.parse(stored) : [];
 
     // Check if it's a sample profile (cannot be edited)
-    if (sampleProfiles.find(p => p.id === profile.id)) {
+    if (sampleProfiles.find((p) => p.id === profile.id)) {
       console.error("Cannot edit sample profiles");
       return false;
     }
 
     // Find and update the profile
-    const profileIndex = userProfiles.findIndex(p => p.id === profile.id);
+    const profileIndex = userProfiles.findIndex((p) => p.id === profile.id);
     if (profileIndex === -1) {
       console.error("Profile not found for update:", profile.id);
       return false;
@@ -255,8 +255,7 @@ export function updateProfile(profile: Profile): boolean {
 // Check if a profile can be edited (user-created profiles only)
 export function canEditProfile(id: string): boolean {
   const userProfiles = getUserProfiles();
-  return userProfiles.some(p => p.id === id);
-}
+  return userProfiles.some((p) => p.id === id);
 }
 
 // Remove a profile
