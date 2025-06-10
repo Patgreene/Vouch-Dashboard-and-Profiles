@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
+import SupabaseTest from "./pages/SupabaseTest";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Route path="/profile/:id" element={<Profile />} />
         {/* Protected admin route - obfuscated URL */}
         <Route path="/admin-stats-d1g3Yt9" element={<AdminDashboard />} />
+        <Route path="/supabase-test" element={<SupabaseTest />} />
         <Route path="/not-found" element={<NotFound />} />
         {/* Catch-all route for 404s */}
         <Route path="*" element={<NotFound />} />
