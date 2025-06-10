@@ -103,25 +103,6 @@ export default function Profile() {
     return <Navigate to="/not-found" replace />;
   }
 
-  // Handle URL parameters for expanding specific transcripts
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const transcriptId = urlParams.get("t");
-
-    if (transcriptId) {
-      // Expand the specific transcript
-      setExpandedTranscripts(new Set([transcriptId]));
-
-      // Scroll to transcript after a short delay
-      setTimeout(() => {
-        const element = document.getElementById(`transcript-${transcriptId}`);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      }, 300);
-    }
-  }, []);
-
   const toggleTranscript = (transcriptId: string) => {
     const newExpanded = new Set(expandedTranscripts);
     if (newExpanded.has(transcriptId)) {
