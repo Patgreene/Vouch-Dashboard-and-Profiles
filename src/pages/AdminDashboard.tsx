@@ -27,8 +27,6 @@ import {
 import { analytics } from "@/lib/analytics";
 import { ProfileForm } from "@/components/ProfileForm";
 import { VouchLogo } from "@/components/VouchLogo";
-import { ProfileEditDebug } from "@/components/ProfileEditDebug";
-import "../utils/deleteProfiles";
 
 interface StatCardProps {
   title: string;
@@ -387,9 +385,6 @@ export default function AdminDashboard() {
           editingProfile={editingProfile}
         />
       )}
-
-      {/* Temporary Debug Info */}
-      <ProfileEditDebug />
     </div>
   );
 }
