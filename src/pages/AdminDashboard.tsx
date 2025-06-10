@@ -30,6 +30,7 @@ import { analytics } from "@/lib/analytics";
 import { ProfileForm } from "@/components/ProfileForm";
 import { VouchLogo } from "@/components/VouchLogo";
 import { SupabaseMigration } from "@/components/SupabaseMigration";
+import { SupabaseTest } from "@/components/SupabaseTest";
 import { downloadProfileBackup, importProfiles } from "@/lib/profileSync";
 
 interface StatCardProps {
@@ -289,6 +290,11 @@ export default function AdminDashboard() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        {/* Supabase Connection Test */}
+        <div className="mb-6">
+          <SupabaseTest />
+        </div>
+
         {/* Supabase Migration */}
         <div className="mb-8">
           <SupabaseMigration
