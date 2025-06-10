@@ -103,6 +103,13 @@ export default function Profile() {
       </div>
 
       {/* Share Tooltip */}
+      {console.log("🔍 About to render ShareTooltip with:", {
+        visible: shareTooltip.visible,
+        x: shareTooltip.x,
+        y: shareTooltip.y,
+        handleShareLinkExists: !!handleShareLink,
+        copiedFeedback,
+      })}
       <ShareTooltip
         visible={shareTooltip.visible}
         x={shareTooltip.x}
