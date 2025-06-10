@@ -29,8 +29,6 @@ import {
 import { analytics } from "@/lib/analytics";
 import { ProfileForm } from "@/components/ProfileForm";
 import { VouchLogo } from "@/components/VouchLogo";
-import { MigrationButton } from "@/components/MigrationButton";
-import { LocalStorageCheck } from "@/components/LocalStorageCheck";
 import { downloadProfileBackup, importProfiles } from "@/lib/profileSync";
 
 interface StatCardProps {
@@ -300,20 +298,6 @@ export default function AdminDashboard() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        {/* localStorage Debug */}
-        <LocalStorageCheck />
-
-        {/* Migration Button */}
-        <MigrationButton
-          onMigrationComplete={async () => {
-            const [profilesData, analyticsData] = await Promise.all([
-              dataProvider.getAllProfiles(),
-              dataProvider.getAnalytics(),
-            ]);
-            setProfiles(profilesData);
-            setLiveAnalytics(analyticsData);
-          }}
-        />
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatCard
