@@ -16,7 +16,28 @@ export function ShareTooltip({
   onShare,
   copied = false,
 }: ShareTooltipProps) {
+  console.log("🎯 ShareTooltip render:", {
+    visible,
+    x,
+    y,
+    copied,
+    onShare: !!onShare,
+  });
+
   if (!visible) return null;
+
+  const handleClick = (e: React.MouseEvent) => {
+    console.log("🔥 ShareTooltip button clicked!");
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (onShare) {
+      console.log("🚀 Calling onShare handler");
+      onShare();
+    } else {
+      console.log("❌ No onShare handler provided!");
+    }
+  };
 
   return (
     <div
@@ -31,7 +52,7 @@ export function ShareTooltip({
         <Button
           size="sm"
           variant="ghost"
-          onClick={onShare}
+          onClick={handleClick}
           className="text-white hover:bg-slate-700 h-auto px-2 py-1"
         >
           {copied ? (
@@ -46,6 +67,15 @@ export function ShareTooltip({
             </>
           )}
         </Button>
+
+        {/* Backup simple div for testing */}
+        <div
+          onClick={handleClick}
+          className="ml-2 cursor-pointer bg-blue-600 px-2 py-1 rounded text-xs"
+          style={{ pointerEvents: "auto" }}
+        >
+          TEST
+        </div>
       </div>
       {/* Arrow */}
       <div
