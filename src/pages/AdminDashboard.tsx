@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { getAllProfiles, mockAnalytics, Profile } from "@/lib/data";
 import { analytics } from "@/lib/analytics";
 import { ProfileForm } from "@/components/ProfileForm";
+import { VouchLogo } from "@/components/VouchLogo";
 
 interface StatCardProps {
   title: string;
@@ -82,12 +83,13 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Analytics Dashboard
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Internal admin panel for Vouch
-              </p>
+              <div className="flex items-center gap-3 mb-2">
+                <VouchLogo size="lg" className="text-vouch-600" />
+                <h1 className="text-3xl font-bold text-gray-900">
+                  Analytics Dashboard
+                </h1>
+              </div>
+              <p className="text-gray-600">Internal admin panel</p>
             </div>
             <div className="flex items-center gap-3">
               <Button asChild variant="outline">

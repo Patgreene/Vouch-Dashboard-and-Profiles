@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { VouchLogo } from "@/components/VouchLogo";
 import { Profile } from "@/lib/data";
 
 interface ProfileHeaderProps {
@@ -36,7 +37,10 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                 asChild
                 className="text-vouch-600 hover:text-vouch-700 p-0 ml-auto"
               >
-                <a href="/">What is Vouch?</a>
+                <a href="/" className="flex items-center gap-2">
+                  <VouchLogo size="sm" />
+                  <span className="text-xs">What is this?</span>
+                </a>
               </Button>
               <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                 {profile.name}
