@@ -7,6 +7,7 @@ import { ShareTooltip } from "@/components/ShareTooltip";
 import { getProfileById } from "@/lib/data";
 import { analytics } from "@/lib/analytics";
 import { useHighlight } from "@/hooks/useHighlight";
+import { debugHighlightFeature } from "@/lib/debug";
 
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
@@ -32,9 +33,14 @@ export default function Profile() {
     processHighlightFromUrl,
   } = useHighlight(id);
 
-  // Track page view
+  // Track page view and run debug
   useEffect(() => {
     analytics.trackPageView(id);
+
+    // Run debug after page loads
+    setTimeout(() => {
+      debugHighlightFeature();
+    }, 1000);
   }, [id]);
 
   // Handle URL parameters for expanding specific transcripts
