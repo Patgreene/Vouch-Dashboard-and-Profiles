@@ -72,34 +72,51 @@ export function TranscriptCard({
         onClick={toggle}
         className="w-full justify-between p-6 h-auto text-left hover:bg-gray-50 transition-colors"
       >
-        <div
-          className="flex items-start gap-4 flex-1"
-          style={{ paddingRight: "1px" }}
-        >
-          <Avatar className="h-12 w-12 mt-1">
-            <AvatarImage
-              src={transcript.speakerPhoto}
-              alt={transcript.speakerName}
-              className="object-cover"
-            />
-            <AvatarFallback className="text-sm font-semibold bg-vouch-100 text-vouch-600">
-              {getInitials(transcript.speakerName)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 text-lg mb-1">
-              {transcript.speakerName}
-            </h3>
-            <div className="flex items-center gap-2 mb-2">
-              <Briefcase className="h-4 w-4 text-gray-500" />
-              <Badge variant="outline" className="text-sm">
-                {transcript.speakerRole}
-              </Badge>
-            </div>
+        <div className="flex items-start justify-between w-full">
+          <div className="flex items-start gap-4 flex-1">
+            <Avatar className="h-12 w-12 mt-1">
+              <AvatarImage
+                src={transcript.speakerPhoto}
+                alt={transcript.speakerName}
+                className="object-cover"
+              />
+              <AvatarFallback className="text-sm font-semibold bg-vouch-100 text-vouch-600">
+                {getInitials(transcript.speakerName)}
+              </AvatarFallback>
+            </Avatar>
 
-            {/* Interview Metadata */}
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-gray-900 text-lg mb-1">
+                {transcript.speakerName}
+              </h3>
+              <div className="flex items-center gap-2 mb-2">
+                <Briefcase className="h-4 w-4 text-gray-500" />
+                <Badge variant="outline" className="text-sm">
+                  {transcript.speakerRole}
+                </Badge>
+              </div>
+
+              {!expanded && (
+                <p
+                  className="text-gray-600 text-sm leading-relaxed break-words whitespace-normal overflow-hidden"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    wordBreak: "break-word",
+                    overflowWrap: "break-word",
+                  }}
+                >
+                  {previewText}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-col items-end gap-2 ml-4 flex-shrink-0">
+            {/* Interview Metadata - Top Right */}
             {(transcript.interviewDate || transcript.interviewedBy) && (
-              <div className="flex flex-wrap items-center gap-4 mb-3 text-xs text-gray-500">
+              <div className="flex flex-col items-end gap-1 text-xs text-gray-400">
                 {transcript.interviewDate && (
                   <div className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
@@ -117,36 +134,19 @@ export function TranscriptCard({
                 {transcript.interviewedBy && (
                   <div className="flex items-center gap-1">
                     <UserCheck className="h-3 w-3" />
-                    <span>
-                      Interviewed by {transcript.interviewedBy.split(" ")[0]}
-                    </span>
+                    <span>by {transcript.interviewedBy.split(" ")[0]}</span>
                   </div>
                 )}
               </div>
             )}
-            {!expanded && (
-              <p
-                className="text-gray-600 text-sm leading-relaxed break-words whitespace-normal overflow-hidden"
-                style={{
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                  wordBreak: "break-word",
-                  overflowWrap: "break-word",
-                }}
-              >
-                {previewText}
-              </p>
+
+            {/* Expand/Collapse Icon */}
+            {expanded ? (
+              <ChevronUp className="h-5 w-5 text-gray-500" />
+            ) : (
+              <ChevronDown className="h-5 w-5 text-gray-500" />
             )}
           </div>
-        </div>
-
-        <div className="ml-4 flex-shrink-0 flex flex-col">
-          {expanded ? (
-            <ChevronUp className="h-5 w-5 text-gray-500 ml-auto" />
-          ) : (
-            <ChevronDown className="h-5 w-5 text-gray-500 ml-auto" />
-          )}
         </div>
       </Button>
 
