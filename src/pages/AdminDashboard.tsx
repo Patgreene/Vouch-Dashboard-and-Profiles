@@ -8,11 +8,19 @@ import {
   Share2,
   TrendingUp,
   ExternalLink,
+  Edit,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getAllProfiles, addProfile, mockAnalytics, Profile } from "@/lib/data";
+import {
+  getAllProfiles,
+  addProfile,
+  updateProfile,
+  canEditProfile,
+  mockAnalytics,
+  Profile,
+} from "@/lib/data";
 import { analytics } from "@/lib/analytics";
 import { ProfileForm } from "@/components/ProfileForm";
 import { VouchLogo } from "@/components/VouchLogo";
@@ -45,6 +53,7 @@ function StatCard({ title, value, icon, color }: StatCardProps) {
 export default function AdminDashboard() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [showProfileForm, setShowProfileForm] = useState(false);
+  const [editingProfile, setEditingProfile] = useState<Profile | null>(null);
   const liveAnalytics = analytics.getAnalyticsSummary();
 
   // Load profiles on component mount
@@ -65,30 +74,54 @@ export default function AdminDashboard() {
   };
 
   const handleCreateProfile = () => {
+    setEditingProfile(null);
+    setShowProfileForm(true);
+  };
+
+  const handleEditProfile = (profile: Profile) => {
+    setEditingProfile(profile);
     setShowProfileForm(true);
   };
 
   const handleSaveProfile = (profile: Profile) => {
-    console.log("New profile created:", profile);
+    if (editingProfile) {
+      // Update existing profile
+      console.log("Profile updated:", profile);
+      const success = updateProfile(profile);
 
-    // Save to localStorage
-    const success = addProfile(profile);
-
-    if (success) {
-      // Update local state
-      setProfiles(getAllProfiles());
-      setShowProfileForm(false);
-      analytics.trackProfileCreated(profile.id);
-
-      // Show success message
-      alert(
-        `Profile for ${profile.name} created successfully! You can now view it at /profile/${profile.id}`,
-      );
+      if (success) {
+        setProfiles(getAllProfiles());
+        setShowProfileForm(false);
+        setEditingProfile(null);
+        alert(`Profile for ${profile.name} updated successfully!`);
+      } else {
+        alert(
+          `Failed to update profile. Only user-created profiles can be edited.`,
+        );
+      }
     } else {
-      alert(
-        `Failed to create profile. A profile with ID "${profile.id}" may already exist.`,
-      );
+      // Create new profile
+      console.log("New profile created:", profile);
+      const success = addProfile(profile);
+
+      if (success) {
+        setProfiles(getAllProfiles());
+        setShowProfileForm(false);
+        analytics.trackProfileCreated(profile.id);
+        alert(
+          `Profile for ${profile.name} created successfully! You can now view it at /profile/${profile.id}`,
+        );
+      } else {
+        alert(
+          `Failed to create profile. A profile with ID "${profile.id}" may already exist.`,
+        );
+      }
     }
+  };
+
+  const handleCloseForm = () => {
+    setShowProfileForm(false);
+    setEditingProfile(null);
   };
 
   return (
@@ -193,7 +226,7 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-6 text-sm">
+                    <div className="flex items-center gap-4 text-sm">
                       <div className="text-center">
                         <div className="font-semibold text-gray-900">
                           {pageViews}
@@ -206,9 +239,23 @@ export default function AdminDashboard() {
                         </div>
                         <div className="text-gray-600">Quote Views</div>
                       </div>
-                      <Button asChild variant="outline" size="sm">
-                        <Link to={`/profile/${profile.id}`}>View Profile</Link>
-                      </Button>
+                      <div className="flex gap-2">
+                        {canEditProfile(profile.id) && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleEditProfile(profile)}
+                          >
+                            <Edit className="h-4 w-4 mr-1" />
+                            Edit
+                          </Button>
+                        )}
+                        <Button asChild variant="outline" size="sm">
+                          <Link to={`/profile/${profile.id}`}>
+                            View Profile
+                          </Link>
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 );
@@ -248,11 +295,12 @@ export default function AdminDashboard() {
         </Card>
       </div>
 
-      {/* Profile Creation Form */}
+      {/* Profile Creation/Edit Form */}
       {showProfileForm && (
         <ProfileForm
-          onClose={() => setShowProfileForm(false)}
+          onClose={handleCloseForm}
           onSave={handleSaveProfile}
+          editingProfile={editingProfile}
         />
       )}
     </div>

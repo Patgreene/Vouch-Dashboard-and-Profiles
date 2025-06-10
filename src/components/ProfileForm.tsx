@@ -12,6 +12,7 @@ import { Profile, KeyTakeaways, Transcript } from "@/lib/data";
 interface ProfileFormProps {
   onClose: () => void;
   onSave: (profile: Profile) => void;
+  editingProfile?: Profile | null;
 }
 
 interface FormData {
@@ -55,8 +56,28 @@ const initialFormData: FormData = {
   ],
 };
 
-export function ProfileForm({ onClose, onSave }: ProfileFormProps) {
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+export function ProfileForm({
+  onClose,
+  onSave,
+  editingProfile,
+}: ProfileFormProps) {
+  const [formData, setFormData] = useState<FormData>(() => {
+    if (editingProfile) {
+      return {
+        id: editingProfile.id,
+        name: editingProfile.name,
+        title: editingProfile.title,
+        company: editingProfile.company || "",
+        photo: editingProfile.photo || "",
+        linkedIn: editingProfile.linkedIn || "",
+        cv: editingProfile.cv || "",
+        portfolio: editingProfile.portfolio || "",
+        keyTakeaways: editingProfile.keyTakeaways,
+        transcripts: editingProfile.transcripts,
+      };
+    }
+    return initialFormData;
+  });
 
   const generateId = (name: string) => {
     return name
@@ -106,7 +127,8 @@ export function ProfileForm({ onClose, onSave }: ProfileFormProps) {
   const updateBasicField = (field: keyof FormData, value: string) => {
     setFormData((prev) => {
       const updated = { ...prev, [field]: value };
-      if (field === "name") {
+      // Only auto-generate ID for new profiles, not when editing
+      if (field === "name" && !editingProfile) {
         updated.id = generateId(value);
       }
       return updated;
@@ -213,6 +235,8 @@ export function ProfileForm({ onClose, onSave }: ProfileFormProps) {
 
     const profile: Profile = {
       ...formData,
+      // Ensure ID is set (use existing ID for edits, or generated ID for new profiles)
+      id: editingProfile ? editingProfile.id : formData.id,
       transcripts: validTranscripts,
       keyTakeaways: {
         strengths: formData.keyTakeaways.strengths.filter((s) => s.trim()),
@@ -242,7 +266,7 @@ export function ProfileForm({ onClose, onSave }: ProfileFormProps) {
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900">
-            Create New Profile
+            {editingProfile ? "Edit Profile" : "Create New Profile"}
           </h2>
           <Button variant="ghost" size="sm" onClick={onClose}>
             <X className="h-5 w-5" />
@@ -624,7 +648,7 @@ export function ProfileForm({ onClose, onSave }: ProfileFormProps) {
           </Button>
           <Button onClick={handleSave} className="gradient-bg">
             <Save className="h-4 w-4 mr-2" />
-            Create Profile
+            {editingProfile ? "Update Profile" : "Create Profile"}
           </Button>
         </div>
       </div>
