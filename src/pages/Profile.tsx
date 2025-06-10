@@ -5,8 +5,8 @@ import { KeyTakeaways } from "@/components/KeyTakeaways";
 import { TranscriptCard } from "@/components/TranscriptCard";
 import { ShareTooltip } from "@/components/ShareTooltip";
 import { Footer } from "@/components/Footer";
-import { getProfileById } from "@/lib/data";
-import { analytics } from "@/lib/analytics";
+import { dataProvider } from "@/lib/dataProvider";
+import { Profile } from "@/lib/data";
 import { useHighlight } from "@/hooks/useHighlight";
 import { debugHighlightFeature } from "@/lib/debug";
 
@@ -38,13 +38,15 @@ export default function Profile() {
 
   // Track page view and run debug
   useEffect(() => {
-    analytics.trackPageView(id);
+    if (profile) {
+      dataProvider.trackEvent(id, "page_view");
 
-    // Run debug after page loads
-    setTimeout(() => {
-      debugHighlightFeature();
-    }, 1000);
-  }, [id]);
+      // Run debug after page loads
+      setTimeout(() => {
+        debugHighlightFeature();
+      }, 1000);
+    }
+  }, [id, profile]);
 
   // Handle URL parameters for expanding specific transcripts
   useEffect(() => {
