@@ -15,63 +15,16 @@ export function ShareTooltip({
   onShare,
   copied = false,
 }: ShareTooltipProps) {
-  console.log("🎯 ShareTooltip render:", {
-    visible,
-    x,
-    y,
-    copied,
-    onShareExists: !!onShare,
-    onShareType: typeof onShare,
-  });
-
   if (!visible) return null;
 
-  // Test onShare immediately
-  console.log("🧪 Testing onShare function:", onShare);
-
-  // Multiple click handlers for testing
-  const handleClick1 = (e: any) => {
+  const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("✅ Share Link button clicked (method 1)!");
-    console.log("🔍 Event details:", e);
+    console.log("🔗 Share Link button clicked");
 
     if (onShare) {
-      console.log("🚀 Calling onShare function");
-      try {
-        onShare();
-        console.log("✅ onShare called successfully");
-      } catch (error) {
-        console.log("❌ Error calling onShare:", error);
-      }
-    } else {
-      console.log("❌ onShare is not defined");
-    }
-  };
-
-  const handleClick2 = () => {
-    console.log("✅ Share Link button clicked (method 2)!");
-    onShare?.();
-  };
-
-  const handleClick3 = () => {
-    console.log("✅ Share Link button clicked (method 3)!");
-    if (typeof onShare === "function") {
       onShare();
-    } else {
-      console.log("❌ onShare is not a function:", typeof onShare);
     }
-  };
-
-  // Mouse event handlers for debugging
-  const handleMouseDown = (e: any) => {
-    console.log("🖱️ Button mousedown");
-    e.stopPropagation();
-  };
-
-  const handleMouseUp = (e: any) => {
-    console.log("🖱️ Button mouseup");
-    e.stopPropagation();
   };
 
   return (
@@ -83,15 +36,11 @@ export function ShareTooltip({
         transform: "translateX(-50%) translateY(-100%)",
         zIndex: 9999,
       }}
-      onClick={() => console.log("🎯 Tooltip container clicked")}
     >
-      <div className="bg-slate-900 text-white px-3 py-2 rounded-lg shadow-lg flex flex-col gap-2 text-sm font-medium">
-        {/* Method 1: HTML Button with extensive debugging */}
+      <div className="bg-slate-900 text-white px-3 py-2 rounded-lg shadow-lg flex items-center gap-2 text-sm font-medium">
         <button
-          onClick={handleClick1}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          className="cursor-pointer px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded flex items-center gap-2 transition-colors"
+          onClick={handleClick}
+          className="cursor-pointer px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded flex items-center gap-2 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           style={{
             border: "none",
             outline: "none",
@@ -114,46 +63,6 @@ export function ShareTooltip({
             </>
           )}
         </button>
-
-        {/* Method 2: Simple div */}
-        <div
-          onClick={handleClick2}
-          className="cursor-pointer px-2 py-1 bg-green-600 hover:bg-green-700 rounded text-center text-xs"
-          style={{
-            userSelect: "none",
-            pointerEvents: "auto",
-          }}
-        >
-          DIV METHOD
-        </div>
-
-        {/* Method 3: Raw HTML */}
-        <div
-          onClick={handleClick3}
-          onMouseDown={() => console.log("🖱️ Raw method mousedown")}
-          className="cursor-pointer px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-center text-xs"
-          style={{
-            userSelect: "none",
-            pointerEvents: "auto",
-          }}
-        >
-          RAW METHOD
-        </div>
-
-        {/* Method 4: Direct inline onClick */}
-        <div
-          onClick={() => {
-            console.log("✅ INLINE CLICK WORKS!");
-            onShare && onShare();
-          }}
-          className="cursor-pointer px-2 py-1 bg-purple-600 hover:bg-purple-700 rounded text-center text-xs"
-          style={{
-            userSelect: "none",
-            pointerEvents: "auto",
-          }}
-        >
-          INLINE
-        </div>
       </div>
 
       {/* Arrow */}

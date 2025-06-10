@@ -105,16 +105,16 @@ export const analytics = new AnalyticsTracker();
 
 // Copy link to clipboard with visual feedback
 export async function copyToClipboard(text: string): Promise<boolean> {
-  console.log("Attempting to copy to clipboard:", text);
+  console.log('📋 Copying to clipboard:', text);
 
   try {
     await navigator.clipboard.writeText(text);
-    console.log("Successfully copied using navigator.clipboard");
+    console.log('✅ Successfully copied using modern clipboard API');
     return true;
   } catch (err) {
-    console.log("Navigator clipboard failed, trying fallback:", err);
+    console.log('⚠️ Modern clipboard blocked, using fallback method...');
 
-    // Fallback for older browsers
+    // Fallback for when clipboard API is blocked by permissions policy
     const textArea = document.createElement("textarea");
     textArea.value = text;
     textArea.style.position = "fixed";
@@ -127,14 +127,21 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     try {
       const successful = document.execCommand("copy");
       document.body.removeChild(textArea);
-      console.log("Fallback copy result:", successful);
+
+      if (successful) {
+        console.log('✅ Successfully copied using fallback method');
+      } else {
+        console.log('❌ Fallback copy failed');
+      }
+
       return successful;
     } catch (err) {
-      console.log("Fallback copy failed:", err);
+      console.log('❌ Fallback copy failed:', err);
       document.body.removeChild(textArea);
       return false;
     }
   }
+}
 }
 
 // Generate share URL for highlighted text

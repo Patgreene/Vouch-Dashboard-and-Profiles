@@ -117,20 +117,7 @@ export function useHighlight(profileId: string) {
 
   // Handle share link generation
   const handleShareLink = useCallback(async () => {
-    console.log("🔗 HANDLESHARELINK FUNCTION CALLED!");
-    console.log(
-      "🔗 handleShareLink called, tooltip data:",
-      shareTooltip.highlightData,
-    );
-
-    // Immediate clipboard test
-    try {
-      console.log("📋 Testing immediate clipboard write...");
-      await navigator.clipboard.writeText("TEST CLIPBOARD WORKS!");
-      console.log("✅ Immediate clipboard test SUCCESS!");
-    } catch (err) {
-      console.log("❌ Immediate clipboard test FAILED:", err);
-    }
+    console.log("🔗 Generating share link...");
 
     if (!shareTooltip.highlightData) {
       console.log("❌ No highlight data available");
@@ -172,7 +159,7 @@ export function useHighlight(profileId: string) {
     } else {
       console.error("❌ Failed to copy to clipboard");
       // Show manual copy option
-      console.log("📝 Manual copy - URL:", shareUrl);
+      console.log("�� Manual copy - URL:", shareUrl);
       alert(
         `Could not automatically copy to clipboard. Please copy this URL manually:\n\n${shareUrl}`,
       );
