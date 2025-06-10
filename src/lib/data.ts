@@ -164,20 +164,20 @@ export const sampleProfiles: Profile[] = [
 export const mockAnalytics: AnalyticsData = {
   totalProfiles: 2,
   totalTranscripts: 4,
-  totalPageViews: 1247,
-  totalQuoteViews: 89,
+  totalPageViews: 0,
+  totalQuoteViews: 0,
   profileStats: [
     {
       profileId: "danielle-davis",
       profileName: "Danielle Davis",
-      pageViews: 892,
-      quoteViews: 67,
+      pageViews: 0,
+      quoteViews: 0,
     },
     {
       profileId: "alex-morgan",
       profileName: "Alex Morgan",
-      pageViews: 355,
-      quoteViews: 22,
+      pageViews: 0,
+      quoteViews: 0,
     },
   ],
 };
