@@ -12,6 +12,8 @@ import {
   Copy,
   Check,
   Trash2,
+  Download,
+  Upload,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -27,6 +29,7 @@ import {
 import { analytics } from "@/lib/analytics";
 import { ProfileForm } from "@/components/ProfileForm";
 import { VouchLogo } from "@/components/VouchLogo";
+import { downloadProfileBackup, importProfiles } from "@/lib/profileSync";
 
 interface StatCardProps {
   title: string;
@@ -177,6 +180,35 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleExportProfiles = () => {
+    downloadProfileBackup();
+  };
+
+  const handleImportProfiles = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const content = event.target?.result as string;
+          const result = importProfiles(content);
+
+          if (result.success) {
+            setProfiles(getAllProfiles());
+            alert(result.message);
+          } else {
+            alert(`Import failed: ${result.message}`);
+          }
+        };
+        reader.readAsText(file);
+      }
+    };
+    input.click();
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -198,6 +230,22 @@ export default function AdminDashboard() {
                   <ExternalLink className="h-4 w-4 mr-2" />
                   View Site
                 </Link>
+              </Button>
+              <Button
+                onClick={handleExportProfiles}
+                variant="outline"
+                title="Export all profiles to a file for sharing across devices"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Export
+              </Button>
+              <Button
+                onClick={handleImportProfiles}
+                variant="outline"
+                title="Import profiles from a backup file"
+              >
+                <Upload className="h-4 w-4 mr-2" />
+                Import
               </Button>
               <Button onClick={handleCreateProfile} className="gradient-bg">
                 <Plus className="h-4 w-4 mr-2" />
