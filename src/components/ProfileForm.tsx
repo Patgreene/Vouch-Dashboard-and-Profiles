@@ -49,6 +49,8 @@ const initialFormData: FormData = {
       speakerRole: "",
       speakerPhoto: "",
       content: "",
+      interviewDate: "",
+      interviewedBy: "",
     },
   ],
 };
@@ -178,6 +180,8 @@ export function ProfileForm({ onClose, onSave }: ProfileFormProps) {
           speakerRole: "",
           speakerPhoto: "",
           content: "",
+          interviewDate: "",
+          interviewedBy: "",
         },
       ],
     }));
@@ -535,6 +539,36 @@ export function ProfileForm({ onClose, onSave }: ProfileFormProps) {
                       </div>
                     </div>
 
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label>Interview Date</Label>
+                        <Input
+                          type="date"
+                          value={transcript.interviewDate}
+                          onChange={(e) =>
+                            updateTranscript(
+                              index,
+                              "interviewDate",
+                              e.target.value,
+                            )
+                          }
+                        />
+                      </div>
+                      <div>
+                        <Label>Interviewed By</Label>
+                        <Input
+                          value={transcript.interviewedBy}
+                          onChange={(e) =>
+                            updateTranscript(
+                              index,
+                              "interviewedBy",
+                              e.target.value,
+                            )
+                          }
+                          placeholder="e.g., Sarah Johnson, HR Partner"
+                        />
+                      </div>
+                    </div>
                     <div>
                       <Label>Transcript Content *</Label>
                       <Textarea

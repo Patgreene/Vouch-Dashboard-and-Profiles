@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { ChevronDown, ChevronUp, User, Briefcase } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  User,
+  Briefcase,
+  Calendar,
+  UserCheck,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -89,6 +96,33 @@ export function TranscriptCard({
                 {transcript.speakerRole}
               </Badge>
             </div>
+
+            {/* Interview Metadata */}
+            {(transcript.interviewDate || transcript.interviewedBy) && (
+              <div className="flex flex-wrap items-center gap-4 mb-3 text-xs text-gray-500">
+                {transcript.interviewDate && (
+                  <div className="flex items-center gap-1">
+                    <Calendar className="h-3 w-3" />
+                    <span>
+                      {new Date(transcript.interviewDate).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        },
+                      )}
+                    </span>
+                  </div>
+                )}
+                {transcript.interviewedBy && (
+                  <div className="flex items-center gap-1">
+                    <UserCheck className="h-3 w-3" />
+                    <span>Interviewed by {transcript.interviewedBy}</span>
+                  </div>
+                )}
+              </div>
+            )}
             {!expanded && (
               <p
                 className="text-gray-600 text-sm leading-relaxed break-words whitespace-normal overflow-hidden"
