@@ -25,26 +25,15 @@ export function ShareTooltip({
 
   if (!visible) return null;
 
-  // Direct click handler
-  const handleDirectClick = () => {
-    console.log("🔥 DIRECT CLICK HANDLER FIRED!");
+  // Working click handler
+  const handleClick = () => {
+    console.log("🔥 Share Link button clicked!");
 
     if (onShare) {
       console.log("🚀 Calling onShare function");
       onShare();
     } else {
       console.log("❌ onShare is not defined");
-    }
-  };
-
-  // Alternative click handler for testing
-  const handleTestClick = () => {
-    console.log("🧪 TEST CLICK HANDLER FIRED!");
-    alert("Test button clicked! onShare exists: " + !!onShare);
-
-    if (onShare) {
-      console.log("🚀 Calling onShare from test handler");
-      onShare();
     }
   };
 
@@ -55,17 +44,22 @@ export function ShareTooltip({
         left: x,
         top: y,
         transform: "translateX(-50%) translateY(-100%)",
-        zIndex: 9999, // Ensure it's on top
+        zIndex: 9999,
       }}
     >
       <div className="bg-slate-900 text-white px-3 py-2 rounded-lg shadow-lg flex items-center gap-2 text-sm font-medium">
-        {/* Method 1: Simple div button */}
-        <div
-          onClick={handleDirectClick}
-          className="cursor-pointer px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded flex items-center gap-2"
+        {/* Main Share Link Button - using working HTML button approach */}
+        <button
+          onClick={handleClick}
+          className="cursor-pointer px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded flex items-center gap-2 transition-colors"
           style={{
+            border: "none",
+            outline: "none",
             userSelect: "none",
             pointerEvents: "auto",
+            color: "white",
+            fontSize: "14px",
+            fontWeight: "500",
           }}
         >
           {copied ? (
@@ -79,43 +73,7 @@ export function ShareTooltip({
               Share Link
             </>
           )}
-        </div>
-
-        {/* Method 2: HTML button element */}
-        <button
-          onClick={handleDirectClick}
-          onMouseDown={(e) => {
-            console.log("🖱️ Button mousedown");
-            e.stopPropagation();
-          }}
-          onMouseUp={(e) => {
-            console.log("🖱️ Button mouseup");
-            e.stopPropagation();
-          }}
-          className="ml-2 cursor-pointer px-2 py-1 bg-green-600 hover:bg-green-700 rounded text-xs"
-          style={{
-            border: "none",
-            outline: "none",
-            userSelect: "none",
-            pointerEvents: "auto",
-          }}
-        >
-          BTN
         </button>
-
-        {/* Method 3: Test button */}
-        <div
-          onClick={handleTestClick}
-          onMouseDown={() => console.log("🖱️ Test div mousedown")}
-          onMouseUp={() => console.log("🖱️ Test div mouseup")}
-          className="ml-2 cursor-pointer px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-xs"
-          style={{
-            userSelect: "none",
-            pointerEvents: "auto",
-          }}
-        >
-          TEST
-        </div>
       </div>
 
       {/* Arrow */}

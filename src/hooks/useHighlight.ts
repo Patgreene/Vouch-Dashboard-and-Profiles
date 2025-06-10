@@ -258,6 +258,7 @@ export function useHighlight(profileId: string) {
         urlTranscriptId,
         startOffset,
         endOffset,
+        currentTranscriptId: transcriptId,
       });
 
       if (urlTranscriptId === transcriptId && startOffset && endOffset) {
@@ -266,37 +267,109 @@ export function useHighlight(profileId: string) {
           const transcriptElement = document.getElementById(
             `transcript-${transcriptId}`,
           );
-          if (transcriptElement) {
-            const textContent = transcriptElement.textContent || "";
-            const start = parseInt(startOffset);
-            const end = parseInt(endOffset);
 
-            console.log("🎨 Highlighting text from URL:", {
-              start,
-              end,
-              text: textContent.substring(start, end),
-              fullLength: textContent.length,
-            });
+          if (!transcriptElement) {
+            console.log(
+              "❌ Transcript element not found:",
+              `transcript-${transcriptId}`,
+            );
+            return;
+          }
 
-            // Create a simple highlight by adding a span around the text
-            const highlightSpan = document.createElement("span");
-            highlightSpan.className = "highlight-intense highlight-fade-in";
-            highlightSpan.textContent = textContent.substring(start, end);
+          const textContent = transcriptElement.textContent || "";
+          const start = parseInt(startOffset);
+          const end = parseInt(endOffset);
 
-            // For now, just scroll to the transcript
+          console.log("🎨 Highlighting text from URL:", {
+            start,
+            end,
+            text: textContent.substring(start, end),
+            fullLength: textContent.length,
+          });
+
+          // Create text walker to find and highlight the specific text
+          const walker = document.createTreeWalker(
+            transcriptElement,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false,
+          );
+
+          let currentOffset = 0;
+          let textNode;
+          let foundStartNode = null;
+          let foundEndNode = null;
+          let startNodeOffset = 0;
+          let endNodeOffset = 0;
+
+          // Find the text nodes that contain our start and end positions
+          while ((textNode = walker.nextNode())) {
+            const nodeLength = textNode.textContent?.length || 0;
+
+            if (currentOffset <= start && currentOffset + nodeLength > start) {
+              foundStartNode = textNode;
+              startNodeOffset = start - currentOffset;
+            }
+
+            if (currentOffset <= end && currentOffset + nodeLength >= end) {
+              foundEndNode = textNode;
+              endNodeOffset = end - currentOffset;
+              break;
+            }
+
+            currentOffset += nodeLength;
+          }
+
+          if (foundStartNode && foundEndNode) {
+            try {
+              // Create a range for the highlighted text
+              const range = document.createRange();
+              range.setStart(foundStartNode, startNodeOffset);
+              range.setEnd(foundEndNode, endNodeOffset);
+
+              // Create highlight element
+              const highlightSpan = document.createElement("span");
+              highlightSpan.className = "highlight-intense highlight-fade-in";
+              highlightSpan.style.backgroundColor = "#fde047";
+              highlightSpan.style.padding = "2px 4px";
+              highlightSpan.style.borderRadius = "4px";
+
+              // Surround the selected content with the highlight span
+              range.surroundContents(highlightSpan);
+
+              console.log("✅ Successfully highlighted text from URL");
+
+              // Scroll to the highlighted section
+              highlightSpan.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+
+              // Track the quote view
+              analytics.trackQuoteView(
+                profileId,
+                transcriptId,
+                `${startOffset}-${endOffset}`,
+              );
+            } catch (error) {
+              console.warn("❌ Could not highlight text:", error);
+
+              // Fallback: just scroll to the transcript
+              transcriptElement.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            }
+          } else {
+            console.warn("❌ Could not find text nodes for highlighting");
+
+            // Fallback: just scroll to the transcript
             transcriptElement.scrollIntoView({
               behavior: "smooth",
               block: "center",
             });
-
-            // Track the quote view
-            analytics.trackQuoteView(
-              profileId,
-              transcriptId,
-              `${startOffset}-${endOffset}`,
-            );
           }
-        }, 500); // Wait for accordion to open
+        }, 1000); // Increased delay to ensure accordion is fully open
       }
     },
     [profileId],
