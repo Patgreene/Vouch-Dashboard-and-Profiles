@@ -69,17 +69,17 @@ export function TranscriptCard({
             </div>
             {!expanded && (
               <p className="text-gray-600 text-sm line-clamp-2">
-                {paragraphs[0]?.substring(0, 120)}...
+                <p>{paragraphs[0]?.substring(0, 120)}...</p>
               </p>
             )}
           </div>
         </div>
 
-        <div className="ml-4 flex-shrink-0">
+        <div className="ml-4 flex-shrink-0 flex flex-col">
           {expanded ? (
-            <ChevronUp className="h-5 w-5 text-gray-500" />
+            <ChevronUp className="h-5 w-5 text-gray-500 ml-auto" />
           ) : (
-            <ChevronDown className="h-5 w-5 text-gray-500" />
+            <ChevronDown className="h-5 w-5 text-gray-500 ml-auto" />
           )}
         </div>
       </Button>
