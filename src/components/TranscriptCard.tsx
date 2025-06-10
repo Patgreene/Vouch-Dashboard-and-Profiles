@@ -4,13 +4,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Transcript } from "@/lib/data";
-import { useHighlight } from "@/hooks/useHighlight";
 
 interface TranscriptCardProps {
   transcript: Transcript;
   profileId: string;
   isExpanded?: boolean;
   onToggle?: () => void;
+  onTextSelection: (transcriptId: string) => void;
+  processHighlightFromUrl: (transcriptId: string) => void;
 }
 
 export function TranscriptCard({
@@ -18,10 +19,10 @@ export function TranscriptCard({
   profileId,
   isExpanded = false,
   onToggle,
+  onTextSelection,
+  processHighlightFromUrl,
 }: TranscriptCardProps) {
   const [internalExpanded, setInternalExpanded] = useState(isExpanded);
-  const { handleTextSelection, processHighlightFromUrl } =
-    useHighlight(profileId);
 
   // Use internal state if no external control
   const expanded = onToggle ? isExpanded : internalExpanded;
@@ -33,7 +34,7 @@ export function TranscriptCard({
   // Handle text selection within this transcript
   const handleMouseUp = () => {
     if (expanded) {
-      handleTextSelection(transcript.id);
+      onTextSelection(transcript.id);
     }
   };
 

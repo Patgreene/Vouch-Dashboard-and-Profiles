@@ -24,7 +24,13 @@ export default function Profile() {
     return <Navigate to="/not-found" replace />;
   }
 
-  const { shareTooltip, copiedFeedback, handleShareLink } = useHighlight(id);
+  const {
+    shareTooltip,
+    copiedFeedback,
+    handleShareLink,
+    handleTextSelection,
+    processHighlightFromUrl,
+  } = useHighlight(id);
 
   // Track page view
   useEffect(() => {
@@ -83,6 +89,8 @@ export default function Profile() {
               profileId={id}
               isExpanded={expandedTranscripts.has(transcript.id)}
               onToggle={() => toggleTranscript(transcript.id)}
+              onTextSelection={handleTextSelection}
+              processHighlightFromUrl={processHighlightFromUrl}
             />
           ))}
         </div>

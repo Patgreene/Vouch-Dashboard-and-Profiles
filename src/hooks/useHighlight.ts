@@ -98,15 +98,42 @@ export function useHighlight(profileId: string) {
     }
   }, [shareTooltip.highlightData, profileId]);
 
-  // Hide tooltip when clicking outside
+  // Hide tooltip when clicking outside and handle global text selection
   useEffect(() => {
     const handleClickOutside = () => {
       setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
     };
 
+    const handleGlobalMouseUp = () => {
+      // Small delay to ensure selection is finalized
+      setTimeout(() => {
+        const selection = window.getSelection();
+        if (selection && selection.toString().trim() !== "") {
+          // Find which transcript contains the selection
+          const range = selection.getRangeAt(0);
+          const transcriptElements = document.querySelectorAll(
+            '[id^="transcript-"]',
+          );
+
+          for (const element of transcriptElements) {
+            if (element.contains(range.commonAncestorContainer)) {
+              const transcriptId = element.id.replace("transcript-", "");
+              handleTextSelection(transcriptId);
+              break;
+            }
+          }
+        }
+      }, 10);
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    document.addEventListener("mouseup", handleGlobalMouseUp);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mouseup", handleGlobalMouseUp);
+    };
+  }, [handleTextSelection]);
 
   // Handle URL parameters for direct highlighting
   const processHighlightFromUrl = useCallback(
