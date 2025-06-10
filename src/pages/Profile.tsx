@@ -5,6 +5,7 @@ import { KeyTakeaways } from "@/components/KeyTakeaways";
 import { TranscriptCard } from "@/components/TranscriptCard";
 import { ShareTooltip } from "@/components/ShareTooltip";
 import { Footer } from "@/components/Footer";
+import { ProfileDebug } from "@/components/ProfileDebug";
 import { getProfileById } from "@/lib/data";
 import { analytics } from "@/lib/analytics";
 import { useHighlight } from "@/hooks/useHighlight";
@@ -75,6 +76,9 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Debug Info */}
+      <ProfileDebug />
+
       {/* Profile Header */}
       <ProfileHeader profile={profile} />
 
