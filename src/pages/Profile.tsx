@@ -18,19 +18,14 @@ export default function Profile() {
     new Set(),
   );
 
-  console.log("Profile page loaded with ID:", id);
-
-  if (!id) {
-    return <Navigate to="/not-found" replace />;
-  }
-
+  // All hooks must be called before any conditional logic
   const {
     shareTooltip,
     copiedFeedback,
     handleShareLink,
     handleTextSelection,
     processHighlightFromUrl,
-  } = useHighlight(id);
+  } = useHighlight(id || "");
 
   // Load profile data
   useEffect(() => {
