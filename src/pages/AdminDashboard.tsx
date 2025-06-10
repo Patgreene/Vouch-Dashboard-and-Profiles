@@ -182,25 +182,6 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleDeleteProfile = (profile: Profile) => {
-    const isConfirmed = window.confirm(
-      `Are you sure you want to delete the profile for "${profile.name}"?\n\nThis action cannot be undone.`,
-    );
-
-    if (isConfirmed) {
-      const success = removeProfile(profile.id);
-
-      if (success) {
-        setProfiles(getAllProfiles());
-        alert(`Profile for ${profile.name} has been deleted successfully.`);
-      } else {
-        alert(
-          `Failed to delete profile. Only user-created profiles can be deleted.`,
-        );
-      }
-    }
-  };
-
   const handleCopyProfileUrl = async (profileId: string) => {
     try {
       const profileUrl = `${window.location.origin}/profile/${profileId}`;
