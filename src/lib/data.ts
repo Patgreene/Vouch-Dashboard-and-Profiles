@@ -182,12 +182,76 @@ export const mockAnalytics: AnalyticsData = {
   ],
 };
 
-// Get profile by ID
-export function getProfileById(id: string): Profile | undefined {
-  return sampleProfiles.find((profile) => profile.id === id);
+// Profile management with localStorage persistence
+const PROFILES_STORAGE_KEY = "vouch_profiles";
+
+// Get all profiles (sample + user-created)
+export function getAllProfiles(): Profile[] {
+  try {
+    const stored = localStorage.getItem(PROFILES_STORAGE_KEY);
+    const userProfiles: Profile[] = stored ? JSON.parse(stored) : [];
+    return [...sampleProfiles, ...userProfiles];
+  } catch (error) {
+    console.error("Error loading profiles from localStorage:", error);
+    return sampleProfiles;
+  }
 }
 
-// Get all profiles
-export function getAllProfiles(): Profile[] {
-  return sampleProfiles;
+// Get profile by ID
+export function getProfileById(id: string): Profile | undefined {
+  return getAllProfiles().find((profile) => profile.id === id);
+}
+
+// Add a new profile
+export function addProfile(profile: Profile): boolean {
+  try {
+    const stored = localStorage.getItem(PROFILES_STORAGE_KEY);
+    const userProfiles: Profile[] = stored ? JSON.parse(stored) : [];
+
+    // Check if profile with this ID already exists
+    const allProfiles = [...sampleProfiles, ...userProfiles];
+    if (allProfiles.find((p) => p.id === profile.id)) {
+      console.error("Profile with this ID already exists:", profile.id);
+      return false;
+    }
+
+    userProfiles.push(profile);
+    localStorage.setItem(PROFILES_STORAGE_KEY, JSON.stringify(userProfiles));
+    return true;
+  } catch (error) {
+    console.error("Error saving profile to localStorage:", error);
+    return false;
+  }
+}
+
+// Remove a profile
+export function removeProfile(id: string): boolean {
+  try {
+    // Don't allow removing sample profiles
+    if (sampleProfiles.find((p) => p.id === id)) {
+      console.error("Cannot remove sample profiles");
+      return false;
+    }
+
+    const stored = localStorage.getItem(PROFILES_STORAGE_KEY);
+    const userProfiles: Profile[] = stored ? JSON.parse(stored) : [];
+    const filtered = userProfiles.filter((p) => p.id !== id);
+
+    localStorage.setItem(PROFILES_STORAGE_KEY, JSON.stringify(filtered));
+    return true;
+  } catch (error) {
+    console.error("Error removing profile from localStorage:", error);
+    return false;
+  }
+}
+
+// Get user-created profiles only
+export function getUserProfiles(): Profile[] {
+  try {
+    const stored = localStorage.getItem(PROFILES_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error("Error loading user profiles from localStorage:", error);
+    return [];
+  }
 }

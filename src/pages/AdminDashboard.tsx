@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Plus,
@@ -12,7 +12,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getAllProfiles, mockAnalytics, Profile } from "@/lib/data";
+import { getAllProfiles, addProfile, mockAnalytics, Profile } from "@/lib/data";
 import { analytics } from "@/lib/analytics";
 import { ProfileForm } from "@/components/ProfileForm";
 import { VouchLogo } from "@/components/VouchLogo";
@@ -43,9 +43,14 @@ function StatCard({ title, value, icon, color }: StatCardProps) {
 }
 
 export default function AdminDashboard() {
-  const [profiles, setProfiles] = useState(getAllProfiles());
+  const [profiles, setProfiles] = useState<Profile[]>([]);
   const [showProfileForm, setShowProfileForm] = useState(false);
   const liveAnalytics = analytics.getAnalyticsSummary();
+
+  // Load profiles on component mount
+  useEffect(() => {
+    setProfiles(getAllProfiles());
+  }, []);
 
   // Combine mock data with live analytics
   const totalStats = {
@@ -64,16 +69,26 @@ export default function AdminDashboard() {
   };
 
   const handleSaveProfile = (profile: Profile) => {
-    // In a real app, this would save to database
     console.log("New profile created:", profile);
-    setProfiles((prev) => [...prev, profile]);
-    setShowProfileForm(false);
-    analytics.trackProfileCreated(profile.id);
 
-    // Show success message
-    alert(
-      `Profile for ${profile.name} created successfully! You can now view it at /profile/${profile.id}`,
-    );
+    // Save to localStorage
+    const success = addProfile(profile);
+
+    if (success) {
+      // Update local state
+      setProfiles(getAllProfiles());
+      setShowProfileForm(false);
+      analytics.trackProfileCreated(profile.id);
+
+      // Show success message
+      alert(
+        `Profile for ${profile.name} created successfully! You can now view it at /profile/${profile.id}`,
+      );
+    } else {
+      alert(
+        `Failed to create profile. A profile with ID "${profile.id}" may already exist.`,
+      );
+    }
   };
 
   return (
