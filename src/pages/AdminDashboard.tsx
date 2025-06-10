@@ -12,8 +12,9 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getAllProfiles, mockAnalytics } from "@/lib/data";
+import { getAllProfiles, mockAnalytics, Profile } from "@/lib/data";
 import { analytics } from "@/lib/analytics";
+import { ProfileForm } from "@/components/ProfileForm";
 
 interface StatCardProps {
   title: string;
@@ -41,7 +42,8 @@ function StatCard({ title, value, icon, color }: StatCardProps) {
 }
 
 export default function AdminDashboard() {
-  const [profiles] = useState(getAllProfiles());
+  const [profiles, setProfiles] = useState(getAllProfiles());
+  const [showProfileForm, setShowProfileForm] = useState(false);
   const liveAnalytics = analytics.getAnalyticsSummary();
 
   // Combine mock data with live analytics
@@ -57,11 +59,20 @@ export default function AdminDashboard() {
   };
 
   const handleCreateProfile = () => {
-    // In a real app, this would open a form or navigate to profile creation
+    setShowProfileForm(true);
+  };
+
+  const handleSaveProfile = (profile: Profile) => {
+    // In a real app, this would save to database
+    console.log("New profile created:", profile);
+    setProfiles((prev) => [...prev, profile]);
+    setShowProfileForm(false);
+    analytics.trackProfileCreated(profile.id);
+
+    // Show success message
     alert(
-      "Profile creation form would open here. This would allow you to input all the profile data including name, title, takeaways, and transcripts.",
+      `Profile for ${profile.name} created successfully! You can now view it at /profile/${profile.id}`,
     );
-    analytics.trackProfileCreated("new-profile");
   };
 
   return (
@@ -219,6 +230,14 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Profile Creation Form */}
+      {showProfileForm && (
+        <ProfileForm
+          onClose={() => setShowProfileForm(false)}
+          onSave={handleSaveProfile}
+        />
+      )}
     </div>
   );
 }
