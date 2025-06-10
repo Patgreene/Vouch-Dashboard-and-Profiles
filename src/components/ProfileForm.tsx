@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Plus, Trash2, Save, User } from "lucide-react";
+import { X, Plus, Trash2, Save, User, Upload, Image } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -62,6 +62,43 @@ export function ProfileForm({ onClose, onSave }: ProfileFormProps) {
       .replace(/[^a-z0-9]/g, "-")
       .replace(/-+/g, "-")
       .replace(/^-|-$/g, "");
+  };
+
+  const handleImageUpload = (
+    file: File,
+    callback: (dataUrl: string) => void,
+  ) => {
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataUrl = e.target?.result as string;
+        callback(dataUrl);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Please select a valid image file");
+    }
+  };
+
+  const handleProfilePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleImageUpload(file, (dataUrl) => {
+        updateBasicField("photo", dataUrl);
+      });
+    }
+  };
+
+  const handleSpeakerPhotoUpload = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    transcriptIndex: number,
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleImageUpload(file, (dataUrl) => {
+        updateTranscript(transcriptIndex, "speakerPhoto", dataUrl);
+      });
+    }
   };
 
   const updateBasicField = (field: keyof FormData, value: string) => {
@@ -249,13 +286,33 @@ export function ProfileForm({ onClose, onSave }: ProfileFormProps) {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="photo">Profile Photo URL</Label>
-                  <Input
-                    id="photo"
-                    value={formData.photo}
-                    onChange={(e) => updateBasicField("photo", e.target.value)}
-                    placeholder="https://..."
-                  />
+                  <Label htmlFor="photo">Profile Photo</Label>
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1">
+                      <label className="flex items-center justify-center gap-2 h-10 px-4 py-2 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 transition-colors">
+                        <Upload className="h-4 w-4" />
+                        <span className="text-sm">
+                          {formData.photo ? "Change Photo" : "Upload Photo"}
+                        </span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleProfilePhotoUpload}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                    {formData.photo && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updateBasicField("photo", "")}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -443,18 +500,39 @@ export function ProfileForm({ onClose, onSave }: ProfileFormProps) {
                     </div>
 
                     <div>
-                      <Label>Speaker Photo URL</Label>
-                      <Input
-                        value={transcript.speakerPhoto}
-                        onChange={(e) =>
-                          updateTranscript(
-                            index,
-                            "speakerPhoto",
-                            e.target.value,
-                          )
-                        }
-                        placeholder="https://..."
-                      />
+                      <Label>Speaker Photo</Label>
+                      <div className="flex items-center gap-3">
+                        <div className="flex-1">
+                          <label className="flex items-center justify-center gap-2 h-10 px-4 py-2 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 transition-colors">
+                            <Upload className="h-4 w-4" />
+                            <span className="text-sm">
+                              {transcript.speakerPhoto
+                                ? "Change Photo"
+                                : "Upload Photo"}
+                            </span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) =>
+                                handleSpeakerPhotoUpload(e, index)
+                              }
+                              className="hidden"
+                            />
+                          </label>
+                        </div>
+                        {transcript.speakerPhoto && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              updateTranscript(index, "speakerPhoto", "")
+                            }
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
                     </div>
 
                     <div>
