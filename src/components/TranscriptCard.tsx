@@ -104,21 +104,25 @@ export function TranscriptCard({
                   <div className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
                     <span>
-                      {new Date(transcript.interviewDate).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short'
-                      })}
+                      {new Date(transcript.interviewDate).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "short",
+                        },
+                      )}
                     </span>
                   </div>
                 )}
                 {transcript.interviewedBy && (
                   <div className="flex items-center gap-1">
                     <UserCheck className="h-3 w-3" />
-                    <span>Interviewed by {transcript.interviewedBy.split(' ')[0]}</span>
+                    <span>
+                      Interviewed by {transcript.interviewedBy.split(" ")[0]}
+                    </span>
                   </div>
                 )}
               </div>
-            )}
             )}
             {!expanded && (
               <p
