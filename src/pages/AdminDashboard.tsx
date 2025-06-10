@@ -233,6 +233,11 @@ export default function AdminDashboard() {
     input.click();
   };
 
+  // Debug logging
+  console.log("AdminDashboard render - profiles state:", profiles);
+  console.log("AdminDashboard render - profiles.length:", profiles.length);
+  console.log("AdminDashboard render - loading:", loading);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -325,7 +330,7 @@ export default function AdminDashboard() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5" />
-              Per-Profile Statistics
+              Per-Profile Statistics ({profiles.length} profiles)
             </CardTitle>
           </CardHeader>
           <CardContent>
