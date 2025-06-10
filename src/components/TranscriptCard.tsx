@@ -73,12 +73,12 @@ export function TranscriptCard({
             <AvatarImage
               src={transcript.speakerPhoto}
               alt={transcript.speakerName}
+              className="object-cover"
             />
             <AvatarFallback className="text-sm font-semibold bg-vouch-100 text-vouch-600">
               {getInitials(transcript.speakerName)}
             </AvatarFallback>
           </Avatar>
-
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-gray-900 text-lg mb-1">
               {transcript.speakerName}
@@ -90,7 +90,16 @@ export function TranscriptCard({
               </Badge>
             </div>
             {!expanded && (
-              <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 max-w-none">
+              <p
+                className="text-gray-600 text-sm leading-relaxed break-words whitespace-normal overflow-hidden"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  wordBreak: "break-word",
+                  overflowWrap: "break-word",
+                }}
+              >
                 {previewText}
               </p>
             )}
