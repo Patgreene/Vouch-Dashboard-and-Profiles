@@ -196,7 +196,6 @@ export function getAllProfiles(): Profile[] {
     return sampleProfiles;
   }
 }
-}
 
 // Get profile by ID
 export function getProfileById(id: string): Profile | undefined {
