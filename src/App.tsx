@@ -3,6 +3,7 @@ import Index from "./pages/Index";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
 import SupabaseTest from "./pages/SupabaseTest";
+import EmergencyAdmin from "./pages/EmergencyAdmin";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         {/* Protected admin route - obfuscated URL */}
         <Route path="/admin-stats-d1g3Yt9" element={<AdminDashboard />} />
         <Route path="/supabase-test" element={<SupabaseTest />} />
+        <Route path="/emergency-admin" element={<EmergencyAdmin />} />
         <Route path="/not-found" element={<NotFound />} />
         {/* Catch-all route for 404s */}
         <Route path="*" element={<NotFound />} />
