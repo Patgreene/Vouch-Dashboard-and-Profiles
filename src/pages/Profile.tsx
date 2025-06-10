@@ -17,13 +17,21 @@ export default function Profile() {
     new Set(),
   );
 
+  console.log("Profile page loaded with ID:", id);
+
   if (!id) {
+    console.log("No ID provided, redirecting to not-found");
     return <Navigate to="/not-found" replace />;
   }
 
   const profile = getProfileById(id);
+  console.log(
+    "Profile found:",
+    profile ? `${profile.name} (${profile.id})` : "Not found",
+  );
 
   if (!profile) {
+    console.log(`Profile with ID "${id}" not found, redirecting to not-found`);
     return <Navigate to="/not-found" replace />;
   }
 

@@ -190,6 +190,12 @@ export function getAllProfiles(): Profile[] {
   try {
     const stored = localStorage.getItem(PROFILES_STORAGE_KEY);
     const userProfiles: Profile[] = stored ? JSON.parse(stored) : [];
+    console.log("Loading profiles:", {
+      sampleCount: sampleProfiles.length,
+      userCount: userProfiles.length,
+      userProfiles: userProfiles.map((p) => ({ id: p.id, name: p.name })),
+      storedData: stored,
+    });
     return [...sampleProfiles, ...userProfiles];
   } catch (error) {
     console.error("Error loading profiles from localStorage:", error);
