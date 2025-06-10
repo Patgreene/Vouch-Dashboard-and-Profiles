@@ -29,7 +29,7 @@ import {
 import { analytics } from "@/lib/analytics";
 import { ProfileForm } from "@/components/ProfileForm";
 import { VouchLogo } from "@/components/VouchLogo";
-import { ProfileLoadDebug } from "@/components/ProfileLoadDebug";
+import { dataProvider } from "@/lib/dataProvider";
 import { downloadProfileBackup, importProfiles } from "@/lib/profileSync";
 
 interface StatCardProps {
@@ -299,9 +299,6 @@ export default function AdminDashboard() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        {/* Profile Loading Debug */}
-        <ProfileLoadDebug />
-
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatCard
