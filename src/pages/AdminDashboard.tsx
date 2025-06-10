@@ -73,14 +73,32 @@ export default function AdminDashboard() {
   // Load profiles and analytics on component mount
   useEffect(() => {
     async function loadData() {
-      setLoading(true);
-      const [profilesData, analyticsData] = await Promise.all([
-        dataProvider.getAllProfiles(),
-        dataProvider.getAnalytics(),
-      ]);
-      setProfiles(profilesData);
-      setLiveAnalytics(analyticsData);
-      setLoading(false);
+      try {
+        console.log("Loading admin dashboard data...");
+        setLoading(true);
+
+        const [profilesData, analyticsData] = await Promise.all([
+          dataProvider.getAllProfiles(),
+          dataProvider.getAnalytics(),
+        ]);
+
+        console.log("Loaded profiles:", profilesData);
+        console.log("Loaded analytics:", analyticsData);
+
+        setProfiles(profilesData);
+        setLiveAnalytics(analyticsData);
+      } catch (error) {
+        console.error("Error loading admin dashboard data:", error);
+        // Fallback to empty data to prevent crash
+        setProfiles([]);
+        setLiveAnalytics({
+          totalPageViews: 0,
+          totalQuoteViews: 0,
+          profileStats: [],
+        });
+      } finally {
+        setLoading(false);
+      }
     }
     loadData();
   }, []);
@@ -241,6 +259,17 @@ export default function AdminDashboard() {
     };
     input.click();
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-vouch-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
