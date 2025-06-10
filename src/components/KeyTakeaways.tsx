@@ -89,7 +89,7 @@ export function KeyTakeaways({ takeaways }: KeyTakeawaysProps) {
               <p className="text-sm text-gray-600">
                 {isExpanded
                   ? "Click to collapse"
-                  : "Click to expand insights and recommendations"}
+                  : "Highlights from the reference conversations"}
               </p>
             </div>
             {isExpanded ? (
