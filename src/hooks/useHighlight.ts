@@ -117,7 +117,7 @@ export function useHighlight(profileId: string) {
 
   // Handle share link generation
   const handleShareLink = useCallback(async () => {
-    console.log("🔗 Generating share link...");
+    console.log("🔗 Starting share link generation...");
 
     if (!shareTooltip.highlightData) {
       console.log("❌ No highlight data available");
@@ -133,40 +133,49 @@ export function useHighlight(profileId: string) {
       text,
     });
 
-    const shareUrl = generateShareUrl(
-      profileId,
-      transcriptId,
-      startOffset,
-      endOffset,
-    );
-
-    console.log("🌐 Generated share URL:", shareUrl);
-
-    const success = await copyToClipboard(shareUrl);
-    console.log("📋 Copy to clipboard result:", success);
-
-    // Always show feedback to user
-    setCopiedFeedback(true);
-    setTimeout(() => setCopiedFeedback(false), 2000);
-
-    if (success) {
-      // Track the quote view
-      analytics.trackQuoteView(
+    try {
+      const shareUrl = generateShareUrl(
         profileId,
         transcriptId,
-        `${startOffset}-${endOffset}`,
+        startOffset,
+        endOffset,
       );
-    } else {
-      console.error("❌ Failed to copy to clipboard");
-      // Show manual copy option
-      console.log("�� Manual copy - URL:", shareUrl);
-      alert(
-        `Could not automatically copy to clipboard. Please copy this URL manually:\n\n${shareUrl}`,
-      );
-    }
 
-    // Hide tooltip
-    setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
+      console.log("🌐 Generated share URL:", shareUrl);
+
+      // Perform clipboard operation in a separate microtask to avoid blocking UI
+      const success = await copyToClipboard(shareUrl);
+      console.log("📋 Copy to clipboard result:", success);
+
+      // Always show feedback to user
+      setCopiedFeedback(true);
+      setTimeout(() => setCopiedFeedback(false), 2000);
+
+      if (success) {
+        // Track the quote view
+        analytics.trackQuoteView(
+          profileId,
+          transcriptId,
+          `${startOffset}-${endOffset}`,
+        );
+        console.log("✅ Share link operation completed successfully");
+      } else {
+        console.error("❌ Failed to copy to clipboard");
+        // Show manual copy option
+        console.log("📝 Manual copy - URL:", shareUrl);
+        alert(
+          `Could not automatically copy to clipboard. Please copy this URL manually:\n\n${shareUrl}`,
+        );
+      }
+
+      // Hide tooltip after a small delay to ensure UI updates complete
+      setTimeout(() => {
+        setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
+      }, 50);
+    } catch (error) {
+      console.error("❌ Error in handleShareLink:", error);
+      setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
+    }
   }, [shareTooltip.highlightData, profileId]);
 
   // Hide tooltip when clicking outside and handle global text selection
