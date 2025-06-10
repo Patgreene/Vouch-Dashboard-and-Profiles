@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp, User, Briefcase } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Transcript } from "@/lib/data";
 
 interface TranscriptCardProps {
@@ -31,6 +32,18 @@ export function TranscriptCard({
   // Format transcript content into paragraphs
   const paragraphs = transcript.content.split("\n\n").filter((p) => p.trim());
 
+  // Get initials for avatar fallback
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
+  };
+
+  // Create preview text that shows approximately two lines
+  const previewText = paragraphs[0]?.substring(0, 240) + "...";
+
   // Handle text selection within this transcript
   const handleMouseUp = () => {
     if (expanded) {
@@ -56,9 +69,15 @@ export function TranscriptCard({
           className="flex items-start gap-4 flex-1"
           style={{ paddingRight: "1px" }}
         >
-          <div className="p-3 bg-vouch-100 rounded-full">
-            <User className="h-5 w-5 text-vouch-600" />
-          </div>
+          <Avatar className="h-12 w-12 mt-1">
+            <AvatarImage
+              src={transcript.speakerPhoto}
+              alt={transcript.speakerName}
+            />
+            <AvatarFallback className="text-sm font-semibold bg-vouch-100 text-vouch-600">
+              {getInitials(transcript.speakerName)}
+            </AvatarFallback>
+          </Avatar>
 
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-gray-900 text-lg mb-1">
@@ -71,8 +90,8 @@ export function TranscriptCard({
               </Badge>
             </div>
             {!expanded && (
-              <p className="text-gray-600 text-sm line-clamp-2">
-                <p>{paragraphs[0]?.substring(0, 120)}...</p>
+              <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 max-w-none">
+                {previewText}
               </p>
             )}
           </div>

@@ -4,6 +4,7 @@ import { ProfileHeader } from "@/components/ProfileHeader";
 import { KeyTakeaways } from "@/components/KeyTakeaways";
 import { TranscriptCard } from "@/components/TranscriptCard";
 import { ShareTooltip } from "@/components/ShareTooltip";
+import { Footer } from "@/components/Footer";
 import { getProfileById } from "@/lib/data";
 import { analytics } from "@/lib/analytics";
 import { useHighlight } from "@/hooks/useHighlight";
@@ -120,6 +121,9 @@ export default function Profile() {
           Link copied to clipboard!
         </div>
       )}
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
