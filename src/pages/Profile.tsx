@@ -109,7 +109,14 @@ export default function Profile() {
         y={shareTooltip.y}
         onShare={() => {
           console.log("🎯 Profile onShare wrapper called");
-          handleShareLink();
+          console.log("🎯 handleShareLink function:", handleShareLink);
+          console.log("🎯 About to call handleShareLink...");
+          try {
+            handleShareLink();
+            console.log("✅ handleShareLink called successfully");
+          } catch (error) {
+            console.log("❌ Error calling handleShareLink:", error);
+          }
         }}
         copied={copiedFeedback}
       />
