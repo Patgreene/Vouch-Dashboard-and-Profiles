@@ -1,5 +1,4 @@
 import { Share2, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface ShareTooltipProps {
   visible: boolean;
@@ -21,21 +20,31 @@ export function ShareTooltip({
     x,
     y,
     copied,
-    onShare: !!onShare,
+    onShareExists: !!onShare,
   });
 
   if (!visible) return null;
 
-  const handleClick = (e: React.MouseEvent) => {
-    console.log("🔥 ShareTooltip button clicked!");
-    e.preventDefault();
-    e.stopPropagation();
+  // Direct click handler
+  const handleDirectClick = () => {
+    console.log("🔥 DIRECT CLICK HANDLER FIRED!");
 
     if (onShare) {
-      console.log("🚀 Calling onShare handler");
+      console.log("🚀 Calling onShare function");
       onShare();
     } else {
-      console.log("❌ No onShare handler provided!");
+      console.log("❌ onShare is not defined");
+    }
+  };
+
+  // Alternative click handler for testing
+  const handleTestClick = () => {
+    console.log("🧪 TEST CLICK HANDLER FIRED!");
+    alert("Test button clicked! onShare exists: " + !!onShare);
+
+    if (onShare) {
+      console.log("🚀 Calling onShare from test handler");
+      onShare();
     }
   };
 
@@ -46,37 +55,69 @@ export function ShareTooltip({
         left: x,
         top: y,
         transform: "translateX(-50%) translateY(-100%)",
+        zIndex: 9999, // Ensure it's on top
       }}
     >
       <div className="bg-slate-900 text-white px-3 py-2 rounded-lg shadow-lg flex items-center gap-2 text-sm font-medium">
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={handleClick}
-          className="text-white hover:bg-slate-700 h-auto px-2 py-1"
+        {/* Method 1: Simple div button */}
+        <div
+          onClick={handleDirectClick}
+          className="cursor-pointer px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded flex items-center gap-2"
+          style={{
+            userSelect: "none",
+            pointerEvents: "auto",
+          }}
         >
           {copied ? (
             <>
-              <Check className="h-4 w-4 mr-1" />
+              <Check className="h-4 w-4" />
               Copied!
             </>
           ) : (
             <>
-              <Share2 className="h-4 w-4 mr-1" />
+              <Share2 className="h-4 w-4" />
               Share Link
             </>
           )}
-        </Button>
+        </div>
 
-        {/* Backup simple div for testing */}
+        {/* Method 2: HTML button element */}
+        <button
+          onClick={handleDirectClick}
+          onMouseDown={(e) => {
+            console.log("🖱️ Button mousedown");
+            e.stopPropagation();
+          }}
+          onMouseUp={(e) => {
+            console.log("🖱️ Button mouseup");
+            e.stopPropagation();
+          }}
+          className="ml-2 cursor-pointer px-2 py-1 bg-green-600 hover:bg-green-700 rounded text-xs"
+          style={{
+            border: "none",
+            outline: "none",
+            userSelect: "none",
+            pointerEvents: "auto",
+          }}
+        >
+          BTN
+        </button>
+
+        {/* Method 3: Test button */}
         <div
-          onClick={handleClick}
-          className="ml-2 cursor-pointer bg-blue-600 px-2 py-1 rounded text-xs"
-          style={{ pointerEvents: "auto" }}
+          onClick={handleTestClick}
+          onMouseDown={() => console.log("🖱️ Test div mousedown")}
+          onMouseUp={() => console.log("🖱️ Test div mouseup")}
+          className="ml-2 cursor-pointer px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-xs"
+          style={{
+            userSelect: "none",
+            pointerEvents: "auto",
+          }}
         >
           TEST
         </div>
       </div>
+
       {/* Arrow */}
       <div
         className="absolute left-1/2 transform -translate-x-1/2 w-0 h-0"

@@ -117,10 +117,20 @@ export function useHighlight(profileId: string) {
 
   // Handle share link generation
   const handleShareLink = useCallback(async () => {
+    console.log("🔗 HANDLESHARELINK FUNCTION CALLED!");
     console.log(
       "🔗 handleShareLink called, tooltip data:",
       shareTooltip.highlightData,
     );
+
+    // Immediate clipboard test
+    try {
+      console.log("📋 Testing immediate clipboard write...");
+      await navigator.clipboard.writeText("TEST CLIPBOARD WORKS!");
+      console.log("✅ Immediate clipboard test SUCCESS!");
+    } catch (err) {
+      console.log("❌ Immediate clipboard test FAILED:", err);
+    }
 
     if (!shareTooltip.highlightData) {
       console.log("❌ No highlight data available");
