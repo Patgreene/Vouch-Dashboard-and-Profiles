@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { X, Plus, Trash2, Save, User, Upload, Image } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -66,75 +66,26 @@ export function ProfileForm({
   const [formData, setFormData] = useState<FormData>(() => {
     if (editingProfile) {
       return {
-        id: editingProfile.id,
-        name: editingProfile.name,
-        title: editingProfile.title,
+        ...editingProfile,
         company: editingProfile.company || "",
         photo: editingProfile.photo || "",
         linkedIn: editingProfile.linkedIn || "",
         cv: editingProfile.cv || "",
         portfolio: editingProfile.portfolio || "",
         keyTakeaways: editingProfile.keyTakeaways,
-        transcripts: editingProfile.transcripts,
+        transcripts: editingProfile.transcripts.length
+          ? editingProfile.transcripts
+          : initialFormData.transcripts,
       };
     }
-    return initialFormData;
+    return {
+      ...initialFormData,
+      id: `profile-${Date.now()}`,
+    };
   });
 
-  const generateId = (name: string) => {
-    return name
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, "-")
-      .replace(/-+/g, "-")
-      .replace(/^-|-$/g, "");
-  };
-
-  const handleImageUpload = (
-    file: File,
-    callback: (dataUrl: string) => void,
-  ) => {
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target?.result as string;
-        callback(dataUrl);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert("Please select a valid image file");
-    }
-  };
-
-  const handleProfilePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      handleImageUpload(file, (dataUrl) => {
-        updateBasicField("photo", dataUrl);
-      });
-    }
-  };
-
-  const handleSpeakerPhotoUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    transcriptIndex: number,
-  ) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      handleImageUpload(file, (dataUrl) => {
-        updateTranscript(transcriptIndex, "speakerPhoto", dataUrl);
-      });
-    }
-  };
-
   const updateBasicField = (field: keyof FormData, value: string) => {
-    setFormData((prev) => {
-      const updated = { ...prev, [field]: value };
-      // Only auto-generate ID for new profiles, not when editing
-      if (field === "name" && !editingProfile) {
-        updated.id = generateId(value);
-      }
-      return updated;
-    });
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const updateTakeawaySection = (
@@ -146,7 +97,7 @@ export function ProfileForm({
       ...prev,
       keyTakeaways: {
         ...prev.keyTakeaways,
-        [section]: prev.keyTakeaways[section].map((item, i) =>
+        [section]: (prev.keyTakeaways[section] as string[]).map((item, i) =>
           i === index ? value : item,
         ),
       },
@@ -158,7 +109,7 @@ export function ProfileForm({
       ...prev,
       keyTakeaways: {
         ...prev.keyTakeaways,
-        [section]: [...prev.keyTakeaways[section], ""],
+        [section]: [...(prev.keyTakeaways[section] as string[]), ""],
       },
     }));
   };
@@ -168,29 +119,51 @@ export function ProfileForm({
       ...prev,
       keyTakeaways: {
         ...prev.keyTakeaways,
-        [section]: prev.keyTakeaways[section].filter((_, i) => i !== index),
+        [section]: (prev.keyTakeaways[section] as string[]).filter(
+          (_, i) => i !== index,
+        ),
       },
     }));
   };
 
-  const updateTranscript = (
+  const updateTranscript = <T extends keyof Transcript>(
     index: number,
-    field: keyof Transcript,
-    value: string,
+    field: T,
+    value: Transcript[T],
   ) => {
     setFormData((prev) => ({
       ...prev,
-      transcripts: prev.transcripts.map((transcript, i) => {
-        if (i === index) {
-          const updated = { ...transcript, [field]: value };
-          if (field === "speakerName") {
-            updated.id = generateId(`${updated.speakerName}-${index + 1}`);
-          }
-          return updated;
-        }
-        return transcript;
-      }),
+      transcripts: prev.transcripts.map((transcript, i) =>
+        i === index ? { ...transcript, [field]: value } : transcript,
+      ),
     }));
+  };
+
+  const handleSpeakerPhotoUpload = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    transcriptIndex: number,
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        updateTranscript(transcriptIndex, "speakerPhoto", dataUrl);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        setFormData((prev) => ({ ...prev, photo: dataUrl }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const addTranscript = () => {
@@ -199,7 +172,7 @@ export function ProfileForm({
       transcripts: [
         ...prev.transcripts,
         {
-          id: "",
+          id: `transcript-${Date.now()}`,
           speakerName: "",
           speakerRole: "",
           speakerPhoto: "",
@@ -218,28 +191,36 @@ export function ProfileForm({
     }));
   };
 
-  const handleSave = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
     // Validate required fields
-    if (!formData.name || !formData.title) {
-      alert("Please fill in at least name and title");
+    if (!formData.name.trim() || !formData.title.trim()) {
+      alert("Please fill in all required fields (Name and Title).");
       return;
     }
 
-    // Filter out empty values and validate transcripts
+    // Validate transcripts
     const validTranscripts = formData.transcripts.filter(
-      (t) => t.speakerName && t.speakerRole && t.content,
+      (t) => t.speakerName.trim() && t.speakerRole.trim() && t.content.trim(),
     );
 
     if (validTranscripts.length === 0) {
-      alert("Please add at least one complete transcript");
+      alert("Please add at least one complete transcript.");
       return;
     }
+
+    // Prepare final transcript data
+    const finalTranscripts = validTranscripts.map((transcript) => ({
+      ...transcript,
+      id: transcript.id || `transcript-${Date.now()}-${Math.random()}`,
+    }));
 
     const profile: Profile = {
       ...formData,
       // Ensure ID is set (use existing ID for edits, or generated ID for new profiles)
       id: editingProfile ? editingProfile.id : formData.id,
-      transcripts: validTranscripts,
+      transcripts: finalTranscripts,
       keyTakeaways: {
         strengths: formData.keyTakeaways.strengths.filter((s) => s.trim()),
         weaknesses: formData.keyTakeaways.weaknesses.filter((w) => w.trim()),
@@ -277,81 +258,17 @@ export function ProfileForm({
           </Button>
         </div>
 
-        <div className="p-6 space-y-8">
+        <form onSubmit={handleSubmit} className="p-6 space-y-8">
           {/* Basic Information */}
           <Card>
             <CardHeader>
               <CardTitle>Basic Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="name">Full Name *</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => updateBasicField("name", e.target.value)}
-                    placeholder="e.g., John Smith"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="title">Job Title *</Label>
-                  <Input
-                    id="title"
-                    value={formData.title}
-                    onChange={(e) => updateBasicField("title", e.target.value)}
-                    placeholder="e.g., Senior Designer"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="company">Company</Label>
-                  <Input
-                    id="company"
-                    value={formData.company}
-                    onChange={(e) =>
-                      updateBasicField("company", e.target.value)
-                    }
-                    placeholder="e.g., Meta"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="photo">Profile Photo</Label>
-                  <div className="flex items-center gap-3">
-                    <div className="flex-1">
-                      <label className="flex items-center justify-center gap-2 h-10 px-4 py-2 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 transition-colors">
-                        <Upload className="h-4 w-4" />
-                        <span className="text-sm">
-                          {formData.photo ? "Change Photo" : "Upload Photo"}
-                        </span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleProfilePhotoUpload}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    {formData.photo && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => updateBasicField("photo", "")}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </div>
-
               {/* Preview */}
               {formData.name && (
-                <div className="flex items-center gap-4">
-                  <Avatar className="h-20 w-20 ring-2 ring-gray-200">
+                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                  <Avatar className="h-16 w-16 ring-2 ring-gray-200">
                     <AvatarImage
                       src={formData.photo}
                       alt={formData.name}
@@ -380,25 +297,73 @@ export function ProfileForm({
                   <div className="flex items-center gap-4">
                     <Avatar className="h-20 w-20 ring-2 ring-gray-200">
                       <AvatarImage
-                      src={formData.photo}
-                      alt={formData.name}
-                      className="object-cover object-center"
-                    />
-                    <AvatarFallback className="text-lg font-semibold bg-vouch-100 text-vouch-600">
-                      {getInitials(formData.name)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h3 className="text-xl font-bold">{formData.name}</h3>
-                    <p className="text-gray-600">{formData.title}</p>
-                    {formData.company && (
-                      <Badge variant="outline" className="mt-1">
-                        {formData.company}
-                      </Badge>
-                    )}
+                        src={formData.photo}
+                        alt={formData.name}
+                        className="object-cover object-center"
+                      />
+                      <AvatarFallback className="text-lg font-semibold bg-vouch-100 text-vouch-600">
+                        {getInitials(formData.name)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                      <Input
+                        id="photo"
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-vouch-50 file:text-vouch-700 hover:file:bg-vouch-100"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Upload a square image for best results
+                      </p>
+                    </div>
                   </div>
+                  {formData.photo && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => updateBasicField("photo", "")}
+                    >
+                      Remove Photo
+                    </Button>
+                  )}
                 </div>
-              )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="name">Full Name *</Label>
+                  <Input
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => updateBasicField("name", e.target.value)}
+                    placeholder="John Doe"
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="title">Job Title *</Label>
+                  <Input
+                    id="title"
+                    value={formData.title}
+                    onChange={(e) => updateBasicField("title", e.target.value)}
+                    placeholder="Senior Software Engineer"
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="company">Company</Label>
+                  <Input
+                    id="company"
+                    value={formData.company}
+                    onChange={(e) =>
+                      updateBasicField("company", e.target.value)
+                    }
+                    placeholder="Acme Corp"
+                  />
+                </div>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -409,7 +374,7 @@ export function ProfileForm({
                     onChange={(e) =>
                       updateBasicField("linkedIn", e.target.value)
                     }
-                    placeholder="https://linkedin.com/in/..."
+                    placeholder="https://..."
                   />
                 </div>
                 <div>
@@ -674,181 +639,180 @@ export function ProfileForm({
               {formData.transcripts.map((transcript, index) => (
                 <div
                   key={index}
-                  className="border border-gray-200 rounded-lg p-4"
+                  className="border border-gray-200 rounded-lg p-4 space-y-4"
                 >
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between">
                     <h4 className="font-semibold">
-                      Reference {index + 1}
+                      Transcript {index + 1}
                       {transcript.speakerName && ` - ${transcript.speakerName}`}
                     </h4>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeTranscript(index)}
-                      disabled={formData.transcripts.length === 1}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label>Speaker Name *</Label>
-                        <Input
-                          value={transcript.speakerName}
-                          onChange={(e) =>
-                            updateTranscript(
-                              index,
-                              "speakerName",
-                              e.target.value,
-                            )
-                          }
-                          placeholder="e.g., Sarah Johnson"
-                        />
-                      </div>
-                      <div>
-                        <Label>Speaker Role *</Label>
-                        <Input
-                          value={transcript.speakerRole}
-                          onChange={(e) =>
-                            updateTranscript(
-                              index,
-                              "speakerRole",
-                              e.target.value,
-                            )
-                          }
-                          placeholder="e.g., Former Manager at Google"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label>Speaker Photo</Label>
-                      <div className="flex items-center gap-3">
-                        <div className="flex-1">
-                          <label className="flex items-center justify-center gap-2 h-10 px-4 py-2 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 transition-colors">
-                            <Upload className="h-4 w-4" />
-                            <span className="text-sm">
-                              {transcript.speakerPhoto
-                                ? "Change Photo"
-                                : "Upload Photo"}
-                            </span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) =>
-                                handleSpeakerPhotoUpload(e, index)
-                              }
-                              className="hidden"
-                            />
-                          </label>
-                        </div>
-                        {transcript.speakerPhoto && (
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() =>
-                              updateTranscript(index, "speakerPhoto", "")
-                            }
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label>Interview Date</Label>
-                        <Input
-                          type="date"
-                          value={transcript.interviewDate}
-                          onChange={(e) =>
-                            updateTranscript(
-                              index,
-                              "interviewDate",
-                              e.target.value,
-                            )
-                          }
-                        />
-                      </div>
-                      <div>
-                        <Label>Interviewed By</Label>
-                        <Input
-                          value={transcript.interviewedBy}
-                          onChange={(e) =>
-                            updateTranscript(
-                              index,
-                              "interviewedBy",
-                              e.target.value,
-                            )
-                          }
-                          placeholder="e.g., Sarah Johnson, HR Partner"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Label>Transcript Content *</Label>
-                      <Textarea
-                        value={transcript.content}
-                        onChange={(e) =>
-                          updateTranscript(index, "content", e.target.value)
-                        }
-                        placeholder="Enter the full transcript content here. Use double line breaks to separate paragraphs..."
-                        className="min-h-[200px]"
-                      />
-                    </div>
-
-                    {/* Preview */}
-                    {transcript.speakerName && (
-                      <div className="p-3 bg-gray-50 rounded-lg">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Avatar className="h-10 w-10">
-                            <AvatarImage
-                              src={transcript.speakerPhoto}
-                              alt={transcript.speakerName}
-                              className="object-cover object-center"
-                            />
-                            <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
-                              {getInitials(transcript.speakerName)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="font-semibold text-sm">
-                              {transcript.speakerName}
-                            </div>
-                            <div className="text-xs text-gray-600">
-                              {transcript.speakerRole}
-                            </div>
-                          </div>
-                        </div>
-                        {transcript.content && (
-                          <p className="text-sm text-gray-700 line-clamp-3">
-                            {transcript.content.substring(0, 200)}...
-                          </p>
-                        )}
-                      </div>
+                    {formData.transcripts.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => removeTranscript(index)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     )}
                   </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label>Speaker Name *</Label>
+                      <Input
+                        value={transcript.speakerName}
+                        onChange={(e) =>
+                          updateTranscript(index, "speakerName", e.target.value)
+                        }
+                        placeholder="John Smith"
+                      />
+                    </div>
+                    <div>
+                      <Label>Speaker Role *</Label>
+                      <Input
+                        value={transcript.speakerRole}
+                        onChange={(e) =>
+                          updateTranscript(index, "speakerRole", e.target.value)
+                        }
+                        placeholder="Senior Manager at Company"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Speaker Photo Upload */}
+                  <div>
+                    <Label>Speaker Photo</Label>
+                    <div className="flex items-center gap-4">
+                      {transcript.speakerPhoto ? (
+                        <Avatar className="h-12 w-12">
+                          <AvatarImage
+                            src={transcript.speakerPhoto}
+                            alt={transcript.speakerName}
+                            className="object-cover object-center"
+                          />
+                          <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
+                            {getInitials(transcript.speakerName)}
+                          </AvatarFallback>
+                        </Avatar>
+                      ) : (
+                        <div className="h-12 w-12 bg-gray-100 rounded-full flex items-center justify-center">
+                          <User className="h-6 w-6 text-gray-400" />
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleSpeakerPhotoUpload(e, index)}
+                          className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-vouch-50 file:text-vouch-700 hover:file:bg-vouch-100"
+                        />
+                      </div>
+                      {transcript.speakerPhoto && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() =>
+                            updateTranscript(index, "speakerPhoto", "")
+                          }
+                        >
+                          Remove
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label>Interview Date</Label>
+                      <Input
+                        type="date"
+                        value={transcript.interviewDate}
+                        onChange={(e) =>
+                          updateTranscript(
+                            index,
+                            "interviewDate",
+                            e.target.value,
+                          )
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label>Interviewed By</Label>
+                      <Input
+                        value={transcript.interviewedBy}
+                        onChange={(e) =>
+                          updateTranscript(
+                            index,
+                            "interviewedBy",
+                            e.target.value,
+                          )
+                        }
+                        placeholder="e.g., Sarah Johnson, HR Partner"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <Label>Transcript Content *</Label>
+                    <Textarea
+                      value={transcript.content}
+                      onChange={(e) =>
+                        updateTranscript(index, "content", e.target.value)
+                      }
+                      placeholder="Enter the full transcript content here. Use double line breaks to separate paragraphs..."
+                      className="min-h-[200px]"
+                    />
+                  </div>
+
+                  {/* Preview */}
+                  {transcript.speakerName && (
+                    <div className="p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage
+                            src={transcript.speakerPhoto}
+                            alt={transcript.speakerName}
+                            className="object-cover object-center"
+                          />
+                          <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
+                            {getInitials(transcript.speakerName)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="font-semibold text-sm">
+                            {transcript.speakerName}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            {transcript.speakerRole}
+                          </div>
+                        </div>
+                      </div>
+                      {transcript.content && (
+                        <p className="text-sm text-gray-700 leading-relaxed">
+                          {transcript.content.substring(0, 200)}
+                          {transcript.content.length > 200 && "..."}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </CardContent>
           </Card>
-        </div>
 
-        {/* Footer */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-200 p-6 flex items-center justify-end gap-3">
-          <Button variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button onClick={handleSave} className="gradient-bg">
-            <Save className="h-4 w-4 mr-2" />
-            {editingProfile ? "Update Profile" : "Create Profile"}
-          </Button>
-        </div>
+          {/* Form Actions */}
+          <div className="flex justify-end gap-3 pt-6 border-t border-gray-200">
+            <Button type="button" variant="outline" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button type="submit" className="gradient-bg">
+              <Save className="h-4 w-4 mr-2" />
+              {editingProfile ? "Update Profile" : "Create Profile"}
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
   );
