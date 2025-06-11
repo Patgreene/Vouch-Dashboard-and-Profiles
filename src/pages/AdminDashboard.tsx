@@ -67,22 +67,40 @@ export default function AdminDashboard() {
   // Load profiles and analytics on component mount
   useEffect(() => {
     async function loadData() {
-      try {
-        const [profilesData, analyticsData] = await Promise.all([
-          dataProvider.getAllProfiles(),
-          dataProvider.getAnalytics(),
-        ]);
+      console.log("🔄 Starting AdminDashboard data load...");
 
+      try {
+        // Load profiles first
+        console.log("📥 Loading profiles...");
+        const profilesData = await dataProvider.getAllProfiles();
+        console.log("✅ Profiles loaded:", profilesData?.length || 0);
         setProfiles(profilesData || []);
-        setLiveAnalytics(
-          analyticsData || {
+
+        // Load analytics separately to prevent blocking
+        console.log("📊 Loading analytics...");
+        try {
+          const analyticsData = await dataProvider.getAnalytics();
+          console.log("✅ Analytics loaded:", analyticsData);
+          setLiveAnalytics(
+            analyticsData || {
+              totalPageViews: 0,
+              totalQuoteViews: 0,
+              profileStats: [],
+            },
+          );
+        } catch (analyticsError) {
+          console.warn(
+            "⚠️ Analytics loading failed, using fallback:",
+            analyticsError,
+          );
+          setLiveAnalytics({
             totalPageViews: 0,
             totalQuoteViews: 0,
             profileStats: [],
-          },
-        );
+          });
+        }
       } catch (error) {
-        console.error("Error loading admin dashboard data:", error);
+        console.error("❌ Critical error loading dashboard data:", error);
         setProfiles([]);
         setLiveAnalytics({
           totalPageViews: 0,
@@ -90,6 +108,7 @@ export default function AdminDashboard() {
           profileStats: [],
         });
       } finally {
+        console.log("✅ AdminDashboard loading complete");
         setLoading(false);
       }
     }
