@@ -98,7 +98,16 @@ export function TranscriptCard({
               </div>
 
               {!expanded && (
-                <p className="text-gray-600 text-sm leading-relaxed break-words">
+                <p
+                  className="text-gray-600 text-sm leading-relaxed"
+                  style={{
+                    whiteSpace: "normal",
+                    wordBreak: "break-word",
+                    overflowWrap: "anywhere",
+                    maxWidth: "100%",
+                    width: "100%",
+                  }}
+                >
                   {previewText}
                 </p>
               )}
