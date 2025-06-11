@@ -154,13 +154,27 @@ export function useHighlight(profileId: string) {
 
       if (success) {
         // Track the quote view
-        await dataProvider.trackEvent(profileId, "quote_view", {
+        console.log("📊 Tracking quote view event...", {
+          profileId,
           transcriptId,
-          highlightId: `${startOffset}-${endOffset}`,
           startOffset,
           endOffset,
         });
+
+        try {
+          await dataProvider.trackEvent(profileId, "quote_view", {
+            transcriptId,
+            highlightId: `${startOffset}-${endOffset}`,
+            startOffset,
+            endOffset,
+          });
+          console.log("✅ Quote view tracked successfully");
+        } catch (trackingError) {
+          console.error("❌ Failed to track quote view:", trackingError);
+        }
+
         console.log("✅ Share link operation completed successfully");
+      }
       } else {
         console.error("❌ Failed to copy to clipboard");
         // Show manual copy option
@@ -344,12 +358,24 @@ export function useHighlight(profileId: string) {
               });
 
               // Track the quote view
-              await dataProvider.trackEvent(profileId, "quote_view", {
+              console.log("📊 Tracking quote view from URL...", {
+                profileId,
                 transcriptId,
-                highlightId: `${startOffset}-${endOffset}`,
                 startOffset,
                 endOffset,
               });
+
+              try {
+                await dataProvider.trackEvent(profileId, "quote_view", {
+                  transcriptId,
+                  highlightId: `${startOffset}-${endOffset}`,
+                  startOffset,
+                  endOffset,
+                });
+                console.log("✅ URL quote view tracked successfully");
+              } catch (trackingError) {
+                console.error("❌ Failed to track URL quote view:", trackingError);
+              }
             } catch (error) {
               console.warn("❌ Could not highlight text:", error);
 
