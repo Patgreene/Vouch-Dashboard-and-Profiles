@@ -48,26 +48,8 @@ export function TranscriptCard({
       .toUpperCase();
   };
 
-  // Create preview text that flows naturally across 2 lines
-  const getPreviewText = () => {
-    const baseText = paragraphs[0] || "";
-
-    // For mobile: aim for ~140-160 characters that will naturally wrap to 2 lines
-    const maxLength = 140;
-
-    if (baseText.length <= maxLength) {
-      return baseText;
-    }
-
-    // Find a good break point near the limit (word boundary)
-    const truncated = baseText.substring(0, maxLength);
-    const lastSpace = truncated.lastIndexOf(" ");
-    const breakPoint = lastSpace > maxLength * 0.7 ? lastSpace : maxLength;
-
-    return baseText.substring(0, breakPoint) + "...";
-  };
-
-  const previewText = getPreviewText();
+  // Use the full first paragraph - let CSS line-clamp handle truncation
+  const previewText = paragraphs[0] || "";
 
   // Handle text selection within this transcript
   const handleMouseUp = () => {
