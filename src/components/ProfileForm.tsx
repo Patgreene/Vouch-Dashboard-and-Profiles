@@ -249,6 +249,8 @@ export function ProfileForm({
         waysToBringOutBest: formData.keyTakeaways.waysToBringOutBest.filter(
           (w) => w.trim(),
         ),
+        customTitle1: formData.keyTakeaways.customTitle1?.trim() || undefined,
+        customTitle2: formData.keyTakeaways.customTitle2?.trim() || undefined,
       },
     };
 
