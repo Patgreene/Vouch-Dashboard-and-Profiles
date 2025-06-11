@@ -116,6 +116,11 @@ export default function AdminDashboard() {
     setShowProfileForm(true);
   };
 
+  const handleCloseForm = () => {
+    setShowProfileForm(false);
+    setEditingProfile(null);
+  };
+
   const handleSaveProfile = async (profile: Profile) => {
     try {
       console.log(
