@@ -145,12 +145,46 @@ export function ProfileForm({
   ) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const dataUrl = reader.result as string;
-        updateTranscript(transcriptIndex, "speakerPhoto", dataUrl);
+      // Validate file size
+      if (file.size > 10 * 1024 * 1024) {
+        // 10MB limit
+        alert("Please choose an image smaller than 10MB.");
+        return;
+      }
+
+      // Create image to check dimensions
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(file);
+
+      img.onload = () => {
+        // Clean up the object URL
+        URL.revokeObjectURL(objectUrl);
+
+        // Check minimum dimensions (more lenient for speaker photos)
+        if (img.width < 200 || img.height < 200) {
+          alert(
+            `Speaker photo dimensions are too small (${img.width}x${img.height}px). Please upload an image that is at least 200x200 pixels for good quality.`,
+          );
+          return;
+        }
+
+        // If dimensions are good, proceed with file reading
+        const reader = new FileReader();
+        reader.onload = () => {
+          const dataUrl = reader.result as string;
+          updateTranscript(transcriptIndex, "speakerPhoto", dataUrl);
+        };
+        reader.readAsDataURL(file);
       };
-      reader.readAsDataURL(file);
+
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        alert(
+          "Unable to load speaker photo. Please choose a valid image file.",
+        );
+      };
+
+      img.src = objectUrl;
     }
   };
 
