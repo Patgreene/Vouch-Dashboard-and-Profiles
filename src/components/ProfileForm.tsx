@@ -334,7 +334,7 @@ export function ProfileForm({
               {/* Preview */}
               {formData.name && (
                 <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                  <Avatar className="h-16 w-16 ring-2 ring-gray-200">
+                  <Avatar className="h-16 w-16 ring-2 ring-gray-200 profile-avatar-medium">
                     <AvatarImage
                       src={formData.photo}
                       alt={formData.name}
