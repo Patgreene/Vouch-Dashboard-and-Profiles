@@ -4,6 +4,7 @@ import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
 import SupabaseTest from "./pages/SupabaseTest";
 import EmergencyAdmin from "./pages/EmergencyAdmin";
+import TestPage from "./pages/TestPage";
 import NotFound from "./pages/NotFound";
 
 function App() {
