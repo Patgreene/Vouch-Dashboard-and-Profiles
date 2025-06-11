@@ -44,6 +44,10 @@ export default function Profile() {
 
         if (profileData) {
           console.log("✅ Profile loaded successfully:", profileData.name);
+          console.log(
+            "📊 Profile transcripts:",
+            profileData.transcripts?.length || 0,
+          );
           setProfile(profileData);
         } else {
           console.log("❌ Profile not found for ID:", id);
@@ -123,7 +127,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div key={profile.id} className="min-h-screen bg-gray-50">
       {/* Profile Header */}
       <ProfileHeader profile={profile} />
 
@@ -134,14 +138,14 @@ export default function Profile() {
       <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-6 sm:mb-8">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
-            Transcripts
+            Transcripts ({profile.transcripts?.length || 0})
           </h2>
         </div>
 
         <div className="space-y-4 sm:space-y-6">
-          {profile.transcripts.map((transcript) => (
+          {profile.transcripts?.map((transcript) => (
             <TranscriptCard
-              key={transcript.id}
+              key={`${profile.id}-${transcript.id}`}
               transcript={transcript}
               profileId={id}
               isExpanded={expandedTranscripts.has(transcript.id)}
@@ -149,7 +153,11 @@ export default function Profile() {
               onTextSelection={handleTextSelection}
               processHighlightFromUrl={processHighlightFromUrl}
             />
-          ))}
+          )) || (
+            <div className="text-center py-8 text-gray-500">
+              No transcripts available
+            </div>
+          )}
         </div>
       </div>
 
