@@ -125,6 +125,11 @@ export default function AdminDashboard() {
   );
 
   // Combine mock data with live analytics
+  const totalUniqueVisitors = liveAnalytics.profileStats.reduce(
+    (sum, stat) => sum + (stat.uniqueVisitors || 0),
+    0,
+  );
+
   const totalStats = {
     totalProfiles: profiles.length,
     totalTranscripts: profiles.reduce(
@@ -134,6 +139,7 @@ export default function AdminDashboard() {
     totalPageViews: mockAnalytics.totalPageViews + liveAnalytics.totalPageViews,
     totalQuoteViews:
       mockAnalytics.totalQuoteViews + liveAnalytics.totalQuoteViews,
+    totalUniqueVisitors,
   };
 
   const handleCreateProfile = () => {
@@ -342,7 +348,7 @@ export default function AdminDashboard() {
 
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <StatCard
             title="Total Profiles"
             value={totalStats.totalProfiles}
@@ -360,6 +366,12 @@ export default function AdminDashboard() {
             value={totalStats.totalPageViews}
             icon={<Eye className="h-6 w-6 text-purple-600" />}
             color="bg-purple-100"
+          />
+          <StatCard
+            title="Unique Visitors"
+            value={totalStats.totalUniqueVisitors}
+            icon={<Users className="h-6 w-6 text-teal-600" />}
+            color="bg-teal-100"
           />
           <StatCard
             title="Quote Link Views"
