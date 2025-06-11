@@ -49,9 +49,11 @@ export default function Profile() {
       } finally {
         setLoading(false);
       }
-          );
-          setProfile(profileData);
-        } else {
+    }
+
+    // Add small delay to ensure dataProvider is ready
+    setTimeout(loadProfile, 100);
+  }, [id]);
           console.log("❌ Profile not found for ID:", id);
           setProfile(null);
         }
