@@ -117,15 +117,16 @@ export function TranscriptCard({
 
               {!expanded && (
                 <p
-                  className="text-gray-600 text-sm break-words overflow-hidden"
+                  className="text-gray-600 text-sm leading-relaxed"
                   style={{
                     display: "-webkit-box",
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
-                    lineHeight: "1.4",
+                    overflow: "hidden",
                     wordBreak: "break-word",
                     overflowWrap: "break-word",
-                    maxHeight: "2.8em", // Allow natural 2-line flow
+                    lineHeight: "1.5",
+                    textOverflow: "ellipsis",
                   }}
                 >
                   {previewText}
