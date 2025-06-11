@@ -48,8 +48,8 @@ export function TranscriptCard({
       .toUpperCase();
   };
 
-  // Use the full first paragraph - let CSS line-clamp handle truncation
-  const previewText = paragraphs[0] || "";
+  // Simple preview text - first paragraph truncated
+  const previewText = paragraphs[0]?.substring(0, 200) + "..." || "";
 
   // Handle text selection within this transcript
   const handleMouseUp = () => {
@@ -98,19 +98,7 @@ export function TranscriptCard({
               </div>
 
               {!expanded && (
-                <p
-                  className="text-gray-600 text-sm leading-relaxed"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                    wordBreak: "break-word",
-                    overflowWrap: "break-word",
-                    lineHeight: "1.5",
-                    textOverflow: "ellipsis",
-                  }}
-                >
+                <p className="text-gray-600 text-sm leading-relaxed break-words">
                   {previewText}
                 </p>
               )}
