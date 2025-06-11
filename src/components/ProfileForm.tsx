@@ -411,59 +411,198 @@ export function ProfileForm({
               <CardTitle>Key Takeaways</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              {Object.entries(formData.keyTakeaways).map(([section, items]) => (
-                <div key={section}>
-                  <div className="flex items-center justify-between mb-3">
-                    <Label className="text-base font-semibold capitalize">
-                      {section.replace(/([A-Z])/g, " $1").toLowerCase()}
-                    </Label>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() =>
-                        addTakeawayItem(section as keyof KeyTakeaways)
-                      }
-                    >
-                      <Plus className="h-4 w-4 mr-1" />
-                      Add
-                    </Button>
-                  </div>
-                  <div className="space-y-2">
-                    {items.map((item, index) => (
-                      <div key={index} className="flex gap-2">
-                        <Textarea
-                          value={item}
-                          onChange={(e) =>
-                            updateTakeawaySection(
-                              section as keyof KeyTakeaways,
-                              index,
-                              e.target.value,
-                            )
-                          }
-                          placeholder={`Enter ${section.toLowerCase()} item...`}
-                          className="min-h-[60px]"
-                        />
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() =>
-                            removeTakeawayItem(
-                              section as keyof KeyTakeaways,
-                              index,
-                            )
-                          }
-                          disabled={items.length === 1}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
+              {/* Custom Section Titles */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <Label htmlFor="customTitle1" className="text-sm font-medium">
+                    Section 3 Title (default: "Custom Section 1")
+                  </Label>
+                  <Input
+                    id="customTitle1"
+                    value={formData.keyTakeaways.customTitle1 || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        keyTakeaways: {
+                          ...prev.keyTakeaways,
+                          customTitle1: e.target.value,
+                        },
+                      }))
+                    }
+                    placeholder="e.g., Communication Style, Leadership, Technical Skills"
+                  />
                 </div>
-              ))}
+                <div>
+                  <Label htmlFor="customTitle2" className="text-sm font-medium">
+                    Section 4 Title (default: "Custom Section 2")
+                  </Label>
+                  <Input
+                    id="customTitle2"
+                    value={formData.keyTakeaways.customTitle2 || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        keyTakeaways: {
+                          ...prev.keyTakeaways,
+                          customTitle2: e.target.value,
+                        },
+                      }))
+                    }
+                    placeholder="e.g., Ways to Bring Out Their Best, Work Style"
+                  />
+                </div>
+              </div>
+
+              {/* Fixed Sections */}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <Label className="text-base font-semibold">Strengths</Label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => addTakeawayItem("strengths")}
+                  >
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add
+                  </Button>
+                </div>
+                <div className="space-y-2">
+                  {formData.keyTakeaways.strengths.map((item, index) => (
+                    <div key={index} className="flex gap-2">
+                      <Textarea
+                        value={item}
+                        onChange={(e) =>
+                          updateTakeawaySection("strengths", index, e.target.value)
+                        }
+                        placeholder="Enter strength..."
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => removeTakeawayItem("strengths", index)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <Label className="text-base font-semibold">Challenges</Label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => addTakeawayItem("weaknesses")}
+                  >
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add
+                  </Button>
+                </div>
+                <div className="space-y-2">
+                  {formData.keyTakeaways.weaknesses.map((item, index) => (
+                    <div key={index} className="flex gap-2">
+                      <Textarea
+                        value={item}
+                        onChange={(e) =>
+                          updateTakeawaySection("weaknesses", index, e.target.value)
+                        }
+                        placeholder="Enter challenge..."
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => removeTakeawayItem("weaknesses", index)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <Label className="text-base font-semibold">
+                    {formData.keyTakeaways.customTitle1 || "Custom Section 1"}
+                  </Label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => addTakeawayItem("communicationStyle")}
+                  >
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add
+                  </Button>
+                </div>
+                <div className="space-y-2">
+                  {formData.keyTakeaways.communicationStyle.map((item, index) => (
+                    <div key={index} className="flex gap-2">
+                      <Textarea
+                        value={item}
+                        onChange={(e) =>
+                          updateTakeawaySection("communicationStyle", index, e.target.value)
+                        }
+                        placeholder={`Enter ${formData.keyTakeaways.customTitle1 || "custom section 1"} item...`}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => removeTakeawayItem("communicationStyle", index)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <Label className="text-base font-semibold">
+                    {formData.keyTakeaways.customTitle2 || "Custom Section 2"}
+                  </Label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => addTakeawayItem("waysToBringOutBest")}
+                  >
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add
+                  </Button>
+                </div>
+                <div className="space-y-2">
+                  {formData.keyTakeaways.waysToBringOutBest.map((item, index) => (
+                    <div key={index} className="flex gap-2">
+                      <Textarea
+                        value={item}
+                        onChange={(e) =>
+                          updateTakeawaySection("waysToBringOutBest", index, e.target.value)
+                        }
+                        placeholder={`Enter ${formData.keyTakeaways.customTitle2 || "custom section 2"} item...`}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => removeTakeawayItem("waysToBringOutBest", index)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </CardContent>
+          </Card>
           </Card>
 
           {/* Transcripts */}
