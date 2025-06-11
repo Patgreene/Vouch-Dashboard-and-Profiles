@@ -145,90 +145,24 @@ export function ProfileForm({
   ) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Validate file size
-      if (file.size > 10 * 1024 * 1024) {
-        // 10MB limit
-        alert("Please choose an image smaller than 10MB.");
-        return;
-      }
-
-      // Create image to check dimensions
-      const img = new Image();
-      const objectUrl = URL.createObjectURL(file);
-
-      img.onload = () => {
-        // Clean up the object URL
-        URL.revokeObjectURL(objectUrl);
-
-        // Check minimum dimensions (more lenient for speaker photos)
-        if (img.width < 200 || img.height < 200) {
-          alert(
-            `Speaker photo dimensions are too small (${img.width}x${img.height}px). Please upload an image that is at least 200x200 pixels for good quality.`,
-          );
-          return;
-        }
-
-        // If dimensions are good, proceed with file reading
-        const reader = new FileReader();
-        reader.onload = () => {
-          const dataUrl = reader.result as string;
-          updateTranscript(transcriptIndex, "speakerPhoto", dataUrl);
-        };
-        reader.readAsDataURL(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        updateTranscript(transcriptIndex, "speakerPhoto", dataUrl);
       };
-
-      img.onerror = () => {
-        URL.revokeObjectURL(objectUrl);
-        alert(
-          "Unable to load speaker photo. Please choose a valid image file.",
-        );
-      };
-
-      img.src = objectUrl;
+      reader.readAsDataURL(file);
     }
   };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Validate file size (optional - prevent extremely large files)
-      if (file.size > 10 * 1024 * 1024) {
-        // 10MB limit
-        alert("Please choose an image smaller than 10MB.");
-        return;
-      }
-
-      // Create image to check dimensions
-      const img = new Image();
-      const objectUrl = URL.createObjectURL(file);
-
-      img.onload = () => {
-        // Clean up the object URL
-        URL.revokeObjectURL(objectUrl);
-
-        // Check minimum dimensions
-        if (img.width < 300 || img.height < 300) {
-          alert(
-            `Image dimensions are too small (${img.width}x${img.height}px). Please upload an image that is at least 300x300 pixels for best quality.`,
-          );
-          return;
-        }
-
-        // If dimensions are good, proceed with file reading
-        const reader = new FileReader();
-        reader.onload = () => {
-          const dataUrl = reader.result as string;
-          setFormData((prev) => ({ ...prev, photo: dataUrl }));
-        };
-        reader.readAsDataURL(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        setFormData((prev) => ({ ...prev, photo: dataUrl }));
       };
-
-      img.onerror = () => {
-        URL.revokeObjectURL(objectUrl);
-        alert("Unable to load image. Please choose a valid image file.");
-      };
-
-      img.src = objectUrl;
+      reader.readAsDataURL(file);
     }
   };
 
@@ -379,23 +313,10 @@ export function ProfileForm({
                         onChange={handlePhotoUpload}
                         className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-vouch-50 file:text-vouch-700 hover:file:bg-vouch-100"
                       />
-                      <div className="mt-2 space-y-1">
-                        <p className="text-xs text-gray-500">
-                          <strong>📸 Upload Requirements:</strong>
-                        </p>
-                        <ul className="text-xs text-gray-500 space-y-1 ml-4 list-disc">
-                          <li>High-resolution image (at least 300px wide)</li>
-                          <li>Square format recommended for best results</li>
-                          <li>File formats: JPG, PNG, WebP</li>
-                          <li>
-                            Max display size: 150px (maintains sharp quality)
-                          </li>
-                        </ul>
-                        <p className="text-xs text-amber-600 mt-2">
-                          💡 Tip: Higher resolution images look sharper when
-                          scaled down
-                        </p>
-                      </div>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Upload any image - it will be automatically fitted to
+                        maintain proper proportions
+                      </p>
                     </div>
                   </div>
                   {formData.photo && (
