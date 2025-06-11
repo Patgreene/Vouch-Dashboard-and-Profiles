@@ -28,25 +28,20 @@ export function useHighlight(profileId: string) {
 
   // Handle text selection
   const handleTextSelection = useCallback((transcriptId: string) => {
-    console.log("🎯 handleTextSelection called for transcript:", transcriptId);
-
     const selection = window.getSelection();
 
     if (!selection) {
-      console.log("❌ No selection object");
       setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
       return;
     }
 
     if (selection.rangeCount === 0) {
-      console.log("❌ No ranges in selection");
       setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
       return;
     }
 
     const selectedText = selection.toString().trim();
     if (selectedText === "") {
-      console.log("⚠️ Empty selection");
       setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
       return;
     }

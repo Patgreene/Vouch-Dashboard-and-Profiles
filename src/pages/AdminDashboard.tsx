@@ -201,16 +201,21 @@ export default function AdminDashboard() {
       )
     ) {
       try {
-        const success = await dataProvider.deleteProfile(profile.id);
-        if (success) {
-          const updatedProfiles = await dataProvider.getAllProfiles();
-          setProfiles(updatedProfiles);
-          alert(`Profile for ${profile.name} deleted successfully.`);
-        } else {
-          alert("Failed to delete profile. Please try again.");
-        }
+        const [profilesData, analyticsData] = await Promise.all([
+          dataProvider.getAllProfiles(),
+          dataProvider.getAnalytics(),
+        ]);
+
+        setProfiles(profilesData || []);
+        setLiveAnalytics(
+          analyticsData || {
+            totalPageViews: 0,
+            totalQuoteViews: 0,
+            profileStats: [],
+          },
+        );
       } catch (error) {
-        console.error("Error deleting profile:", error);
+        console.error("Error loading admin dashboard data:", error);
         alert("Error deleting profile. Please try again.");
       }
     }

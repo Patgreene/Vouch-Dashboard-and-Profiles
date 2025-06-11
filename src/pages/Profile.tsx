@@ -30,23 +30,25 @@ export default function Profile() {
   useEffect(() => {
     async function loadProfile() {
       if (!id) {
-        console.log("❌ No profile ID provided");
         setLoading(false);
         return;
       }
 
       try {
         setLoading(true);
-        console.log("🔄 Loading profile with ID:", id);
-
         const profileData = await dataProvider.getProfileById(id);
-        console.log("📊 Profile data result:", profileData);
 
         if (profileData) {
-          console.log("✅ Profile loaded successfully:", profileData.name);
-          console.log(
-            "📊 Profile transcripts:",
-            profileData.transcripts?.length || 0,
+          setProfile(profileData);
+        } else {
+          setProfile(null);
+        }
+      } catch (error) {
+        console.error("Error loading profile:", error);
+        setProfile(null);
+      } finally {
+        setLoading(false);
+      }
           );
           setProfile(profileData);
         } else {
@@ -102,7 +104,7 @@ export default function Profile() {
     setExpandedTranscripts(newExpanded);
   };
 
-  console.log("Profile page loaded with ID:", id);
+
 
   // Now handle conditional logic after all hooks
   if (!id) {
