@@ -48,49 +48,23 @@ export function TranscriptCard({
       .toUpperCase();
   };
 
-  // Create preview text that forces 2-line display on mobile
+  // Create preview text that flows naturally across 2 lines
   const getPreviewText = () => {
     const baseText = paragraphs[0] || "";
 
-    // For mobile: create text that's likely to wrap to 2 lines
-    // Approximate 35-40 characters per line on mobile
-    const words = baseText.split(" ");
-    let line1 = "";
-    let line2 = "";
+    // For mobile: aim for ~140-160 characters that will naturally wrap to 2 lines
+    const maxLength = 140;
 
-    // Build first line (aim for ~35-40 chars)
-    for (const word of words) {
-      if (line1.length + word.length + 1 < 40) {
-        line1 += (line1 ? " " : "") + word;
-      } else {
-        break;
-      }
+    if (baseText.length <= maxLength) {
+      return baseText;
     }
 
-    // Build second line with remaining words
-    const remainingWords = words.slice(line1.split(" ").length);
-    for (const word of remainingWords) {
-      if (line2.length + word.length + 1 < 40) {
-        line2 += (line2 ? " " : "") + word;
-      } else {
-        line2 += "...";
-        break;
-      }
-    }
+    // Find a good break point near the limit (word boundary)
+    const truncated = baseText.substring(0, maxLength);
+    const lastSpace = truncated.lastIndexOf(" ");
+    const breakPoint = lastSpace > maxLength * 0.7 ? lastSpace : maxLength;
 
-    // If we don't have enough for 2 lines, add padding
-    if (!line2) {
-      // Find a good break point in the text
-      if (line1.length < 80 && baseText.length > line1.length) {
-        const remaining = baseText.substring(line1.length).trim();
-        line2 =
-          remaining.length > 40
-            ? remaining.substring(0, 37) + "..."
-            : remaining;
-      }
-    }
-
-    return line2 ? `${line1} ${line2}` : line1;
+    return baseText.substring(0, breakPoint) + "...";
   };
 
   const previewText = getPreviewText();
@@ -142,38 +116,20 @@ export function TranscriptCard({
               </div>
 
               {!expanded && (
-                <div className="text-gray-600 text-sm leading-normal">
-                  {/* Force 2-line display with manual line breaks */}
-                  <div
-                    className="block sm:hidden"
-                    style={{
-                      lineHeight: "1.3",
-                      maxWidth: "100%",
-                      wordBreak: "break-word",
-                      overflow: "hidden",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      minHeight: "2.6em", // Force 2 lines minimum
-                      height: "2.6em", // Lock height to exactly 2 lines
-                    }}
-                  >
-                    {previewText}
-                  </div>
-                  {/* Desktop version */}
-                  <div
-                    className="hidden sm:block"
-                    style={{
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                      lineHeight: "1.4",
-                    }}
-                  >
-                    {paragraphs[0]?.substring(0, 200)}...
-                  </div>
-                </div>
+                <p
+                  className="text-gray-600 text-sm break-words overflow-hidden"
+                  style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    lineHeight: "1.4",
+                    wordBreak: "break-word",
+                    overflowWrap: "break-word",
+                    maxHeight: "2.8em", // Allow natural 2-line flow
+                  }}
+                >
+                  {previewText}
+                </p>
               )}
             </div>
           </div>

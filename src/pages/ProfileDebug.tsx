@@ -25,9 +25,15 @@ export default function ProfileDebug() {
             allProfiles?.length || 0,
             "profiles",
           );
+
+          // Force state updates in sequence
           setProfiles(allProfiles || []);
-          setLoading(false);
-          console.log("✅ Profiles state updated");
+          setTimeout(() => {
+            if (mounted) {
+              setLoading(false);
+              console.log("✅ Profiles state updated and loading set to false");
+            }
+          }, 10);
         }
       } catch (err) {
         console.error("❌ Error loading profiles:", err);
@@ -39,7 +45,8 @@ export default function ProfileDebug() {
       }
     }
 
-    loadProfiles();
+    // Add delay to ensure component is mounted
+    setTimeout(loadProfiles, 200);
 
     return () => {
       mounted = false;
