@@ -161,7 +161,6 @@ export function useHighlight(profileId: string) {
           endOffset,
         });
         console.log("✅ Share link operation completed successfully");
-      }
       } else {
         console.error("❌ Failed to copy to clipboard");
         // Show manual copy option
