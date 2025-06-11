@@ -473,7 +473,11 @@ export function ProfileForm({
                       <Textarea
                         value={item}
                         onChange={(e) =>
-                          updateTakeawaySection("strengths", index, e.target.value)
+                          updateTakeawaySection(
+                            "strengths",
+                            index,
+                            e.target.value,
+                          )
                         }
                         placeholder="Enter strength..."
                       />
@@ -509,7 +513,11 @@ export function ProfileForm({
                       <Textarea
                         value={item}
                         onChange={(e) =>
-                          updateTakeawaySection("weaknesses", index, e.target.value)
+                          updateTakeawaySection(
+                            "weaknesses",
+                            index,
+                            e.target.value,
+                          )
                         }
                         placeholder="Enter challenge..."
                       />
@@ -542,25 +550,33 @@ export function ProfileForm({
                   </Button>
                 </div>
                 <div className="space-y-2">
-                  {formData.keyTakeaways.communicationStyle.map((item, index) => (
-                    <div key={index} className="flex gap-2">
-                      <Textarea
-                        value={item}
-                        onChange={(e) =>
-                          updateTakeawaySection("communicationStyle", index, e.target.value)
-                        }
-                        placeholder={`Enter ${formData.keyTakeaways.customTitle1 || "custom section 1"} item...`}
-                      />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeTakeawayItem("communicationStyle", index)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
+                  {formData.keyTakeaways.communicationStyle.map(
+                    (item, index) => (
+                      <div key={index} className="flex gap-2">
+                        <Textarea
+                          value={item}
+                          onChange={(e) =>
+                            updateTakeawaySection(
+                              "communicationStyle",
+                              index,
+                              e.target.value,
+                            )
+                          }
+                          placeholder={`Enter ${formData.keyTakeaways.customTitle1 || "custom section 1"} item...`}
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() =>
+                            removeTakeawayItem("communicationStyle", index)
+                          }
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
 
@@ -580,29 +596,36 @@ export function ProfileForm({
                   </Button>
                 </div>
                 <div className="space-y-2">
-                  {formData.keyTakeaways.waysToBringOutBest.map((item, index) => (
-                    <div key={index} className="flex gap-2">
-                      <Textarea
-                        value={item}
-                        onChange={(e) =>
-                          updateTakeawaySection("waysToBringOutBest", index, e.target.value)
-                        }
-                        placeholder={`Enter ${formData.keyTakeaways.customTitle2 || "custom section 2"} item...`}
-                      />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeTakeawayItem("waysToBringOutBest", index)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
+                  {formData.keyTakeaways.waysToBringOutBest.map(
+                    (item, index) => (
+                      <div key={index} className="flex gap-2">
+                        <Textarea
+                          value={item}
+                          onChange={(e) =>
+                            updateTakeawaySection(
+                              "waysToBringOutBest",
+                              index,
+                              e.target.value,
+                            )
+                          }
+                          placeholder={`Enter ${formData.keyTakeaways.customTitle2 || "custom section 2"} item...`}
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() =>
+                            removeTakeawayItem("waysToBringOutBest", index)
+                          }
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ),
+                  )}
                 </div>
               </div>
             </CardContent>
-          </Card>
           </Card>
 
           {/* Transcripts */}
