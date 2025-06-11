@@ -237,11 +237,6 @@ export default function AdminDashboard() {
     input.click();
   };
 
-  // Debug logging
-  console.log("AdminDashboard render - profiles state:", profiles);
-  console.log("AdminDashboard render - profiles.length:", profiles.length);
-  console.log("AdminDashboard render - loading:", loading);
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
