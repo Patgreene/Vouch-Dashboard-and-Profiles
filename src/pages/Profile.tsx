@@ -54,21 +54,6 @@ export default function Profile() {
     // Add small delay to ensure dataProvider is ready
     setTimeout(loadProfile, 100);
   }, [id]);
-          console.log("❌ Profile not found for ID:", id);
-          setProfile(null);
-        }
-      } catch (error) {
-        console.error("❌ Error loading profile:", error);
-        setProfile(null);
-      } finally {
-        console.log("🏁 Profile loading finished");
-        setLoading(false);
-      }
-    }
-
-    // Add small delay to ensure dataProvider is ready
-    setTimeout(loadProfile, 100);
-  }, [id]);
 
   // Track page view
   useEffect(() => {
@@ -105,8 +90,6 @@ export default function Profile() {
     }
     setExpandedTranscripts(newExpanded);
   };
-
-
 
   // Now handle conditional logic after all hooks
   if (!id) {
