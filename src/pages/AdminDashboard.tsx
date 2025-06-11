@@ -14,14 +14,15 @@ import {
   Trash2,
   Download,
   Upload,
+  Search,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { mockAnalytics, Profile } from "@/lib/data";
 import { analytics } from "@/lib/analytics";
 import { ProfileForm } from "@/components/ProfileForm";
-import { VouchLogo } from "@/components/VouchLogo";
 import { dataProvider } from "@/lib/dataProvider";
 import { downloadProfileBackup, importProfiles } from "@/lib/profileSync";
 
@@ -34,7 +35,7 @@ interface StatCardProps {
 
 function StatCard({ title, value, icon, color }: StatCardProps) {
   return (
-    <Card>
+    <Card className="hover:shadow-md transition-shadow">
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div>
@@ -55,6 +56,7 @@ export default function AdminDashboard() {
   const [showProfileForm, setShowProfileForm] = useState(false);
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null);
   const [copiedProfileId, setCopiedProfileId] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [liveAnalytics, setLiveAnalytics] = useState({
     totalPageViews: 0,
     totalQuoteViews: 0,
@@ -65,34 +67,43 @@ export default function AdminDashboard() {
   // Load profiles and analytics on component mount
   useEffect(() => {
     async function loadData() {
-      console.log("Loading admin dashboard data...");
-
       try {
         const [profilesData, analyticsData] = await Promise.all([
           dataProvider.getAllProfiles(),
           dataProvider.getAnalytics(),
         ]);
 
-        console.log("Loaded profiles:", profilesData);
-        console.log("Loaded analytics:", analyticsData);
-
-        setProfiles(profilesData);
-        setLiveAnalytics(analyticsData);
-        setLoading(false);
+        setProfiles(profilesData || []);
+        setLiveAnalytics(
+          analyticsData || {
+            totalPageViews: 0,
+            totalQuoteViews: 0,
+            profileStats: [],
+          },
+        );
       } catch (error) {
         console.error("Error loading admin dashboard data:", error);
-        // Fallback to empty data to prevent crash
         setProfiles([]);
         setLiveAnalytics({
           totalPageViews: 0,
           totalQuoteViews: 0,
           profileStats: [],
         });
+      } finally {
         setLoading(false);
       }
     }
     loadData();
   }, []);
+
+  // Filter profiles based on search term
+  const filteredProfiles = profiles.filter(
+    (profile) =>
+      profile.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      profile.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (profile.company &&
+        profile.company.toLowerCase().includes(searchTerm.toLowerCase())),
+  );
 
   // Combine mock data with live analytics
   const totalStats = {
@@ -123,10 +134,6 @@ export default function AdminDashboard() {
 
   const handleSaveProfile = async (profile: Profile) => {
     try {
-      console.log(
-        editingProfile ? "Profile updated:" : "New profile created:",
-        profile,
-      );
       const success = await dataProvider.saveProfile(profile);
 
       if (success) {
@@ -155,86 +162,80 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleDeleteProfile = async (profile: Profile) => {
-    const isConfirmed = window.confirm(
-      `Are you sure you want to delete the profile for "${profile.name}"?\n\nThis action cannot be undone.`,
-    );
-
-    if (isConfirmed) {
-      try {
-        const success = await dataProvider.deleteProfile(profile.id);
-
-        if (success) {
-          const updatedProfiles = await dataProvider.getAllProfiles();
-          setProfiles(updatedProfiles);
-          alert(`Profile for ${profile.name} has been deleted successfully.`);
-        } else {
-          alert(`Failed to delete profile. Please try again.`);
-        }
-      } catch (error) {
-        alert(`Error deleting profile. Please try again.`);
-        console.error("Error deleting profile:", error);
-      }
+  const handleCopyProfileUrl = async (profileId: string) => {
+    const url = `${window.location.origin}/profile/${profileId}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedProfileId(profileId);
+      setTimeout(() => setCopiedProfileId(null), 2000);
+    } catch (err) {
+      console.error("Failed to copy: ", err);
     }
   };
 
-  const handleCopyProfileUrl = async (profileId: string) => {
-    try {
-      const profileUrl = `${window.location.origin}/profile/${profileId}`;
-      await navigator.clipboard.writeText(profileUrl);
-      setCopiedProfileId(profileId);
+  const handleDeleteProfile = async (profile: Profile) => {
+    if (!dataProvider.canEditProfile(profile.id)) return;
 
-      // Reset the copied state after 2 seconds
-      setTimeout(() => {
-        setCopiedProfileId(null);
-      }, 2000);
-    } catch (error) {
-      // Fallback for browsers that don't support clipboard API
-      const textArea = document.createElement("textarea");
-      textArea.value = `${window.location.origin}/profile/${profileId}`;
-      document.body.appendChild(textArea);
-      textArea.select();
+    if (
+      window.confirm(
+        `Are you sure you want to delete the profile for ${profile.name}? This action cannot be undone.`,
+      )
+    ) {
       try {
-        document.execCommand("copy");
-        setCopiedProfileId(profileId);
-        setTimeout(() => {
-          setCopiedProfileId(null);
-        }, 2000);
-      } catch (fallbackError) {
-        console.error("Failed to copy URL:", fallbackError);
-        alert(`Profile URL: ${window.location.origin}/profile/${profileId}`);
+        const success = await dataProvider.deleteProfile(profile.id);
+        if (success) {
+          const updatedProfiles = await dataProvider.getAllProfiles();
+          setProfiles(updatedProfiles);
+          alert(`Profile for ${profile.name} deleted successfully.`);
+        } else {
+          alert("Failed to delete profile. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error deleting profile:", error);
+        alert("Error deleting profile. Please try again.");
       }
-      document.body.removeChild(textArea);
     }
   };
 
   const handleExportProfiles = () => {
-    downloadProfileBackup();
+    try {
+      downloadProfileBackup(profiles);
+    } catch (error) {
+      console.error("Export failed:", error);
+      alert("Failed to export profiles. Please try again.");
+    }
   };
 
-  const handleImportProfiles = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".json";
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const content = event.target?.result as string;
-          const result = importProfiles(content);
+  const handleImportProfiles = async () => {
+    try {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".json";
 
-          if (result.success) {
-            setProfiles(getAllProfiles());
-            alert(result.message);
+      input.onchange = async (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (!file) return;
+
+        try {
+          const success = await importProfiles(file);
+          if (success) {
+            const updatedProfiles = await dataProvider.getAllProfiles();
+            setProfiles(updatedProfiles);
+            alert("Profiles imported successfully!");
           } else {
-            alert(`Import failed: ${result.message}`);
+            alert("Import failed. Please check the file format and try again.");
           }
-        };
-        reader.readAsText(file);
-      }
-    };
-    input.click();
+        } catch (error) {
+          console.error("Import failed:", error);
+          alert("Import failed. Please try again.");
+        }
+      };
+
+      input.click();
+    } catch (error) {
+      console.error("Import failed:", error);
+      alert("Import failed. Please try again.");
+    }
   };
 
   if (loading) {
@@ -251,45 +252,50 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <img
-                  loading="lazy"
-                  srcSet="https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=100 100w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=200 200w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=400 400w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=800 800w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=1200 1200w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=1600 1600w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=2000 2000w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13"
-                  src="https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13"
-                  alt="Vouch Logo"
-                  className="w-16 h-8 object-cover object-center overflow-hidden ml-5"
-                  style={{
-                    aspectRatio: "2.08",
-                    minHeight: "10px",
-                    minWidth: "10px",
-                  }}
-                />
-                <h1 className="text-3xl font-bold text-gray-900 ml-12 -mb-1">
-                  <h6>Internal Analytics Dashboard</h6>
+          <div className="flex items-start justify-between">
+            {/* Logo and Title */}
+            <div className="flex items-center gap-4">
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13"
+                alt="Vouch Logo"
+                className="w-16 h-8 object-contain"
+              />
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">
+                  Internal Analytics Dashboard
                 </h1>
+                <p className="text-sm text-gray-600 mt-1">
+                  Manage profiles and view analytics
+                </p>
               </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2">
-                <Button asChild variant="outline">
+
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-3">
+              <div className="flex gap-3">
+                <Button asChild variant="outline" size="sm">
                   <Link to="/">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     View Site
                   </Link>
                 </Button>
-                <Button onClick={handleCreateProfile} className="gradient-bg">
+                <Button
+                  onClick={handleCreateProfile}
+                  className="gradient-bg"
+                  size="sm"
+                >
                   <Plus className="h-4 w-4 mr-2" />
                   Create New Profile
                 </Button>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-3">
                 <Button
                   onClick={handleExportProfiles}
                   variant="outline"
+                  size="sm"
                   title="Export all profiles to a file for sharing across devices"
                 >
                   <Download className="h-4 w-4 mr-2" />
@@ -298,6 +304,7 @@ export default function AdminDashboard() {
                 <Button
                   onClick={handleImportProfiles}
                   variant="outline"
+                  size="sm"
                   title="Import profiles from a backup file"
                 >
                   <Upload className="h-4 w-4 mr-2" />
@@ -338,166 +345,152 @@ export default function AdminDashboard() {
           />
         </div>
 
-        {/* Profile Stats */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              Per-Profile Statistics ({profiles.length} profiles)
+        {/* Profile Management */}
+        <Card className="shadow-sm">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5" />
+                Profile Management ({filteredProfiles.length} of{" "}
+                {profiles.length} profiles)
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent>
             {/* Search Box */}
             <div className="mb-6">
-              <div className="relative">
-                <input
+              <div className="relative max-w-md">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
                   type="text"
                   placeholder="Search profiles..."
-                  className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vouch-500 focus:border-vouch-500 outline-none"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
                 />
-                <svg
-                  className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
               </div>
             </div>
+
+            {/* Profiles List */}
             <div className="space-y-4">
-              {profiles.map((profile) => {
-                const mockStats = mockAnalytics.profileStats.find(
-                  (s) => s.profileId === profile.id,
-                );
-                const liveStats = liveAnalytics.profileStats.find(
-                  (s) => s.profileId === profile.id,
-                );
+              {filteredProfiles.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  {searchTerm
+                    ? `No profiles found matching "${searchTerm}"`
+                    : "No profiles created yet"}
+                </div>
+              ) : (
+                filteredProfiles.map((profile) => {
+                  const mockStats = mockAnalytics.profileStats.find(
+                    (s) => s.profileId === profile.id,
+                  );
+                  const liveStats = liveAnalytics.profileStats.find(
+                    (s) => s.profileId === profile.id,
+                  );
 
-                const pageViews =
-                  (mockStats?.pageViews || 0) + (liveStats?.pageViews || 0);
-                const quoteViews =
-                  (mockStats?.quoteViews || 0) + (liveStats?.quoteViews || 0);
+                  const pageViews =
+                    (mockStats?.pageViews || 0) + (liveStats?.pageViews || 0);
+                  const quoteViews =
+                    (mockStats?.quoteViews || 0) + (liveStats?.quoteViews || 0);
 
-                return (
-                  <div
-                    key={profile.id}
-                    className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div>
-                        <h3 className="font-semibold text-gray-900">
-                          {profile.name}
-                        </h3>
-                        <p className="text-sm text-gray-600">{profile.title}</p>
-                        {profile.company && (
-                          <Badge variant="outline" className="mt-1">
-                            {profile.company}
-                          </Badge>
-                        )}
+                  return (
+                    <div
+                      key={profile.id}
+                      className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div>
+                          <h3 className="font-semibold text-gray-900">
+                            {profile.name}
+                          </h3>
+                          <p className="text-sm text-gray-600">
+                            {profile.title}
+                          </p>
+                          {profile.company && (
+                            <Badge variant="outline" className="mt-1">
+                              {profile.company}
+                            </Badge>
+                          )}
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-center gap-4 text-sm">
-                      <div className="text-center">
-                        <div className="font-semibold text-gray-900">
-                          {pageViews}
+                      <div className="flex items-center gap-6">
+                        {/* Stats */}
+                        <div className="flex gap-4 text-sm">
+                          <div className="text-center">
+                            <div className="font-semibold text-gray-900">
+                              {pageViews}
+                            </div>
+                            <div className="text-gray-600">Page Views</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="font-semibold text-gray-900">
+                              {quoteViews}
+                            </div>
+                            <div className="text-gray-600">Quote Views</div>
+                          </div>
                         </div>
-                        <div className="text-gray-600">Page Views</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="font-semibold text-gray-900">
-                          {quoteViews}
-                        </div>
-                        <div className="text-gray-600">Quote Views</div>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleCopyProfileUrl(profile.id)}
-                            className="relative"
-                          >
-                            {copiedProfileId === profile.id ? (
-                              <>
-                                <Check className="h-4 w-4 mr-1 text-green-600" />
-                                Copied!
-                              </>
-                            ) : (
-                              <>
-                                <Copy className="h-4 w-4 mr-1" />
-                                Copy URL
-                              </>
-                            )}
-                          </Button>
-                          <Button asChild variant="outline" size="sm">
-                            <Link to={`/profile/${profile.id}`}>
-                              View Profile
-                            </Link>
-                          </Button>
-                        </div>
-                        {dataProvider.canEditProfile(profile.id) && (
+
+                        {/* Action Buttons */}
+                        <div className="flex flex-col gap-2">
                           <div className="flex gap-2">
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => handleEditProfile(profile)}
+                              onClick={() => handleCopyProfileUrl(profile.id)}
+                              className="min-w-[100px]"
                             >
-                              <Edit className="h-4 w-4 mr-1" />
-                              Edit
+                              {copiedProfileId === profile.id ? (
+                                <>
+                                  <Check className="h-4 w-4 mr-1 text-green-600" />
+                                  Copied!
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="h-4 w-4 mr-1" />
+                                  Copy URL
+                                </>
+                              )}
                             </Button>
                             <Button
+                              asChild
                               variant="outline"
                               size="sm"
-                              onClick={() => handleDeleteProfile(profile)}
-                              className="text-red-600 hover:text-red-700 hover:border-red-300 hover:bg-red-50"
+                              className="min-w-[100px]"
                             >
-                              <Trash2 className="h-4 w-4 mr-1" />
-                              Delete
+                              <Link to={`/profile/${profile.id}`}>
+                                View Profile
+                              </Link>
                             </Button>
                           </div>
-                        )}
+                          {dataProvider.canEditProfile(profile.id) && (
+                            <div className="flex gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleEditProfile(profile)}
+                                className="min-w-[100px]"
+                              >
+                                <Edit className="h-4 w-4 mr-1" />
+                                Edit
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleDeleteProfile(profile)}
+                                className="text-red-600 hover:text-red-700 hover:border-red-300 hover:bg-red-50 min-w-[100px]"
+                              >
+                                <Trash2 className="h-4 w-4 mr-1" />
+                                Delete
+                              </Button>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Admin Instructions */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle>Admin Instructions</CardTitle>
-          </CardHeader>
-          <CardContent className="prose prose-gray max-w-none">
-            <div className="text-sm text-gray-600 space-y-2">
-              <p>
-                <strong>Creating Profiles:</strong> Click "Create New Profile"
-                to add new candidate profiles with their transcripts and
-                takeaways.
-              </p>
-              <p>
-                <strong>Accessing Dashboard:</strong> This dashboard is
-                accessible at the protected route and should not be publicly
-                linked.
-              </p>
-              <p>
-                <strong>Analytics:</strong> All page views and quote link shares
-                are automatically tracked and displayed here.
-              </p>
-              <p>
-                <strong>Sharing:</strong> Users can highlight text in
-                transcripts to generate shareable links that scroll to specific
-                content.
-              </p>
+                  );
+                })
+              )}
             </div>
           </CardContent>
         </Card>
