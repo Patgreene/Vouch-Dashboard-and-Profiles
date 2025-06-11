@@ -274,7 +274,7 @@ export function useHighlight(profileId: string) {
 
       if (urlTranscriptId === transcriptId && startOffset && endOffset) {
         // Find and highlight the text
-        setTimeout(() => {
+        setTimeout(async () => {
           const transcriptElement = document.getElementById(
             `transcript-${transcriptId}`,
           );
