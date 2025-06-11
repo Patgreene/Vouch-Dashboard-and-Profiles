@@ -49,7 +49,7 @@ export function TranscriptCard({
   };
 
   // Create preview text that shows approximately two lines
-  const previewText = paragraphs[0]?.substring(0, 240) + "...";
+  const previewText = paragraphs[0]?.substring(0, 200) + "...";
 
   // Handle text selection within this transcript
   const handleMouseUp = () => {
@@ -70,41 +70,43 @@ export function TranscriptCard({
       <Button
         variant="ghost"
         onClick={toggle}
-        className="w-full justify-between p-6 h-auto text-left hover:bg-gray-50 transition-colors"
+        className="w-full justify-between p-4 sm:p-6 h-auto text-left hover:bg-gray-50 transition-colors"
       >
-        <div className="flex items-start justify-between w-full">
-          <div className="flex items-start gap-4 flex-1">
-            <Avatar className="h-12 w-12 mt-1">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between w-full gap-3 sm:gap-4">
+          {/* Main Content Area */}
+          <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+            <Avatar className="h-10 w-10 sm:h-12 sm:w-12 mt-1 shrink-0">
               <AvatarImage
                 src={transcript.speakerPhoto}
                 alt={transcript.speakerName}
                 className="object-cover"
               />
-              <AvatarFallback className="text-sm font-semibold bg-vouch-100 text-vouch-600">
+              <AvatarFallback className="text-xs sm:text-sm font-semibold bg-vouch-100 text-vouch-600">
                 {getInitials(transcript.speakerName)}
               </AvatarFallback>
             </Avatar>
 
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-gray-900 text-lg mb-1">
+              <h3 className="font-semibold text-gray-900 text-base sm:text-lg mb-1 leading-tight">
                 {transcript.speakerName}
               </h3>
               <div className="flex items-center gap-2 mb-2">
-                <Briefcase className="h-4 w-4 text-gray-500" />
-                <Badge variant="outline" className="text-sm">
+                <Briefcase className="h-3 w-3 sm:h-4 sm:w-4 text-gray-500 shrink-0" />
+                <Badge variant="outline" className="text-xs sm:text-sm">
                   {transcript.speakerRole}
                 </Badge>
               </div>
 
               {!expanded && (
                 <p
-                  className="text-gray-600 text-sm leading-relaxed break-words whitespace-normal overflow-hidden"
+                  className="text-gray-600 text-sm leading-relaxed break-words overflow-hidden"
                   style={{
                     display: "-webkit-box",
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
                     wordBreak: "break-word",
                     overflowWrap: "break-word",
+                    hyphens: "auto",
                   }}
                 >
                   {previewText}
@@ -113,14 +115,15 @@ export function TranscriptCard({
             </div>
           </div>
 
-          <div className="flex flex-col items-end gap-2 ml-4 flex-shrink-0">
-            {/* Interview Metadata - Top Right */}
+          {/* Right side - Metadata and expand icon */}
+          <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 sm:gap-2 shrink-0">
+            {/* Interview Metadata */}
             {(transcript.interviewDate || transcript.interviewedBy) && (
-              <div className="flex flex-col items-end gap-1 text-xs text-gray-400">
+              <div className="flex flex-row sm:flex-col items-center sm:items-end gap-1 sm:gap-1 text-xs text-gray-400">
                 {transcript.interviewDate && (
                   <div className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
-                    <span>
+                    <span className="whitespace-nowrap">
                       {new Date(transcript.interviewDate).toLocaleDateString(
                         "en-US",
                         {
@@ -134,40 +137,48 @@ export function TranscriptCard({
                 {transcript.interviewedBy && (
                   <div className="flex items-center gap-1">
                     <UserCheck className="h-3 w-3" />
-                    <span>by {transcript.interviewedBy.split(" ")[0]}</span>
+                    <span className="whitespace-nowrap">
+                      by {transcript.interviewedBy.split(" ")[0]}
+                    </span>
                   </div>
                 )}
               </div>
             )}
 
             {/* Expand/Collapse Icon */}
-            {expanded ? (
-              <ChevronUp className="h-5 w-5 text-gray-500" />
-            ) : (
-              <ChevronDown className="h-5 w-5 text-gray-500" />
-            )}
+            <div className="p-1">
+              {expanded ? (
+                <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
+              ) : (
+                <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
+              )}
+            </div>
           </div>
         </div>
       </Button>
 
       {expanded && (
-        <CardContent className="px-6 pb-6 pt-0 animate-fade-in">
-          <div className="border-t border-gray-100 pt-6">
-            <div
-              id={`transcript-${transcript.id}`}
-              className="prose prose-gray max-w-none"
-              onMouseUp={handleMouseUp}
-              style={{ userSelect: "text" }}
-            >
-              {paragraphs.map((paragraph, index) => (
-                <p
-                  key={index}
-                  className="text-gray-700 leading-relaxed mb-4 last:mb-0"
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
+        <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6 pt-0">
+          <div
+            id={`transcript-${transcript.id}`}
+            className="prose prose-gray max-w-none text-sm sm:text-base leading-relaxed"
+            onMouseUp={handleMouseUp}
+            style={{
+              userSelect: "text",
+              cursor: "text",
+              wordBreak: "break-word",
+              overflowWrap: "break-word",
+              hyphens: "auto",
+            }}
+          >
+            {paragraphs.map((paragraph, index) => (
+              <p
+                key={index}
+                className="mb-4 text-gray-700 leading-relaxed last:mb-0"
+              >
+                {paragraph}
+              </p>
+            ))}
           </div>
         </CardContent>
       )}

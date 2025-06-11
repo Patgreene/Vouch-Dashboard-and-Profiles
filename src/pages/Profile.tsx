@@ -8,7 +8,6 @@ import { Footer } from "@/components/Footer";
 import { dataProvider } from "@/lib/dataProvider";
 import { Profile } from "@/lib/data";
 import { useHighlight } from "@/hooks/useHighlight";
-import { debugHighlightFeature } from "@/lib/debug";
 
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
@@ -74,6 +73,16 @@ export default function Profile() {
     }
   }, []);
 
+  const toggleTranscript = (transcriptId: string) => {
+    const newExpanded = new Set(expandedTranscripts);
+    if (newExpanded.has(transcriptId)) {
+      newExpanded.delete(transcriptId);
+    } else {
+      newExpanded.add(transcriptId);
+    }
+    setExpandedTranscripts(newExpanded);
+  };
+
   console.log("Profile page loaded with ID:", id);
 
   // Now handle conditional logic after all hooks
@@ -84,7 +93,7 @@ export default function Profile() {
   // Show loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-vouch-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading profile...</p>
@@ -98,16 +107,6 @@ export default function Profile() {
     return <Navigate to="/not-found" replace />;
   }
 
-  const toggleTranscript = (transcriptId: string) => {
-    const newExpanded = new Set(expandedTranscripts);
-    if (newExpanded.has(transcriptId)) {
-      newExpanded.delete(transcriptId);
-    } else {
-      newExpanded.add(transcriptId);
-    }
-    setExpandedTranscripts(newExpanded);
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Profile Header */}
@@ -117,16 +116,14 @@ export default function Profile() {
       <KeyTakeaways takeaways={profile.keyTakeaways} />
 
       {/* Transcripts Section */}
-      <div
-        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
-        style={{ margin: "-3px auto 0", padding: "7px 32px 32px" }}
-      >
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Transcripts</h2>
-          <p className="text-gray-600"></p>
+      <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+            Transcripts
+          </h2>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {profile.transcripts.map((transcript) => (
             <TranscriptCard
               key={transcript.id}
@@ -152,7 +149,7 @@ export default function Profile() {
 
       {/* Copied Feedback */}
       {copiedFeedback && (
-        <div className="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in z-50">
+        <div className="fixed bottom-4 left-4 right-4 sm:bottom-4 sm:right-4 sm:left-auto sm:w-auto bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in z-50 text-center sm:text-left">
           Link copied to clipboard!
         </div>
       )}

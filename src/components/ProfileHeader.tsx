@@ -18,39 +18,44 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
 
   return (
     <div className="bg-white border-b border-gray-200">
-      <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-4 sm:space-y-0">
-          {/* Avatar */}
-          <Avatar className="h-24 w-24 sm:h-32 sm:w-32">
-            <AvatarImage src={profile.photo} alt={profile.name} />
-            <AvatarFallback className="text-xl font-semibold bg-gradient-to-br from-vouch-500 to-vouch-600 text-white">
-              {getInitials(profile.name)}
-            </AvatarFallback>
-          </Avatar>
+      <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
+        <div className="flex flex-col space-y-4">
+          {/* Top section with avatar and "What is Vouch?" */}
+          <div className="flex items-start justify-between">
+            <Avatar className="h-20 w-20 sm:h-24 sm:w-24 md:h-32 md:w-32">
+              <AvatarImage src={profile.photo} alt={profile.name} />
+              <AvatarFallback className="text-lg sm:text-xl font-semibold bg-gradient-to-br from-vouch-500 to-vouch-600 text-white">
+                {getInitials(profile.name)}
+              </AvatarFallback>
+            </Avatar>
+
+            <a
+              href="https://www.vouchprofile.com/"
+              className="text-vouch-600 hover:text-vouch-700 text-sm font-medium shrink-0"
+            >
+              What is Vouch?
+            </a>
+          </div>
 
           {/* Profile Info */}
-          <div className="flex-1 space-y-3">
-            <div className="flex flex-col">
-              <a
-                href="https://www.vouchprofile.com/"
-                className="text-vouch-600 hover:text-vouch-700 ml-auto text-sm font-medium"
-              >
-                <p>What is Vouch?</p>
-              </a>
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
+          <div className="space-y-3">
+            <div>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 tracking-tight leading-tight">
                 {profile.name}
               </h1>
-              <p className="text-xl text-gray-600 mt-1">{profile.title}</p>
+              <p className="text-lg sm:text-xl text-gray-600 mt-1 leading-relaxed">
+                {profile.title}
+              </p>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               {profile.linkedIn && (
                 <Button
                   variant="outline"
                   size="sm"
                   asChild
-                  className="hover:bg-blue-50 hover:border-blue-200"
+                  className="hover:bg-blue-50 hover:border-blue-200 text-xs sm:text-sm"
                 >
                   <a
                     href={profile.linkedIn}
@@ -67,7 +72,7 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                   variant="outline"
                   size="sm"
                   asChild
-                  className="hover:bg-green-50 hover:border-green-200"
+                  className="hover:bg-green-50 hover:border-green-200 text-xs sm:text-sm"
                 >
                   <a
                     href={profile.cv}
@@ -84,7 +89,7 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                   variant="outline"
                   size="sm"
                   asChild
-                  className="hover:bg-purple-50 hover:border-purple-200"
+                  className="hover:bg-purple-50 hover:border-purple-200 text-xs sm:text-sm"
                 >
                   <a
                     href={profile.portfolio}
