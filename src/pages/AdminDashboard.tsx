@@ -261,11 +261,11 @@ export default function AdminDashboard() {
                   srcSet="https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=100 100w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=200 200w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=400 400w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=800 800w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=1200 1200w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=1600 1600w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=2000 2000w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13"
                   src="https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13"
                   alt="Vouch Logo"
-                  className="w-full object-cover object-center overflow-hidden ml-5"
+                  className="w-16 h-8 object-cover object-center overflow-hidden ml-5"
                   style={{
                     aspectRatio: "2.08",
-                    minHeight: "20px",
-                    minWidth: "20px",
+                    minHeight: "10px",
+                    minWidth: "10px",
                   }}
                 />
                 <h1 className="text-3xl font-bold text-gray-900 ml-12 -mb-1">
@@ -273,33 +273,37 @@ export default function AdminDashboard() {
                 </h1>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Button asChild variant="outline">
-                <Link to="/">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  View Site
-                </Link>
-              </Button>
-              <Button
-                onClick={handleExportProfiles}
-                variant="outline"
-                title="Export all profiles to a file for sharing across devices"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Export
-              </Button>
-              <Button
-                onClick={handleImportProfiles}
-                variant="outline"
-                title="Import profiles from a backup file"
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                Import
-              </Button>
-              <Button onClick={handleCreateProfile} className="gradient-bg">
-                <Plus className="h-4 w-4 mr-2" />
-                Create New Profile
-              </Button>
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <Button asChild variant="outline">
+                  <Link to="/">
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    View Site
+                  </Link>
+                </Button>
+                <Button onClick={handleCreateProfile} className="gradient-bg">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create New Profile
+                </Button>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleExportProfiles}
+                  variant="outline"
+                  title="Export all profiles to a file for sharing across devices"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Export
+                </Button>
+                <Button
+                  onClick={handleImportProfiles}
+                  variant="outline"
+                  title="Import profiles from a backup file"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  Import
+                </Button>
+              </div>
             </div>
           </div>
         </div>
