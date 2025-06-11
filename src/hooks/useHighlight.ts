@@ -46,37 +46,21 @@ export function useHighlight(profileId: string) {
       return;
     }
 
-    console.log("📝 Selected text:", selectedText);
-
     const range = selection.getRangeAt(0);
     const rect = range.getBoundingClientRect();
 
-    console.log("📐 Selection rect:", {
-      left: rect.left,
-      top: rect.top,
-      width: rect.width,
-      height: rect.height,
-    });
-
-    // Only show tooltip if text is selected within the transcript
+    // Find which transcript element contains the selection
     const transcriptElement = document.getElementById(
       `transcript-${transcriptId}`,
     );
 
     if (!transcriptElement) {
-      console.log(
-        "❌ Transcript element not found:",
-        `transcript-${transcriptId}`,
-      );
       return;
     }
 
     if (!transcriptElement.contains(range.commonAncestorContainer)) {
-      console.log("❌ Selection not within transcript element");
       return;
     }
-
-    console.log("✅ Selection is within transcript element");
 
     // Calculate absolute position within the transcript text
     const transcriptText = transcriptElement.textContent || "";
@@ -85,13 +69,6 @@ export function useHighlight(profileId: string) {
     beforeSelection.setEnd(range.startContainer, range.startOffset);
     const startOffset = beforeSelection.toString().length;
     const endOffset = startOffset + selectedText.length;
-
-    console.log("📍 Calculated positions:", {
-      startOffset,
-      endOffset,
-      selectedText,
-      transcriptLength: transcriptText.length,
-    });
 
     const highlightData: HighlightData = {
       transcriptId,
@@ -107,127 +84,95 @@ export function useHighlight(profileId: string) {
       highlightData,
     };
 
-    console.log("💡 Setting tooltip state:", tooltipState);
     setShareTooltip(tooltipState);
   }, []);
 
   // Handle share link generation
   const handleShareLink = useCallback(async () => {
-    console.log("🔗 Starting share link generation...");
-
     if (!shareTooltip.highlightData) {
-      console.log("❌ No highlight data available");
       return;
     }
 
     const { transcriptId, startOffset, endOffset, text } =
       shareTooltip.highlightData;
-    console.log("🔧 Generating share URL for:", {
+
+    const shareUrl = generateShareUrl(
+      profileId,
       transcriptId,
       startOffset,
       endOffset,
       text,
-    });
+    );
 
-    try {
-      const shareUrl = generateShareUrl(
-        profileId,
-        transcriptId,
-        startOffset,
-        endOffset,
-      );
+    // Perform clipboard operation in a separate microtask to avoid blocking UI
+    const success = await copyToClipboard(shareUrl);
 
-      // Perform clipboard operation in a separate microtask to avoid blocking UI
-      const success = await copyToClipboard(shareUrl);
+    // Always show feedback to user
+    setCopiedFeedback(true);
+    setTimeout(() => setCopiedFeedback(false), 2000);
 
-      // Always show feedback to user
-      setCopiedFeedback(true);
-      setTimeout(() => setCopiedFeedback(false), 2000);
-
-      if (success) {
-        // Track the quote view
-        try {
-          await dataProvider.trackEvent(profileId, "quote_view", {
-            transcriptId,
-            highlightId: `${startOffset}-${endOffset}`,
-            startOffset,
-            endOffset,
-          });
-        } catch (trackingError) {
-          console.error("Failed to track quote view:", trackingError);
-        }
-      } else {
-        // Show manual copy option
-        alert(
-          `Could not automatically copy to clipboard. Please copy this URL manually:\n\n${shareUrl}`,
-        );
+    if (success) {
+      // Track the quote view
+      try {
+        await dataProvider.trackEvent(profileId, "quote_view", {
+          transcriptId,
+          highlightId: `${startOffset}-${endOffset}`,
+          startOffset,
+          endOffset,
+        });
+      } catch (trackingError) {
+        console.error("Failed to track quote view:", trackingError);
       }
-
-      // Hide tooltip after a small delay to ensure UI updates complete
-      setTimeout(() => {
-        setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
-      }, 50);
-    } catch (error) {
-      console.error("❌ Error in handleShareLink:", error);
-      setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
+    } else {
+      // Show manual copy option
+      alert(
+        `Could not automatically copy to clipboard. Please copy this URL manually:\n\n${shareUrl}`,
+      );
     }
+
+    // Hide tooltip after a small delay to ensure UI updates complete
+    setTimeout(() => {
+      setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
+    }, 100);
   }, [shareTooltip.highlightData, profileId]);
 
-  // Hide tooltip when clicking outside and handle global text selection
+  // Hide tooltip when clicking outside
+  const handleClickOutside = useCallback(() => {
+    setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
+  }, []);
+
+  // Handle global mouseup to detect text selection
+  const handleGlobalMouseUp = useCallback(() => {
+    const selection = window.getSelection();
+    if (!selection) {
+      return;
+    }
+
+    const selectedText = selection.toString().trim();
+
+    if (selectedText === "") {
+      return;
+    }
+
+    if (selection.rangeCount === 0) {
+      return;
+    }
+
+    // Find which transcript contains the selection
+    const range = selection.getRangeAt(0);
+    const transcriptElements = document.querySelectorAll('[id^="transcript-"]');
+
+    for (const element of transcriptElements) {
+      if (element.contains(range.commonAncestorContainer)) {
+        const transcriptId = element.id.replace("transcript-", "");
+        handleTextSelection(transcriptId);
+        return;
+      }
+    }
+  }, [handleTextSelection]);
+
+  // Set up event listeners for text selection
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      console.log("🖱️ Click outside detected");
-      setShareTooltip({ visible: false, x: 0, y: 0, highlightData: null });
-    };
-
-    const handleGlobalMouseUp = () => {
-      // Small delay to ensure selection is finalized
-      setTimeout(() => {
-        console.log("🖱️ Global mouseup detected");
-        const selection = window.getSelection();
-
-        if (!selection) {
-          console.log("❌ No selection object");
-          return;
-        }
-
-        const selectedText = selection.toString().trim();
-        console.log("📝 Selected text:", selectedText);
-
-        if (selectedText === "") {
-          console.log("⚠️ No text selected");
-          return;
-        }
-
-        if (selection.rangeCount === 0) {
-          console.log("❌ No ranges in selection");
-          return;
-        }
-
-        // Find which transcript contains the selection
-        const range = selection.getRangeAt(0);
-        const transcriptElements = document.querySelectorAll(
-          '[id^="transcript-"]',
-        );
-        console.log(
-          "🔍 Checking",
-          transcriptElements.length,
-          "transcript elements",
-        );
-
-        for (const element of transcriptElements) {
-          if (element.contains(range.commonAncestorContainer)) {
-            const transcriptId = element.id.replace("transcript-", "");
-            console.log("✅ Found selection in transcript:", transcriptId);
-            handleTextSelection(transcriptId);
-            return;
-          }
-        }
-
-        console.log("❌ Selection not found in any transcript");
-      }, 10);
-    };
-
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("mouseup", handleGlobalMouseUp);
 
@@ -245,13 +190,6 @@ export function useHighlight(profileId: string) {
       const startOffset = urlParams.get("s");
       const endOffset = urlParams.get("e");
 
-      console.log("🔗 Processing highlight from URL:", {
-        urlTranscriptId,
-        startOffset,
-        endOffset,
-        currentTranscriptId: transcriptId,
-      });
-
       if (urlTranscriptId === transcriptId && startOffset && endOffset) {
         // Find and highlight the text
         setTimeout(async () => {
@@ -260,23 +198,12 @@ export function useHighlight(profileId: string) {
           );
 
           if (!transcriptElement) {
-            console.log(
-              "❌ Transcript element not found:",
-              `transcript-${transcriptId}`,
-            );
             return;
           }
 
           const textContent = transcriptElement.textContent || "";
           const start = parseInt(startOffset);
           const end = parseInt(endOffset);
-
-          console.log("🎨 Highlighting text from URL:", {
-            start,
-            end,
-            text: textContent.substring(start, end),
-            fullLength: textContent.length,
-          });
 
           // Create text walker to find and highlight the specific text
           const walker = document.createTreeWalker(
@@ -296,39 +223,52 @@ export function useHighlight(profileId: string) {
           // Find the text nodes that contain our start and end positions
           while ((textNode = walker.nextNode())) {
             const nodeLength = textNode.textContent?.length || 0;
+            const nodeStart = currentOffset;
+            const nodeEnd = currentOffset + nodeLength;
 
-            if (currentOffset <= start && currentOffset + nodeLength > start) {
+            if (start >= nodeStart && start < nodeEnd && !foundStartNode) {
               foundStartNode = textNode;
-              startNodeOffset = start - currentOffset;
+              startNodeOffset = start - nodeStart;
             }
 
-            if (currentOffset <= end && currentOffset + nodeLength >= end) {
+            if (end > nodeStart && end <= nodeEnd && !foundEndNode) {
               foundEndNode = textNode;
-              endNodeOffset = end - currentOffset;
-              break;
+              endNodeOffset = end - nodeStart;
             }
 
             currentOffset += nodeLength;
+
+            if (foundStartNode && foundEndNode) break;
           }
 
+          // Create and apply highlight if we found the nodes
           if (foundStartNode && foundEndNode) {
             try {
-              // Create a range for the highlighted text
               const range = document.createRange();
               range.setStart(foundStartNode, startNodeOffset);
               range.setEnd(foundEndNode, endNodeOffset);
 
-              // Create highlight element
+              const selection = window.getSelection();
+              if (selection) {
+                selection.removeAllRanges();
+                selection.addRange(range);
+              }
+
+              // Create a highlight span
               const highlightSpan = document.createElement("span");
-              highlightSpan.className = "highlight-intense highlight-fade-in";
-              highlightSpan.style.backgroundColor = "#fde047";
+              highlightSpan.style.backgroundColor = "#fef3c7";
               highlightSpan.style.padding = "2px 4px";
               highlightSpan.style.borderRadius = "4px";
+              highlightSpan.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
 
-              // Surround the selected content with the highlight span
-              range.surroundContents(highlightSpan);
-
-              console.log("✅ Successfully highlighted text from URL");
+              try {
+                range.surroundContents(highlightSpan);
+              } catch (e) {
+                // Fallback if surroundContents fails
+                const contents = range.extractContents();
+                highlightSpan.appendChild(contents);
+                range.insertNode(highlightSpan);
+              }
 
               // Scroll to the highlighted section
               highlightSpan.scrollIntoView({
@@ -337,13 +277,6 @@ export function useHighlight(profileId: string) {
               });
 
               // Track the quote view
-              console.log("📊 Tracking quote view from URL...", {
-                profileId,
-                transcriptId,
-                startOffset,
-                endOffset,
-              });
-
               try {
                 await dataProvider.trackEvent(profileId, "quote_view", {
                   transcriptId,
@@ -351,32 +284,18 @@ export function useHighlight(profileId: string) {
                   startOffset,
                   endOffset,
                 });
-                console.log("✅ URL quote view tracked successfully");
               } catch (trackingError) {
-                console.error(
-                  "❌ Failed to track URL quote view:",
-                  trackingError,
-                );
+                console.error("Failed to track URL quote view:", trackingError);
               }
             } catch (error) {
-              console.warn("❌ Could not highlight text:", error);
-
               // Fallback: just scroll to the transcript
               transcriptElement.scrollIntoView({
                 behavior: "smooth",
                 block: "center",
               });
             }
-          } else {
-            console.warn("❌ Could not find text nodes for highlighting");
-
-            // Fallback: just scroll to the transcript
-            transcriptElement.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-            });
           }
-        }, 1000); // Increased delay to ensure accordion is fully open
+        }, 500);
       }
     },
     [profileId],
@@ -385,8 +304,8 @@ export function useHighlight(profileId: string) {
   return {
     shareTooltip,
     copiedFeedback,
-    handleTextSelection,
     handleShareLink,
+    handleTextSelection,
     processHighlightFromUrl,
   };
 }
