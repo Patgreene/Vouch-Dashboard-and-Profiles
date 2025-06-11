@@ -174,7 +174,6 @@ export function useHighlight(profileId: string) {
         }
 
         console.log("✅ Share link operation completed successfully");
-      }
       } else {
         console.error("❌ Failed to copy to clipboard");
         // Show manual copy option
@@ -374,7 +373,10 @@ export function useHighlight(profileId: string) {
                 });
                 console.log("✅ URL quote view tracked successfully");
               } catch (trackingError) {
-                console.error("❌ Failed to track URL quote view:", trackingError);
+                console.error(
+                  "❌ Failed to track URL quote view:",
+                  trackingError,
+                );
               }
             } catch (error) {
               console.warn("❌ Could not highlight text:", error);
