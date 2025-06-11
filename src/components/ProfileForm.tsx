@@ -157,12 +157,44 @@ export function ProfileForm({
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const dataUrl = reader.result as string;
-        setFormData((prev) => ({ ...prev, photo: dataUrl }));
+      // Validate file size (optional - prevent extremely large files)
+      if (file.size > 10 * 1024 * 1024) {
+        // 10MB limit
+        alert("Please choose an image smaller than 10MB.");
+        return;
+      }
+
+      // Create image to check dimensions
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(file);
+
+      img.onload = () => {
+        // Clean up the object URL
+        URL.revokeObjectURL(objectUrl);
+
+        // Check minimum dimensions
+        if (img.width < 300 || img.height < 300) {
+          alert(
+            `Image dimensions are too small (${img.width}x${img.height}px). Please upload an image that is at least 300x300 pixels for best quality.`,
+          );
+          return;
+        }
+
+        // If dimensions are good, proceed with file reading
+        const reader = new FileReader();
+        reader.onload = () => {
+          const dataUrl = reader.result as string;
+          setFormData((prev) => ({ ...prev, photo: dataUrl }));
+        };
+        reader.readAsDataURL(file);
       };
-      reader.readAsDataURL(file);
+
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        alert("Unable to load image. Please choose a valid image file.");
+      };
+
+      img.src = objectUrl;
     }
   };
 
