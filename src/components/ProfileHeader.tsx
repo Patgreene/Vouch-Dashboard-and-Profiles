@@ -31,20 +31,12 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
           {/* Profile Info */}
           <div className="flex-1 space-y-3">
             <div className="flex flex-col">
-              <Button
-                variant="link"
-                size="sm"
-                asChild
-                className="text-vouch-600 hover:text-vouch-700 p-0 ml-auto"
+              <a
+                href="https://www.vouchprofile.com/"
+                className="text-vouch-600 hover:text-vouch-700 ml-auto text-sm font-medium"
               >
-                <a
-                  href="https://www.vouchprofile.com/"
-                  className="flex items-center gap-2"
-                >
-                  <VouchLogo size="sm" />
-                  <span className="text-xs">What is this?</span>
-                </a>
-              </Button>
+                <p>What is Vouch?</p>
+              </a>
               <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
                 {profile.name}
               </h1>
