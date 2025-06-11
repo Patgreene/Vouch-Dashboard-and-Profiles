@@ -256,12 +256,22 @@ export default function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <VouchLogo size="lg" className="text-vouch-600" />
-                <h1 className="text-3xl font-bold text-gray-900">
-                  Analytics Dashboard
+                <img
+                  loading="lazy"
+                  srcSet="https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=100 100w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=200 200w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=400 400w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=800 800w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=1200 1200w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=1600 1600w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13?width=2000 2000w, https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13"
+                  src="https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F5458c0c30e7f4da8ac941780333ddd13"
+                  alt="Vouch Logo"
+                  className="w-full object-cover object-center overflow-hidden ml-5"
+                  style={{
+                    aspectRatio: "2.08",
+                    minHeight: "20px",
+                    minWidth: "20px",
+                  }}
+                />
+                <h1 className="text-3xl font-bold text-gray-900 ml-12 -mb-1">
+                  <h6>Internal Analytics Dashboard</h6>
                 </h1>
               </div>
-              <p className="text-gray-600">Internal admin panel</p>
             </div>
             <div className="flex items-center gap-3">
               <Button asChild variant="outline">
