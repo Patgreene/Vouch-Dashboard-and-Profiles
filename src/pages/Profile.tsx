@@ -48,15 +48,10 @@ export default function Profile() {
     loadProfile();
   }, [id]);
 
-  // Track page view and run debug
+  // Track page view
   useEffect(() => {
     if (profile && id) {
       dataProvider.trackEvent(id, "page_view");
-
-      // Run debug after page loads
-      setTimeout(() => {
-        debugHighlightFeature();
-      }, 1000);
     }
   }, [id, profile]);
 
