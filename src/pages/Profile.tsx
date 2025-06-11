@@ -29,22 +29,37 @@ export default function Profile() {
   // Load profile data
   useEffect(() => {
     async function loadProfile() {
-      if (!id) return;
+      if (!id) {
+        console.log("❌ No profile ID provided");
+        setLoading(false);
+        return;
+      }
 
       try {
         setLoading(true);
-        console.log("Loading profile with ID:", id);
+        console.log("🔄 Loading profile with ID:", id);
+
         const profileData = await dataProvider.getProfileById(id);
-        console.log("Loaded profile data:", profileData);
-        setProfile(profileData);
+        console.log("📊 Profile data result:", profileData);
+
+        if (profileData) {
+          console.log("✅ Profile loaded successfully:", profileData.name);
+          setProfile(profileData);
+        } else {
+          console.log("❌ Profile not found for ID:", id);
+          setProfile(null);
+        }
       } catch (error) {
-        console.error("Error loading profile:", error);
+        console.error("❌ Error loading profile:", error);
         setProfile(null);
       } finally {
+        console.log("🏁 Profile loading finished");
         setLoading(false);
       }
     }
-    loadProfile();
+
+    // Add small delay to ensure dataProvider is ready
+    setTimeout(loadProfile, 100);
   }, [id]);
 
   // Track page view

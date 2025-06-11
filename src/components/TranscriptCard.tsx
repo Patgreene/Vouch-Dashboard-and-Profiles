@@ -48,13 +48,11 @@ export function TranscriptCard({
       .toUpperCase();
   };
 
-  // Create preview text that shows approximately two lines
-  // Adjust length based on screen size - shorter on mobile for proper 2-line display
+  // Create preview text that ensures proper 2-line display
   const getPreviewText = () => {
     const baseText = paragraphs[0] || "";
-    // Use shorter length on mobile to ensure 2 lines display properly
-    const isMobile = window.innerWidth < 640; // sm breakpoint
-    const maxLength = isMobile ? 120 : 200;
+    // Use shorter length to ensure text wraps to 2 lines on mobile
+    const maxLength = 150; // Conservative length that works across screen sizes
 
     if (baseText.length <= maxLength) {
       return baseText;
@@ -118,16 +116,16 @@ export function TranscriptCard({
 
               {!expanded && (
                 <p
-                  className="text-gray-600 text-sm leading-relaxed break-words overflow-hidden"
+                  className="text-gray-600 text-sm break-words overflow-hidden"
                   style={{
                     display: "-webkit-box",
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
                     wordBreak: "break-word",
                     overflowWrap: "break-word",
-                    hyphens: "auto",
-                    lineHeight: "1.4",
-                    maxHeight: "2.8em", // Approximately 2 lines
+                    lineHeight: "1.5",
+                    maxHeight: "3em", // 2 lines × 1.5 line-height
+                    minHeight: "3em", // Force minimum height for 2 lines
                   }}
                 >
                   {previewText}
