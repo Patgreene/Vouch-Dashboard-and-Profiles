@@ -28,12 +28,12 @@ export interface Transcript {
   interviewedBy?: string;
 }
 
-export interface AnalyticsData {
-  totalProfiles: number;
-  totalTranscripts: number;
-  totalPageViews: number;
-  totalQuoteViews: number;
-  profileStats: ProfileStats[];
+export interface Analytics {
+  profileId: string;
+  profileName: string;
+  pageViews: number;
+  quoteViews: number;
+  uniqueVisitors?: number;
 }
 
 export interface ProfileStats {
