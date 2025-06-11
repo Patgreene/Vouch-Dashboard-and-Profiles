@@ -1,5 +1,15 @@
-import React, { useState } from "react";
-import { X, Plus, Trash2, Save, User, Upload, Image } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import {
+  X,
+  Plus,
+  Trash2,
+  Save,
+  User,
+  Upload,
+  Image,
+  CheckCircle,
+  AlertCircle,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,6 +73,13 @@ export function ProfileForm({
   onSave,
   editingProfile,
 }: ProfileFormProps) {
+  // Progress states
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
   const [formData, setFormData] = useState<FormData>(() => {
     if (editingProfile) {
       return {
@@ -191,12 +208,17 @@ export function ProfileForm({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Reset states
+    setSubmitStatus("idle");
+    setErrorMessage("");
 
     // Validate required fields
     if (!formData.name.trim() || !formData.title.trim()) {
-      alert("Please fill in all required fields (Name and Title).");
+      setSubmitStatus("error");
+      setErrorMessage("Please fill in all required fields (Name and Title).");
       return;
     }
 
@@ -206,36 +228,60 @@ export function ProfileForm({
     );
 
     if (validTranscripts.length === 0) {
-      alert("Please add at least one complete transcript.");
+      setSubmitStatus("error");
+      setErrorMessage("Please add at least one complete transcript.");
       return;
     }
 
-    // Prepare final transcript data
-    const finalTranscripts = validTranscripts.map((transcript) => ({
-      ...transcript,
-      id: transcript.id || `transcript-${Date.now()}-${Math.random()}`,
-    }));
+    // Start loading state
+    setIsSubmitting(true);
 
-    const profile: Profile = {
-      ...formData,
-      // Ensure ID is set (use existing ID for edits, or generated ID for new profiles)
-      id: editingProfile ? editingProfile.id : formData.id,
-      transcripts: finalTranscripts,
-      keyTakeaways: {
-        strengths: formData.keyTakeaways.strengths.filter((s) => s.trim()),
-        weaknesses: formData.keyTakeaways.weaknesses.filter((w) => w.trim()),
-        communicationStyle: formData.keyTakeaways.communicationStyle.filter(
-          (c) => c.trim(),
-        ),
-        waysToBringOutBest: formData.keyTakeaways.waysToBringOutBest.filter(
-          (w) => w.trim(),
-        ),
-        customTitle1: formData.keyTakeaways.customTitle1?.trim() || undefined,
-        customTitle2: formData.keyTakeaways.customTitle2?.trim() || undefined,
-      },
-    };
+    try {
+      // Prepare final transcript data
+      const finalTranscripts = validTranscripts.map((transcript) => ({
+        ...transcript,
+        id: transcript.id || `transcript-${Date.now()}-${Math.random()}`,
+      }));
 
-    onSave(profile);
+      const profile: Profile = {
+        ...formData,
+        // Ensure ID is set (use existing ID for edits, or generated ID for new profiles)
+        id: editingProfile ? editingProfile.id : formData.id,
+        transcripts: finalTranscripts,
+        keyTakeaways: {
+          strengths: formData.keyTakeaways.strengths.filter((s) => s.trim()),
+          weaknesses: formData.keyTakeaways.weaknesses.filter((w) => w.trim()),
+          communicationStyle: formData.keyTakeaways.communicationStyle.filter(
+            (c) => c.trim(),
+          ),
+          waysToBringOutBest: formData.keyTakeaways.waysToBringOutBest.filter(
+            (w) => w.trim(),
+          ),
+          customTitle1: formData.keyTakeaways.customTitle1?.trim() || undefined,
+          customTitle2: formData.keyTakeaways.customTitle2?.trim() || undefined,
+        },
+      };
+
+      // Call the onSave function and wait for it
+      await onSave(profile);
+
+      // Show success state
+      setSubmitStatus("success");
+      setIsSubmitting(false);
+
+      // Auto-close after success (optional - you can remove this if you want manual close)
+      setTimeout(() => {
+        onClose();
+      }, 1500);
+    } catch (error) {
+      setIsSubmitting(false);
+      setSubmitStatus("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred. Please try again.",
+      );
+    }
   };
 
   const getInitials = (name: string) => {
