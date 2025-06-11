@@ -246,7 +246,7 @@ export function useHighlight(profileId: string) {
 
   // Handle URL parameters for direct highlighting
   const processHighlightFromUrl = useCallback(
-    (transcriptId: string) => {
+    async (transcriptId: string) => {
       const urlParams = new URLSearchParams(window.location.search);
       const urlTranscriptId = urlParams.get("t");
       const startOffset = urlParams.get("s");
