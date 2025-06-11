@@ -31,11 +31,6 @@ export class DataProvider {
 
   constructor() {
     this.useSupabase = isSupabaseConfigured();
-    console.log(
-      this.useSupabase
-        ? "✅ Using Supabase for data storage"
-        : "⚠️  Using localStorage (Supabase not configured)",
-    );
   }
 
   async getAllProfiles(): Promise<Profile[]> {
