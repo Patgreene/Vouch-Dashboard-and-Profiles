@@ -203,13 +203,19 @@ export async function trackEventInSupabase(
   profileId: string,
   eventType: "page_view" | "quote_view" | "profile_created",
   metadata?: Record<string, any>,
+  visitorId?: string,
 ): Promise<void> {
   try {
-    const { error } = await supabase.from("analytics").insert({
+    const eventData = {
       profile_id: profileId,
       event_type: eventType,
-      metadata: metadata || {},
-    });
+      metadata: {
+        ...metadata,
+        visitor_id: visitorId || undefined,
+      },
+    };
+
+    const { error } = await supabase.from("analytics").insert(eventData);
 
     if (error) throw error;
   } catch (error) {
@@ -226,7 +232,7 @@ export async function getAnalyticsFromSupabase() {
 
     if (error) throw error;
 
-    // Transform to match existing analytics format
+    // Transform to match existing analytics format with unique visitor tracking
     const totalPageViews = data.filter(
       (e) => e.event_type === "page_view",
     ).length;
@@ -237,18 +243,35 @@ export async function getAnalyticsFromSupabase() {
     const profileStats = data.reduce(
       (acc, event) => {
         if (!acc[event.profile_id]) {
-          acc[event.profile_id] = { pageViews: 0, quoteViews: 0 };
+          acc[event.profile_id] = {
+            pageViews: 0,
+            quoteViews: 0,
+            uniqueVisitors: new Set(),
+          };
         }
 
         if (event.event_type === "page_view") {
           acc[event.profile_id].pageViews++;
+
+          // Track unique visitors for page views
+          const visitorId = event.metadata?.visitor_id;
+          if (visitorId) {
+            acc[event.profile_id].uniqueVisitors.add(visitorId);
+          }
         } else if (event.event_type === "quote_view") {
           acc[event.profile_id].quoteViews++;
         }
 
         return acc;
       },
-      {} as Record<string, { pageViews: number; quoteViews: number }>,
+      {} as Record<
+        string,
+        {
+          pageViews: number;
+          quoteViews: number;
+          uniqueVisitors: Set<string>;
+        }
+      >,
     );
 
     return {
@@ -256,7 +279,9 @@ export async function getAnalyticsFromSupabase() {
       totalQuoteViews,
       profileStats: Object.entries(profileStats).map(([profileId, stats]) => ({
         profileId,
-        ...stats,
+        pageViews: stats.pageViews,
+        quoteViews: stats.quoteViews,
+        uniqueVisitors: stats.uniqueVisitors.size, // Convert Set to count
       })),
     };
   } catch (error) {
