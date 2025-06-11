@@ -65,10 +65,9 @@ export default function AdminDashboard() {
   // Load profiles and analytics on component mount
   useEffect(() => {
     async function loadData() {
-      try {
-        console.log("Loading admin dashboard data...");
-        setLoading(true);
+      console.log("Loading admin dashboard data...");
 
+      try {
         const [profilesData, analyticsData] = await Promise.all([
           dataProvider.getAllProfiles(),
           dataProvider.getAnalytics(),
@@ -79,6 +78,7 @@ export default function AdminDashboard() {
 
         setProfiles(profilesData);
         setLiveAnalytics(analyticsData);
+        setLoading(false);
       } catch (error) {
         console.error("Error loading admin dashboard data:", error);
         // Fallback to empty data to prevent crash
@@ -88,7 +88,6 @@ export default function AdminDashboard() {
           totalQuoteViews: 0,
           profileStats: [],
         });
-      } finally {
         setLoading(false);
       }
     }
