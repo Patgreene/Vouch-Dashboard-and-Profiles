@@ -22,7 +22,7 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
         <div className="flex flex-col space-y-4">
           {/* Top section with avatar and "What is Vouch?" */}
           <div className="flex items-start justify-between">
-            <Avatar className="h-20 w-20 sm:h-24 sm:w-24 md:h-32 md:w-32 ring-2 ring-white shadow-lg">
+            <Avatar className="h-20 w-20 sm:h-24 sm:w-24 md:h-32 md:w-32 ring-2 ring-white shadow-lg profile-avatar-large">
               <AvatarImage
                 src={profile.photo}
                 alt={profile.name}
