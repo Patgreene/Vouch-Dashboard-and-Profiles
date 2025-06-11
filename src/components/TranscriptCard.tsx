@@ -66,15 +66,20 @@ export function TranscriptCard({
   }, [expanded, transcript.id, processHighlightFromUrl]);
 
   return (
-    <Card className="overflow-hidden transition-all duration-200 hover:shadow-md">
+    <Card className="overflow-hidden transition-all duration-200 hover:shadow-md max-w-full">
       <Button
         variant="ghost"
         onClick={toggle}
-        className="w-full justify-between p-4 sm:p-6 h-auto text-left hover:bg-gray-50 transition-colors"
+        className="w-full justify-between p-4 sm:p-6 h-auto text-left hover:bg-gray-50 transition-colors max-w-full"
+        style={{
+          whiteSpace: "normal",
+          wordBreak: "break-word",
+          overflowWrap: "anywhere",
+        }}
       >
         <div className="flex flex-col sm:flex-row sm:items-start justify-between w-full gap-3 sm:gap-4">
           {/* Main Content Area */}
-          <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+          <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0 overflow-hidden">
             <Avatar className="h-10 w-10 sm:h-12 sm:w-12 mt-1 shrink-0">
               <AvatarImage
                 src={transcript.speakerPhoto}
@@ -86,7 +91,13 @@ export function TranscriptCard({
               </AvatarFallback>
             </Avatar>
 
-            <div className="flex-1 min-w-0">
+            <div
+              className="flex-1 min-w-0 max-w-full overflow-hidden"
+              style={{
+                wordBreak: "break-word",
+                overflowWrap: "anywhere",
+              }}
+            >
               <h3 className="font-semibold text-gray-900 text-base sm:text-lg mb-1 leading-tight">
                 {transcript.speakerName}
               </h3>
