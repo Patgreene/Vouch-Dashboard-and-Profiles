@@ -416,6 +416,7 @@ export default function AdminDashboard() {
                     (mockStats?.pageViews || 0) + (liveStats?.pageViews || 0);
                   const quoteViews =
                     (mockStats?.quoteViews || 0) + (liveStats?.quoteViews || 0);
+                  const uniqueVisitors = liveStats?.uniqueVisitors || 0;
 
                   return (
                     <div
@@ -446,6 +447,12 @@ export default function AdminDashboard() {
                               {pageViews}
                             </div>
                             <div className="text-gray-600">Page Views</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="font-semibold text-gray-900">
+                              {uniqueVisitors}
+                            </div>
+                            <div className="text-gray-600">Unique Visitors</div>
                           </div>
                           <div className="text-center">
                             <div className="font-semibold text-gray-900">
