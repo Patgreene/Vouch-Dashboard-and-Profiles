@@ -81,10 +81,32 @@ export class DataProvider {
     eventType: "page_view" | "quote_view" | "profile_created",
     metadata?: Record<string, any>,
   ): Promise<void> {
+    // Import visitor tracking for unique visitor counting and cooldown
+    const { getVisitorId, recordVisit } = await import("./visitorTracking");
+
     if (this.useSupabase) {
-      await trackEventInSupabase(profileId, eventType, metadata);
+      const visitorId = getVisitorId();
+
+      // For page views, check cooldown and record visit
+      if (eventType === "page_view") {
+        const shouldCount = recordVisit(profileId);
+        if (!shouldCount) {
+          return; // Skip tracking due to cooldown
+        }
+      }
+
+      await trackEventInSupabase(profileId, eventType, metadata, visitorId);
     } else {
-      // Fallback to existing analytics system
+      // Fallback to existing analytics system with visitor tracking
+      const visitorId = getVisitorId();
+
+      if (eventType === "page_view") {
+        const shouldCount = recordVisit(profileId);
+        if (!shouldCount) {
+          return; // Skip tracking due to cooldown
+        }
+      }
+
       const { analytics } = await import("./analytics");
       if (eventType === "page_view") {
         analytics.trackPageView(profileId);
