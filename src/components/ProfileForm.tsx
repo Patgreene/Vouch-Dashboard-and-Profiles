@@ -295,7 +295,7 @@ export function ProfileForm({
                 <Label htmlFor="photo">Profile Photo</Label>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
-                    <Avatar className="h-20 w-20 ring-2 ring-gray-200">
+                    <Avatar className="h-20 w-20 ring-2 ring-gray-200 profile-avatar-medium">
                       <AvatarImage
                         src={formData.photo}
                         alt={formData.name}
@@ -313,9 +313,23 @@ export function ProfileForm({
                         onChange={handlePhotoUpload}
                         className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-vouch-50 file:text-vouch-700 hover:file:bg-vouch-100"
                       />
-                      <p className="text-xs text-gray-500 mt-1">
-                        Upload a square image for best results
-                      </p>
+                      <div className="mt-2 space-y-1">
+                        <p className="text-xs text-gray-500">
+                          <strong>📸 Upload Requirements:</strong>
+                        </p>
+                        <ul className="text-xs text-gray-500 space-y-1 ml-4 list-disc">
+                          <li>High-resolution image (at least 300px wide)</li>
+                          <li>Square format recommended for best results</li>
+                          <li>File formats: JPG, PNG, WebP</li>
+                          <li>
+                            Max display size: 150px (maintains sharp quality)
+                          </li>
+                        </ul>
+                        <p className="text-xs text-amber-600 mt-2">
+                          💡 Tip: Higher resolution images look sharper when
+                          scaled down
+                        </p>
+                      </div>
                     </div>
                   </div>
                   {formData.photo && (

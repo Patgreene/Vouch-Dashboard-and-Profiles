@@ -6,12 +6,20 @@
   object-position: center !important;
   width: 100% !important;
   height: 100% !important;
+  /* Prevent scaling beyond actual image resolution */
+  max-width: 150px !important;
+  max-height: 150px !important;
+  image-rendering: auto !important;
+  image-rendering: -webkit-optimize-contrast !important;
 }
 
 /* Avatar container styles */
 [data-radix-avatar-root] {
   overflow: hidden !important;
   position: relative !important;
+  /* Ensure container doesn't exceed our max dimensions */
+  max-width: 150px !important;
+  max-height: 150px !important;
 }
 
 /* Ensure circular avatars stay circular */
@@ -19,40 +27,69 @@
   border-radius: 50% !important;
 }
 
-/* Responsive avatar sizes with proper aspect ratios */
+/* Responsive avatar sizes with proper aspect ratios and max constraints */
 .avatar-xs {
   width: 24px !important;
   height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
 }
 
 .avatar-sm {
   width: 32px !important;
   height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
 }
 
 .avatar-md {
   width: 40px !important;
   height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
 }
 
 .avatar-lg {
   width: 48px !important;
   height: 48px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
 }
 
 .avatar-xl {
   width: 64px !important;
   height: 64px !important;
+  max-width: 64px !important;
+  max-height: 64px !important;
 }
 
 .avatar-2xl {
   width: 80px !important;
   height: 80px !important;
+  max-width: 80px !important;
+  max-height: 80px !important;
 }
 
 .avatar-3xl {
   width: 96px !important;
   height: 96px !important;
+  max-width: 96px !important;
+  max-height: 96px !important;
+}
+
+/* Profile header specific larger sizes with max constraint */
+.profile-avatar-large {
+  width: 128px !important;
+  height: 128px !important;
+  max-width: 150px !important;
+  max-height: 150px !important;
+}
+
+.profile-avatar-medium {
+  width: 80px !important;
+  height: 80px !important;
+  max-width: 80px !important;
+  max-height: 80px !important;
 }
 
 /* Ensure images don't stretch on mobile */
@@ -60,6 +97,13 @@
   [data-radix-avatar-image] {
     object-fit: cover !important;
     object-position: center !important;
+    max-width: 150px !important;
+    max-height: 150px !important;
+  }
+
+  [data-radix-avatar-root] {
+    max-width: 150px !important;
+    max-height: 150px !important;
   }
 }
 
@@ -71,4 +115,19 @@
   object-position: center !important;
   width: 100% !important;
   height: 100% !important;
+  max-width: 150px !important;
+  max-height: 150px !important;
+}
+
+/* Prevent image upscaling beyond natural resolution */
+img[src*="supabase"],
+img[src*="cloudinary"],
+img[src*="amazonaws"],
+[data-radix-avatar-image][src] {
+  image-rendering: auto !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  /* Maintain crisp edges when scaling down */
+  -webkit-backface-visibility: hidden !important;
+  -moz-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
 }
