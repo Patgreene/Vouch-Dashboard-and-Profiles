@@ -160,15 +160,9 @@ export async function testClipboard(
   }
 }
 
-// Auto-run debug when this file is loaded
+// Make debug functions available globally but don't auto-run
 if (typeof window !== "undefined") {
-  // Make debug functions available globally
   (window as any).debugHighlightFeature = debugHighlightFeature;
   (window as any).debugTextSelection = debugTextSelection;
   (window as any).testClipboard = testClipboard;
-
-  console.log("🛠️ Debug functions available:");
-  console.log("- debugHighlightFeature(): Check overall setup");
-  console.log("- debugTextSelection(): Check current text selection");
-  console.log('- testClipboard("text"): Test clipboard functionality');
 }
