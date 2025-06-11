@@ -810,6 +810,7 @@ export function ProfileForm({
                             <AvatarImage
                               src={transcript.speakerPhoto}
                               alt={transcript.speakerName}
+                              className="object-cover object-center"
                             />
                             <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
                               {getInitials(transcript.speakerName)}
