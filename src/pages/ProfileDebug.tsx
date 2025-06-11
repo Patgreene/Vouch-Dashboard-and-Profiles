@@ -12,14 +12,24 @@ export default function ProfileDebug() {
         console.log("🔄 Loading all profiles for debug...");
         const allProfiles = await dataProvider.getAllProfiles();
         console.log("📋 All available profiles:", allProfiles);
-        setProfiles(allProfiles);
+        console.log(
+          "📊 Setting profiles state with",
+          allProfiles.length,
+          "profiles",
+        );
+        setProfiles(allProfiles || []);
+        console.log("✅ Profiles state updated");
       } catch (error) {
         console.error("❌ Error loading profiles:", error);
+        setProfiles([]);
       } finally {
+        console.log("🏁 Setting loading to false");
         setLoading(false);
       }
     }
-    loadProfiles();
+
+    // Add small delay to ensure dataProvider is initialized
+    setTimeout(loadProfiles, 100);
   }, []);
 
   if (loading) {
