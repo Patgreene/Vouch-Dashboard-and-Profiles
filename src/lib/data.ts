@@ -79,6 +79,8 @@ export const sampleProfiles: Profile[] = [
         "Schedule regular design reviews with stakeholders",
         "Encourage experimentation and rapid prototyping",
       ],
+      customTitle1: "Communication Style",
+      customTitle2: "Ways to Bring Out Their Best",
     },
     transcripts: [
       {
