@@ -306,14 +306,34 @@ export function ProfileForm({
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
-                      <Input
+                      <input
                         id="photo"
                         type="file"
                         accept="image/*"
                         onChange={handlePhotoUpload}
-                        className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-vouch-50 file:text-vouch-700 hover:file:bg-vouch-100"
+                        className="hidden"
+                        ref={(ref) => {
+                          if (ref) {
+                            (window as any).photoInputRef = ref;
+                          }
+                        }}
                       />
-                      <p className="text-xs text-gray-500 mt-1">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const input = document.getElementById(
+                            "photo",
+                          ) as HTMLInputElement;
+                          input?.click();
+                        }}
+                        className="mb-2"
+                      >
+                        <Upload className="h-4 w-4 mr-2" />
+                        Upload Image
+                      </Button>
+                      <p className="text-xs text-gray-500">
                         Upload any image - it will be automatically fitted to
                         maintain proper proportions
                       </p>
