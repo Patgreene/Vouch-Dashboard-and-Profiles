@@ -355,9 +355,31 @@ export function ProfileForm({
                     <AvatarImage
                       src={formData.photo}
                       alt={formData.name}
-                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                  <Avatar className="h-16 w-16 ring-2 ring-gray-200">
-                    <AvatarImage
+                      className="object-cover object-center"
+                    />
+                    <AvatarFallback className="text-lg font-semibold bg-vouch-100 text-vouch-600">
+                      {getInitials(formData.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="text-xl font-bold">{formData.name}</h3>
+                    <p className="text-gray-600">{formData.title}</p>
+                    {formData.company && (
+                      <Badge variant="outline" className="mt-1">
+                        {formData.company}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Photo Upload */}
+              <div>
+                <Label htmlFor="photo">Profile Photo</Label>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <Avatar className="h-20 w-20 ring-2 ring-gray-200">
+                      <AvatarImage
                       src={formData.photo}
                       alt={formData.name}
                       className="object-cover object-center"
