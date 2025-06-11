@@ -147,6 +147,8 @@ export const sampleProfiles: Profile[] = [
         "Opportunities to mentor junior developers",
         "Time for code reviews and technical debt reduction",
       ],
+      customTitle1: "Communication Style",
+      customTitle2: "Ways to Bring Out Their Best",
     },
     transcripts: [
       {
