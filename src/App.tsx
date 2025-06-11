@@ -17,6 +17,7 @@ function App() {
         <Route path="/admin-stats-d1g3Yt9" element={<AdminDashboard />} />
         <Route path="/supabase-test" element={<SupabaseTest />} />
         <Route path="/emergency-admin" element={<EmergencyAdmin />} />
+        <Route path="/test" element={<TestPage />} />
         <Route path="/not-found" element={<NotFound />} />
         {/* Catch-all route for 404s */}
         <Route path="*" element={<NotFound />} />
