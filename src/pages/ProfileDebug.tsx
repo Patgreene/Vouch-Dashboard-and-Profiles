@@ -5,64 +5,94 @@ import { Profile } from "@/lib/data";
 export default function ProfileDebug() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let mounted = true;
+
     async function loadProfiles() {
       try {
         console.log("🔄 Loading all profiles for debug...");
+        setLoading(true);
+        setError(null);
+
         const allProfiles = await dataProvider.getAllProfiles();
         console.log("📋 All available profiles:", allProfiles);
-        console.log(
-          "📊 Setting profiles state with",
-          allProfiles.length,
-          "profiles",
-        );
-        setProfiles(allProfiles || []);
-        console.log("✅ Profiles state updated");
-      } catch (error) {
-        console.error("❌ Error loading profiles:", error);
-        setProfiles([]);
-      } finally {
-        console.log("🏁 Setting loading to false");
-        setLoading(false);
+
+        if (mounted) {
+          console.log(
+            "📊 Setting profiles state with",
+            allProfiles?.length || 0,
+            "profiles",
+          );
+          setProfiles(allProfiles || []);
+          setLoading(false);
+          console.log("✅ Profiles state updated");
+        }
+      } catch (err) {
+        console.error("❌ Error loading profiles:", err);
+        if (mounted) {
+          setError(err instanceof Error ? err.message : "Unknown error");
+          setProfiles([]);
+          setLoading(false);
+        }
       }
     }
 
-    // Add small delay to ensure dataProvider is initialized
-    setTimeout(loadProfiles, 100);
+    loadProfiles();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  if (loading) {
-    return (
-      <div className="p-8">
-        <h1 className="text-2xl font-bold mb-4">Profile Debug</h1>
-        <p>Loading profiles...</p>
-      </div>
-    );
-  }
+  console.log(
+    "🔍 ProfileDebug render - loading:",
+    loading,
+    "profiles:",
+    profiles.length,
+  );
 
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">Profile Debug</h1>
       <p className="mb-4">Storage type: {dataProvider.getStorageType()}</p>
-      <p className="mb-4">Total profiles found: {profiles.length}</p>
 
-      <div className="space-y-4">
-        {profiles.map((profile) => (
-          <div key={profile.id} className="border p-4 rounded">
-            <h3 className="font-bold">{profile.name}</h3>
-            <p>ID: {profile.id}</p>
-            <p>Title: {profile.title}</p>
-            <p>Transcripts: {profile.transcripts.length}</p>
-            <a
-              href={`/profile/${profile.id}`}
-              className="text-blue-600 underline"
-            >
-              View Profile
-            </a>
+      {loading && <p className="text-blue-600">Loading profiles...</p>}
+      {error && <p className="text-red-600">Error: {error}</p>}
+
+      {!loading && !error && (
+        <>
+          <p className="mb-4 text-green-600">
+            ✅ Total profiles found: {profiles.length}
+          </p>
+
+          <div className="space-y-4">
+            {profiles.length === 0 ? (
+              <p className="text-gray-500">No profiles found</p>
+            ) : (
+              profiles.map((profile) => (
+                <div key={profile.id} className="border p-4 rounded bg-gray-50">
+                  <h3 className="font-bold text-lg">{profile.name}</h3>
+                  <p className="text-sm text-gray-600">ID: {profile.id}</p>
+                  <p className="text-sm text-gray-600">
+                    Title: {profile.title}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Transcripts: {profile.transcripts?.length || 0}
+                  </p>
+                  <a
+                    href={`/profile/${profile.id}`}
+                    className="text-blue-600 underline hover:text-blue-800"
+                  >
+                    View Profile →
+                  </a>
+                </div>
+              ))
+            )}
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </div>
   );
 }
