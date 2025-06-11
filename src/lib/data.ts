@@ -38,9 +38,9 @@ export interface Analytics {
 
 export interface ProfileStats {
   profileId: string;
-  profileName: string;
   pageViews: number;
   quoteViews: number;
+  uniqueVisitors?: number;
 }
 
 // Sample data
