@@ -37,7 +37,10 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                 asChild
                 className="text-vouch-600 hover:text-vouch-700 p-0 ml-auto"
               >
-                <a href="/" className="flex items-center gap-2">
+                <a
+                  href="https://www.vouchprofile.com/"
+                  className="flex items-center gap-2"
+                >
                   <VouchLogo size="sm" />
                   <span className="text-xs">What is this?</span>
                 </a>

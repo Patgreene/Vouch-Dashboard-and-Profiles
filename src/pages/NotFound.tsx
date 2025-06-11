@@ -22,10 +22,10 @@ export default function NotFound() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button asChild className="gradient-bg">
-            <Link to="/">
+            <a href="https://www.vouchprofile.com/">
               <Home className="mr-2 h-4 w-4" />
               Back to Home
-            </Link>
+            </a>
           </Button>
           <Button variant="outline" onClick={() => window.history.back()}>
             <ArrowLeft className="mr-2 h-4 w-4" />
