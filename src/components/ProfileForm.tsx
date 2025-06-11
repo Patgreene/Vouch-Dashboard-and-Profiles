@@ -292,6 +292,51 @@ export function ProfileForm({
       .toUpperCase();
   };
 
+  // Progress Bar Component
+  const ProgressBar = () => (
+    <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+      <div
+        className="bg-vouch-600 h-2 rounded-full transition-all duration-1000 ease-out"
+        style={{
+          width: isSubmitting ? "100%" : "0%",
+          animation: isSubmitting ? "progress 2s ease-in-out" : "none",
+        }}
+      />
+      <style>{`
+        @keyframes progress {
+          0% { width: 0%; }
+          50% { width: 70%; }
+          100% { width: 100%; }
+        }
+      `}</style>
+    </div>
+  );
+
+  // Status Message Component
+  const StatusMessage = () => {
+    if (submitStatus === "success") {
+      return (
+        <div className="flex items-center gap-2 text-green-600 text-sm font-medium">
+          <CheckCircle className="h-4 w-4" />
+          Success!
+        </div>
+      );
+    }
+
+    if (submitStatus === "error") {
+      return (
+        <div className="flex items-center gap-2 text-red-600 text-sm">
+          <AlertCircle className="h-4 w-4" />
+          <span>
+            <strong>Oops!</strong> {errorMessage}
+          </span>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -870,14 +915,48 @@ export function ProfileForm({
           </Card>
 
           {/* Form Actions */}
-          <div className="flex justify-end gap-3 pt-6 border-t border-gray-200">
-            <Button type="button" variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button type="submit" className="gradient-bg">
-              <Save className="h-4 w-4 mr-2" />
-              {editingProfile ? "Update Profile" : "Create Profile"}
-            </Button>
+          <div className="pt-6 border-t border-gray-200">
+            {/* Progress Bar and Status */}
+            {(isSubmitting || submitStatus !== "idle") && (
+              <div className="mb-4">
+                {isSubmitting && <ProgressBar />}
+                <StatusMessage />
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex justify-end gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onClose}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="gradient-bg min-w-[140px]"
+                disabled={isSubmitting || submitStatus === "success"}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                    {editingProfile ? "Updating..." : "Creating..."}
+                  </>
+                ) : submitStatus === "success" ? (
+                  <>
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    Success!
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    {editingProfile ? "Update Profile" : "Create Profile"}
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
         </form>
       </div>
