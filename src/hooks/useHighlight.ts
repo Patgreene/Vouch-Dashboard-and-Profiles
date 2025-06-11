@@ -137,11 +137,8 @@ export function useHighlight(profileId: string) {
         endOffset,
       );
 
-      console.log("🌐 Generated share URL:", shareUrl);
-
       // Perform clipboard operation in a separate microtask to avoid blocking UI
       const success = await copyToClipboard(shareUrl);
-      console.log("📋 Copy to clipboard result:", success);
 
       // Always show feedback to user
       setCopiedFeedback(true);
@@ -149,13 +146,6 @@ export function useHighlight(profileId: string) {
 
       if (success) {
         // Track the quote view
-        console.log("📊 Tracking quote view event...", {
-          profileId,
-          transcriptId,
-          startOffset,
-          endOffset,
-        });
-
         try {
           await dataProvider.trackEvent(profileId, "quote_view", {
             transcriptId,
@@ -163,16 +153,11 @@ export function useHighlight(profileId: string) {
             startOffset,
             endOffset,
           });
-          console.log("✅ Quote view tracked successfully");
         } catch (trackingError) {
-          console.error("❌ Failed to track quote view:", trackingError);
+          console.error("Failed to track quote view:", trackingError);
         }
-
-        console.log("✅ Share link operation completed successfully");
       } else {
-        console.error("❌ Failed to copy to clipboard");
         // Show manual copy option
-        console.log("📝 Manual copy - URL:", shareUrl);
         alert(
           `Could not automatically copy to clipboard. Please copy this URL manually:\n\n${shareUrl}`,
         );
