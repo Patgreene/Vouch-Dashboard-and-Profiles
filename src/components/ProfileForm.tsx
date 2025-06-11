@@ -42,6 +42,8 @@ const initialFormData: FormData = {
     weaknesses: [""],
     communicationStyle: [""],
     waysToBringOutBest: [""],
+    customTitle1: "",
+    customTitle2: "",
   },
   transcripts: [
     {
