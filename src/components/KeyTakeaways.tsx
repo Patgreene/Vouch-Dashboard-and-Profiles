@@ -55,9 +55,9 @@ export function KeyTakeaways({ takeaways }: KeyTakeawaysProps) {
     },
     {
       title: "Challenges",
-      icon: <AlertTriangle className="h-5 w-5 text-amber-600" />,
+      icon: <AlertTriangle className="h-5 w-5 text-orange-600" />,
       items: takeaways.weaknesses,
-      color: "bg-amber-100",
+      color: "bg-orange-100",
     },
     {
       title: takeaways.customTitle1 || "Custom Section 1",
