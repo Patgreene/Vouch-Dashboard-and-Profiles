@@ -49,7 +49,26 @@ export function TranscriptCard({
   };
 
   // Create preview text that shows approximately two lines
-  const previewText = paragraphs[0]?.substring(0, 200) + "...";
+  // Adjust length based on screen size - shorter on mobile for proper 2-line display
+  const getPreviewText = () => {
+    const baseText = paragraphs[0] || "";
+    // Use shorter length on mobile to ensure 2 lines display properly
+    const isMobile = window.innerWidth < 640; // sm breakpoint
+    const maxLength = isMobile ? 120 : 200;
+
+    if (baseText.length <= maxLength) {
+      return baseText;
+    }
+
+    // Find a good break point near the limit (word boundary)
+    const truncated = baseText.substring(0, maxLength);
+    const lastSpace = truncated.lastIndexOf(" ");
+    const breakPoint = lastSpace > maxLength * 0.7 ? lastSpace : maxLength;
+
+    return baseText.substring(0, breakPoint) + "...";
+  };
+
+  const previewText = getPreviewText();
 
   // Handle text selection within this transcript
   const handleMouseUp = () => {
@@ -107,6 +126,8 @@ export function TranscriptCard({
                     wordBreak: "break-word",
                     overflowWrap: "break-word",
                     hyphens: "auto",
+                    lineHeight: "1.4",
+                    maxHeight: "2.8em", // Approximately 2 lines
                   }}
                 >
                   {previewText}

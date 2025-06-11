@@ -80,45 +80,21 @@ export function KeyTakeaways({ takeaways }: KeyTakeawaysProps) {
           <Button
             variant="ghost"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full p-6 h-auto text-left hover:bg-transparent relative"
+            className="w-full justify-between p-6 h-auto text-left hover:bg-transparent"
           >
-            {/* Desktop Layout */}
-            <div className="hidden sm:flex justify-between items-center w-full">
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-1">
-                  Key Takeaways
-                </h2>
-                <p className="text-sm text-gray-600">
-                  {isExpanded ? "Click to collapse" : "Click to expand"}
-                </p>
-              </div>
-              {isExpanded ? (
-                <ChevronUp className="h-5 w-5 text-gray-500" />
-              ) : (
-                <ChevronDown className="h-5 w-5 text-gray-500" />
-              )}
+            <div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-1">
+                Key Takeaways
+              </h2>
+              <p className="text-sm text-gray-600">
+                {isExpanded ? "Click to collapse" : "Click to expand"}
+              </p>
             </div>
-
-            {/* Mobile Layout */}
-            <div className="sm:hidden w-full">
-              <div className="text-center mb-4">
-                <h2 className="text-xl font-semibold text-gray-900 mb-1">
-                  Key Takeaways
-                </h2>
-                <p className="text-sm text-gray-600">
-                  {isExpanded ? "Click to collapse" : "Click to expand"}
-                </p>
-              </div>
-
-              {/* Arrow at bottom center on mobile */}
-              <div className="flex justify-center">
-                {isExpanded ? (
-                  <ChevronUp className="h-5 w-5 text-gray-500" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-gray-500" />
-                )}
-              </div>
-            </div>
+            {isExpanded ? (
+              <ChevronUp className="h-5 w-5 text-gray-500" />
+            ) : (
+              <ChevronDown className="h-5 w-5 text-gray-500" />
+            )}
           </Button>
         </div>
 
