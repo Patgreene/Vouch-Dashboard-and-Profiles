@@ -165,15 +165,23 @@ export function TranscriptCard({
             style={{
               userSelect: "text",
               cursor: "text",
+              whiteSpace: "normal",
               wordBreak: "break-word",
-              overflowWrap: "break-word",
-              hyphens: "auto",
+              overflowWrap: "anywhere",
+              maxWidth: "100%",
+              width: "100%",
             }}
           >
             {paragraphs.map((paragraph, index) => (
               <p
                 key={index}
                 className="mb-4 text-gray-700 leading-relaxed last:mb-0"
+                style={{
+                  whiteSpace: "normal",
+                  wordBreak: "break-word",
+                  overflowWrap: "anywhere",
+                  maxWidth: "100%",
+                }}
               >
                 {paragraph}
               </p>
