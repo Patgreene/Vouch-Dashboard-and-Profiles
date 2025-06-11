@@ -1,0 +1,74 @@
+/* Profile Picture Fix - Ensure proper aspect ratio and cropping */
+
+/* Base avatar image styles */
+[data-radix-avatar-image] {
+  object-fit: cover !important;
+  object-position: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Avatar container styles */
+[data-radix-avatar-root] {
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+/* Ensure circular avatars stay circular */
+.rounded-full [data-radix-avatar-image] {
+  border-radius: 50% !important;
+}
+
+/* Responsive avatar sizes with proper aspect ratios */
+.avatar-xs {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.avatar-sm {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.avatar-md {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.avatar-lg {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.avatar-xl {
+  width: 64px !important;
+  height: 64px !important;
+}
+
+.avatar-2xl {
+  width: 80px !important;
+  height: 80px !important;
+}
+
+.avatar-3xl {
+  width: 96px !important;
+  height: 96px !important;
+}
+
+/* Ensure images don't stretch on mobile */
+@media (max-width: 640px) {
+  [data-radix-avatar-image] {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+}
+
+/* Fix for any img tags within avatars */
+.Avatar img,
+.avatar img,
+[role="img"] img {
+  object-fit: cover !important;
+  object-position: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
