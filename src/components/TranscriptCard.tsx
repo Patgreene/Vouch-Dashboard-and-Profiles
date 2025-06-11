@@ -115,7 +115,7 @@ export function TranscriptCard({
               </div>
 
               {!expanded && (
-                <p
+                <div
                   className="text-gray-600 text-sm break-words overflow-hidden"
                   style={{
                     display: "-webkit-box",
@@ -123,13 +123,13 @@ export function TranscriptCard({
                     WebkitBoxOrient: "vertical",
                     wordBreak: "break-word",
                     overflowWrap: "break-word",
-                    lineHeight: "1.5",
-                    maxHeight: "3em", // 2 lines × 1.5 line-height
-                    minHeight: "3em", // Force minimum height for 2 lines
+                    lineHeight: "1.4",
+                    height: "2.8em", // Force exact height for 2 lines
+                    width: "100%",
                   }}
                 >
-                  {previewText}
-                </p>
+                  <span style={{ display: "inline" }}>{previewText}</span>
+                </div>
               )}
             </div>
           </div>
