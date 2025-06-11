@@ -22,8 +22,12 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
         <div className="flex flex-col space-y-4">
           {/* Top section with avatar and "What is Vouch?" */}
           <div className="flex items-start justify-between">
-            <Avatar className="h-20 w-20 sm:h-24 sm:w-24 md:h-32 md:w-32">
-              <AvatarImage src={profile.photo} alt={profile.name} />
+            <Avatar className="h-20 w-20 sm:h-24 sm:w-24 md:h-32 md:w-32 ring-2 ring-white shadow-lg">
+              <AvatarImage
+                src={profile.photo}
+                alt={profile.name}
+                className="object-cover object-center"
+              />
               <AvatarFallback className="text-lg sm:text-xl font-semibold bg-gradient-to-br from-vouch-500 to-vouch-600 text-white">
                 {getInitials(profile.name)}
               </AvatarFallback>
