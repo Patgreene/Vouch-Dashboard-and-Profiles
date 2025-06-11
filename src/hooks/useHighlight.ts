@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { analytics, copyToClipboard, generateShareUrl } from "@/lib/analytics";
+import { dataProvider } from "@/lib/dataProvider";
 
 export interface HighlightData {
   transcriptId: string;
@@ -153,12 +154,14 @@ export function useHighlight(profileId: string) {
 
       if (success) {
         // Track the quote view
-        analytics.trackQuoteView(
-          profileId,
+        await dataProvider.trackEvent(profileId, "quote_view", {
           transcriptId,
-          `${startOffset}-${endOffset}`,
-        );
+          highlightId: `${startOffset}-${endOffset}`,
+          startOffset,
+          endOffset,
+        });
         console.log("✅ Share link operation completed successfully");
+      }
       } else {
         console.error("❌ Failed to copy to clipboard");
         // Show manual copy option
@@ -342,11 +345,12 @@ export function useHighlight(profileId: string) {
               });
 
               // Track the quote view
-              analytics.trackQuoteView(
-                profileId,
+              await dataProvider.trackEvent(profileId, "quote_view", {
                 transcriptId,
-                `${startOffset}-${endOffset}`,
-              );
+                highlightId: `${startOffset}-${endOffset}`,
+                startOffset,
+                endOffset,
+              });
             } catch (error) {
               console.warn("❌ Could not highlight text:", error);
 
