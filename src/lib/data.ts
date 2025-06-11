@@ -16,6 +16,8 @@ export interface KeyTakeaways {
   weaknesses: string[];
   communicationStyle: string[];
   waysToBringOutBest: string[];
+  customTitle1?: string;
+  customTitle2?: string;
 }
 
 export interface Transcript {
