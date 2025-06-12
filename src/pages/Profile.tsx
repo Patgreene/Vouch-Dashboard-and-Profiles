@@ -1,13 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { ProfileHeader } from "@/components/ProfileHeader";
 import { KeyTakeaways } from "@/components/KeyTakeaways";
 import { TranscriptCard } from "@/components/TranscriptCard";
 import { ShareTooltip } from "@/components/ShareTooltip";
-import { Footer } from "@/components/Footer";
 import { dataProvider } from "@/lib/dataProvider";
 import { Profile } from "@/lib/data";
 import { useHighlight } from "@/hooks/useHighlight";
+
+// Lazy load Footer component
+const Footer = lazy(() =>
+  import("@/components/Footer").then((module) => ({
+    default: module.Footer,
+  })),
+);
 
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
@@ -164,8 +170,10 @@ export default function Profile() {
         </div>
       )}
 
-      {/* Footer */}
-      <Footer />
+      {/* Footer - Lazy loaded */}
+      <Suspense fallback={<div className="h-16" />}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }
