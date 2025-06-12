@@ -3,12 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello world project</title>
+    <title>Vouch Profile</title>
+
+    <!-- Performance optimizations -->
+    <meta name="theme-color" content="#0284c7" />
+
+    <!-- Preconnect to important domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Optimize font loading - load only needed weights -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <!-- Critical CSS will be injected here by Vite -->
+
+    <!-- Prefetch DNS for potential external resources -->
+    <link rel="dns-prefetch" href="https://cdn.builder.io" />
+
+    <!-- Resource hints for better loading -->
+    <link rel="modulepreload" href="/src/main.tsx" />
   </head>
 
   <body>
     <div id="root"></div>
 
+    <!-- Load main script as module with proper priority -->
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Inline critical loading optimization -->
+    <script>
+      // Preload critical resources
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(() => {
+          // Prefetch likely navigation targets
+          const prefetchLinks = ["/admin-stats-d1g3Yt9"];
+          prefetchLinks.forEach((href) => {
+            const link = document.createElement("link");
+            link.rel = "prefetch";
+            link.href = href;
+            document.head.appendChild(link);
+          });
+        });
+      }
+    </script>
   </body>
 </html>
