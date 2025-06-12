@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import {
   Plus,
@@ -22,9 +22,15 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { mockAnalytics, Profile } from "@/lib/data";
 import { analytics } from "@/lib/analytics";
-import { ProfileForm } from "@/components/ProfileForm";
 import { dataProvider } from "@/lib/dataProvider";
 import { downloadProfileBackup, importProfiles } from "@/lib/profileSync";
+
+// Lazy load heavy ProfileForm component
+const ProfileForm = lazy(() =>
+  import("@/components/ProfileForm").then((module) => ({
+    default: module.ProfileForm,
+  })),
+);
 
 interface StatCardProps {
   title: string;
