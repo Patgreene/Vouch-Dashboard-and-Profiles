@@ -1,11 +1,38 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
+
+// Import critical CSS first
 import "./index.css";
-import "./styles/avatar-fix.css";
-import { initializeVisitorTracking } from "./lib/visitorTracking.ts";
-import "./utils/deleteNathanProfile.ts";
 
-// Initialize visitor tracking
-initializeVisitorTracking();
+// Lazy load non-critical CSS and utilities
+const loadNonCriticalAssets = async () => {
+  // Load avatar fixes only when needed
+  await import("./styles/avatar-fix.css");
 
-createRoot(document.getElementById("root")!).render(<App />);
+  // Initialize visitor tracking after main app loads
+  const { initializeVisitorTracking } = await import(
+    "./lib/visitorTracking.ts"
+  );
+  initializeVisitorTracking();
+
+  // Load cleanup utility after everything else
+  await import("./utils/deleteNathanProfile.ts");
+};
+
+// Start the React app immediately
+const rootElement = document.getElementById("root")!;
+const root = createRoot(rootElement);
+root.render(<App />);
+
+// Load non-critical assets after the app is rendered
+if (typeof window !== "undefined") {
+  // Use requestIdleCallback for better performance
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(() => {
+      loadNonCriticalAssets();
+    });
+  } else {
+    // Fallback for browsers without requestIdleCallback
+    setTimeout(loadNonCriticalAssets, 100);
+  }
+}
