@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import {
   ChevronDown,
   ChevronUp,
@@ -85,6 +85,8 @@ export function TranscriptCard({
                 src={transcript.speakerPhoto}
                 alt={transcript.speakerName}
                 className="object-cover object-center"
+                loading="lazy"
+                decoding="async"
               />
               <AvatarFallback className="text-xs sm:text-sm font-semibold bg-vouch-100 text-vouch-600">
                 {getInitials(transcript.speakerName)}
