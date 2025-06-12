@@ -5,9 +5,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:analyze": "vite build --mode analyze",
+    "preview": "vite preview",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "performance:audit": "npm run build && npm run preview"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -39,7 +42,6 @@
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.4",
     "@react-three/fiber": "^8.18.0",
-    "@supabase/supabase-js": "^2.50.0",
     "@swc/core": "^1.11.24",
     "@tanstack/react-query": "^5.56.2",
     "@types/three": "^0.176.0",
