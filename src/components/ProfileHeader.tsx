@@ -27,6 +27,9 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
                 src={profile.photo}
                 alt={profile.name}
                 className="object-cover object-center"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
               />
               <AvatarFallback className="text-lg sm:text-xl font-semibold bg-gradient-to-br from-vouch-500 to-vouch-600 text-white">
                 {getInitials(profile.name)}
