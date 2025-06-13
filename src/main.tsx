@@ -21,6 +21,7 @@ const loadNonCriticalAssets = async () => {
   // Load debugging utilities (only in development)
   if (import.meta.env.DEV) {
     await import("./utils/supabaseDebug.ts");
+    await import("./utils/databaseHealthCheck.ts");
   }
 };
 
