@@ -138,13 +138,14 @@ function transformToDatabase(profile: Profile): {
   };
 }
 
-// Get all profiles from Supabase
+// Get all profiles from Supabase with robust error handling
 export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
   try {
     // First test basic connection
     console.log("🔍 Testing Supabase connection for profiles...");
 
-    let profiles, profilesError;
+    let profiles: any[] = [];
+    let profilesError: any = null;
 
     // Try multiple query strategies to bypass 500 errors
     console.log("🔍 Attempting multiple query strategies...");
@@ -158,8 +159,7 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
         .order("created_at", { ascending: false });
 
       if (!fullQuery.error) {
-        profiles = fullQuery.data;
-        profilesError = null;
+        profiles = fullQuery.data || [];
         console.log("✅ Strategy 1 succeeded");
       } else {
         throw fullQuery.error;
@@ -170,13 +170,10 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
       // Strategy 2: Query without ordering
       try {
         console.log("Strategy 2: Query without ordering");
-        const noOrderQuery = await supabase
-          .from("profiles")
-          .select("*");
+        const noOrderQuery = await supabase.from("profiles").select("*");
 
         if (!noOrderQuery.error) {
-          profiles = noOrderQuery.data;
-          profilesError = null;
+          profiles = noOrderQuery.data || [];
           console.log("✅ Strategy 2 succeeded");
         } else {
           throw noOrderQuery.error;
@@ -189,11 +186,12 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
           console.log("Strategy 3: Basic fields only");
           const basicQuery = await supabase
             .from("profiles")
-            .select("id, name, title, company, photo, linkedin, cv, portfolio, key_takeaways");
+            .select(
+              "id, name, title, company, photo, linkedin, cv, portfolio, key_takeaways",
+            );
 
           if (!basicQuery.error) {
-            profiles = basicQuery.data;
-            profilesError = null;
+            profiles = basicQuery.data || [];
             console.log("✅ Strategy 3 succeeded");
           } else {
             throw basicQuery.error;
@@ -209,25 +207,33 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
               .select("id, name")
               .limit(10);
 
-            if (!minimalQuery.error) {
-              console.log("✅ Strategy 4 succeeded - connection works but complex queries fail");
-              console.log("🚨 This suggests a data structure issue in the database");
+            if (!minimalQuery.error && minimalQuery.data) {
+              console.log(
+                "✅ Strategy 4 succeeded - connection works but complex queries fail",
+              );
+              console.log(
+                "🚨 This suggests a data structure issue in the database",
+              );
 
               // Return minimal data for now so admin can load
-              profiles = minimalQuery.data?.map(p => ({
+              profiles = minimalQuery.data.map((p) => ({
                 ...p,
-                title: "Data structure issue",
-                keyTakeaways: {
+                title: "Data structure issue - check database",
+                company: null,
+                photo: null,
+                linkedin: null,
+                cv: null,
+                portfolio: null,
+                key_takeaways: {
                   strengths: [],
                   weaknesses: [],
                   communicationStyle: [],
-                  waysToBringOutBest: []
+                  waysToBringOutBest: [],
                 },
-                transcripts: []
               }));
-              profilesError = null;
+              console.log("✅ Strategy 4 completed with fallback data");
             } else {
-              throw minimalQuery.error;
+              throw minimalQuery.error || new Error("No data returned");
             }
           } catch (error4) {
             console.error("❌ All strategies failed");
@@ -236,12 +242,34 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
         }
       }
     }
-    }
 
     if (profilesError) {
       console.error("❌ Profiles query failed:");
-      console.error("Status:", profilesError.code);
-      console.error("Message:", profilesError.message);
+      console.error("Error details:", {
+        message:
+          profilesError instanceof Error
+            ? profilesError.message
+            : String(profilesError),
+        code:
+          profilesError &&
+          typeof profilesError === "object" &&
+          "code" in profilesError
+            ? profilesError.code
+            : "Unknown",
+        details:
+          profilesError &&
+          typeof profilesError === "object" &&
+          "details" in profilesError
+            ? profilesError.details
+            : null,
+        hint:
+          profilesError &&
+          typeof profilesError === "object" &&
+          "hint" in profilesError
+            ? profilesError.hint
+            : null,
+        fullError: profilesError,
+      });
       throw profilesError;
     }
 
@@ -249,15 +277,28 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
       `✅ Profiles fetched successfully: ${profiles?.length || 0} profiles`,
     );
 
+    // If no profiles found, return empty array
+    if (!profiles || profiles.length === 0) {
+      console.log("📭 No profiles found in database");
+      return [];
+    }
+
+    // Fetch transcripts for all profiles
+    console.log("📄 Fetching transcripts...");
     const { data: transcripts, error: transcriptsError } = await supabase
       .from("transcripts")
       .select("*")
       .order("created_at", { ascending: true });
 
-    if (transcriptsError) throw transcriptsError;
+    if (transcriptsError) {
+      console.warn(
+        "⚠️ Transcripts fetch failed, continuing without transcripts:",
+        transcriptsError,
+      );
+    }
 
     // Group transcripts by profile_id
-    const transcriptsByProfile = transcripts.reduce(
+    const transcriptsByProfile = (transcripts || []).reduce(
       (acc, transcript) => {
         if (!acc[transcript.profile_id]) {
           acc[transcript.profile_id] = [];
@@ -269,9 +310,12 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
     );
 
     // Transform to app format
-    return profiles.map((profile) =>
+    const transformedProfiles = profiles.map((profile) =>
       transformDatabaseProfile(profile, transcriptsByProfile[profile.id] || []),
     );
+
+    console.log("🎉 Profile transformation complete!");
+    return transformedProfiles;
   } catch (error) {
     console.error("Error fetching profiles from Supabase:");
     console.error("Error details:", {
