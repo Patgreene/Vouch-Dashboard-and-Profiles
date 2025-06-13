@@ -55,6 +55,30 @@ function transformDatabaseProfile(
   dbProfile: DatabaseProfile,
   transcripts: DatabaseTranscript[],
 ): Profile {
+  // Safely handle key_takeaways with fallback structure
+  const defaultKeyTakeaways = {
+    strengths: [],
+    weaknesses: [],
+    communicationStyle: [],
+    waysToBringOutBest: [],
+    customTitle1: undefined,
+    customTitle2: undefined,
+  };
+
+  let keyTakeaways = defaultKeyTakeaways;
+
+  try {
+    if (dbProfile.key_takeaways) {
+      keyTakeaways = {
+        ...defaultKeyTakeaways,
+        ...dbProfile.key_takeaways,
+      };
+    }
+  } catch (error) {
+    console.warn("⚠️ Invalid key_takeaways structure, using defaults:", error);
+    keyTakeaways = defaultKeyTakeaways;
+  }
+
   return {
     id: dbProfile.id,
     name: dbProfile.name,
@@ -64,7 +88,7 @@ function transformDatabaseProfile(
     linkedIn: dbProfile.linkedin || undefined,
     cv: dbProfile.cv || undefined,
     portfolio: dbProfile.portfolio || undefined,
-    keyTakeaways: dbProfile.key_takeaways,
+    keyTakeaways,
     transcripts: transcripts.map(transformDatabaseTranscript),
   };
 }
@@ -117,12 +141,34 @@ function transformToDatabase(profile: Profile): {
 // Get all profiles from Supabase
 export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
   try {
+    // First test basic connection
+    console.log("🔍 Testing Supabase connection for profiles...");
+
     const { data: profiles, error: profilesError } = await supabase
       .from("profiles")
       .select("*")
       .order("created_at", { ascending: false });
 
-    if (profilesError) throw profilesError;
+    if (profilesError) {
+      console.error("❌ Profiles query failed:");
+      console.error("Status:", profilesError.code);
+      console.error("Message:", profilesError.message);
+
+      // Handle specific 500 errors
+      if (profilesError.message?.includes("500")) {
+        console.error("🚨 Database server error (500) - this usually means:");
+        console.error("1. Database schema issue (missing tables/columns)");
+        console.error("2. Invalid JSON structure in key_takeaways field");
+        console.error("3. Database server is down");
+        console.error("4. Permission/RLS policy blocking access");
+      }
+
+      throw profilesError;
+    }
+
+    console.log(
+      `✅ Profiles fetched successfully: ${profiles?.length || 0} profiles`,
+    );
 
     const { data: transcripts, error: transcriptsError } = await supabase
       .from("transcripts")
