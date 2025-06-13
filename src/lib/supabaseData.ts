@@ -104,7 +104,23 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
       transformDatabaseProfile(profile, transcriptsByProfile[profile.id] || []),
     );
   } catch (error) {
-    console.error("Error fetching profiles from Supabase:", error);
+    console.error("Error fetching profiles from Supabase:");
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : String(error),
+      code:
+        error && typeof error === "object" && "code" in error
+          ? error.code
+          : "Unknown",
+      details:
+        error && typeof error === "object" && "details" in error
+          ? error.details
+          : null,
+      hint:
+        error && typeof error === "object" && "hint" in error
+          ? error.hint
+          : null,
+      fullError: error,
+    });
     return [];
   }
 }
@@ -137,7 +153,23 @@ export async function getProfileFromSupabase(
 
     return transformDatabaseProfile(profile, transcripts || []);
   } catch (error) {
-    console.error("Error fetching profile from Supabase:", error);
+    console.error("Error fetching profile from Supabase:");
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : String(error),
+      code:
+        error && typeof error === "object" && "code" in error
+          ? error.code
+          : "Unknown",
+      details:
+        error && typeof error === "object" && "details" in error
+          ? error.details
+          : null,
+      hint:
+        error && typeof error === "object" && "hint" in error
+          ? error.hint
+          : null,
+      fullError: error,
+    });
     return null;
   }
 }
@@ -177,7 +209,23 @@ export async function saveProfileToSupabase(
     console.log("Profile saved to Supabase successfully:", profile.id);
     return true;
   } catch (error) {
-    console.error("Error saving profile to Supabase:", error);
+    console.error("Error saving profile to Supabase:");
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : String(error),
+      code:
+        error && typeof error === "object" && "code" in error
+          ? error.code
+          : "Unknown",
+      details:
+        error && typeof error === "object" && "details" in error
+          ? error.details
+          : null,
+      hint:
+        error && typeof error === "object" && "hint" in error
+          ? error.hint
+          : null,
+      fullError: error,
+    });
     return false;
   }
 }
@@ -193,7 +241,23 @@ export async function deleteProfileFromSupabase(id: string): Promise<boolean> {
     console.log("Profile deleted from Supabase successfully:", id);
     return true;
   } catch (error) {
-    console.error("Error deleting profile from Supabase:", error);
+    console.error("Error deleting profile from Supabase:");
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : String(error),
+      code:
+        error && typeof error === "object" && "code" in error
+          ? error.code
+          : "Unknown",
+      details:
+        error && typeof error === "object" && "details" in error
+          ? error.details
+          : null,
+      hint:
+        error && typeof error === "object" && "hint" in error
+          ? error.hint
+          : null,
+      fullError: error,
+    });
     return false;
   }
 }
