@@ -48,8 +48,9 @@ export function TranscriptCard({
       .toUpperCase();
   };
 
-  // Simple preview text - first paragraph truncated
-  const previewText = paragraphs[0]?.substring(0, 200) + "..." || "";
+  // Simple preview text - first paragraph truncated with safe array access
+  const previewText =
+    paragraphs.length > 0 ? paragraphs[0].substring(0, 200) + "..." : "";
 
   // Handle text selection within this transcript
   const handleMouseUp = () => {
@@ -150,7 +151,9 @@ export function TranscriptCard({
                   <div className="flex items-center gap-1">
                     <UserCheck className="h-3 w-3" />
                     <span className="whitespace-nowrap">
-                      by {transcript.interviewedBy.split(" ")[0]}
+                      by{" "}
+                      {transcript.interviewedBy?.split(" ")?.[0] ||
+                        transcript.interviewedBy}
                     </span>
                   </div>
                 )}
