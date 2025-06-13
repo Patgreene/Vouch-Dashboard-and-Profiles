@@ -70,6 +70,20 @@ export default function AdminDashboard() {
   });
   const [loading, setLoading] = useState(true);
 
+  // Emergency fallback - force load dashboard after 15 seconds
+  useEffect(() => {
+    const emergencyTimer = setTimeout(() => {
+      if (loading) {
+        console.warn(
+          "🚨 Emergency fallback: Forcing dashboard to load after 15 seconds",
+        );
+        setLoading(false);
+      }
+    }, 15000);
+
+    return () => clearTimeout(emergencyTimer);
+  }, [loading]);
+
   // Load profiles and analytics on component mount
   useEffect(() => {
     async function loadData() {
