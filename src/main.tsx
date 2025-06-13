@@ -17,6 +17,11 @@ const loadNonCriticalAssets = async () => {
 
   // Load cleanup utility after everything else
   await import("./utils/deleteNathanProfile.ts");
+
+  // Load debugging utilities (only in development)
+  if (import.meta.env.DEV) {
+    await import("./utils/supabaseDebug.ts");
+  }
 };
 
 // Start the React app immediately
