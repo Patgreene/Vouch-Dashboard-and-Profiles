@@ -283,7 +283,23 @@ export async function trackEventInSupabase(
 
     if (error) throw error;
   } catch (error) {
-    console.error("Error tracking event in Supabase:", error);
+    console.error("Error tracking event in Supabase:");
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : String(error),
+      code:
+        error && typeof error === "object" && "code" in error
+          ? error.code
+          : "Unknown",
+      details:
+        error && typeof error === "object" && "details" in error
+          ? error.details
+          : null,
+      hint:
+        error && typeof error === "object" && "hint" in error
+          ? error.hint
+          : null,
+      fullError: error,
+    });
   }
 }
 
@@ -349,7 +365,23 @@ export async function getAnalyticsFromSupabase() {
       })),
     };
   } catch (error) {
-    console.error("Error fetching analytics from Supabase:", error);
+    console.error("Error fetching analytics from Supabase:");
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : String(error),
+      code:
+        error && typeof error === "object" && "code" in error
+          ? error.code
+          : "Unknown",
+      details:
+        error && typeof error === "object" && "details" in error
+          ? error.details
+          : null,
+      hint:
+        error && typeof error === "object" && "hint" in error
+          ? error.hint
+          : null,
+      fullError: error,
+    });
     return {
       totalPageViews: 0,
       totalQuoteViews: 0,
