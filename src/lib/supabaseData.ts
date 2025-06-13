@@ -146,48 +146,96 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
 
     let profiles, profilesError;
 
-    // Try full query first
-    const fullQuery = await supabase
-      .from("profiles")
-      .select("*")
-      .order("created_at", { ascending: false });
+    // Try multiple query strategies to bypass 500 errors
+    console.log("🔍 Attempting multiple query strategies...");
 
-    profiles = fullQuery.data;
-    profilesError = fullQuery.error;
-
-    // If 500 error, try simplified queries to isolate the issue
-    if (
-      profilesError &&
-      (profilesError.code === "500" || profilesError.message?.includes("500"))
-    ) {
-      console.error(
-        "❌ Full profiles query failed with 500 error, trying simplified queries...",
-      );
-
-      // Try basic table access
-      const basicQuery = await supabase
+    // Strategy 1: Full query with ordering
+    try {
+      console.log("Strategy 1: Full query with ordering");
+      const fullQuery = await supabase
         .from("profiles")
-        .select("id, name, title")
-        .limit(1);
+        .select("*")
+        .order("created_at", { ascending: false });
 
-      if (basicQuery.error) {
-        console.error("❌ Even basic profiles query failed:", basicQuery.error);
-        throw new Error(
-          `Database table 'profiles' is not accessible: ${basicQuery.error.message}`,
-        );
+      if (!fullQuery.error) {
+        profiles = fullQuery.data;
+        profilesError = null;
+        console.log("✅ Strategy 1 succeeded");
+      } else {
+        throw fullQuery.error;
       }
+    } catch (error1) {
+      console.warn("⚠️ Strategy 1 failed:", error1);
 
-      // Try without ordering
-      const noOrderQuery = await supabase.from("profiles").select("*");
+      // Strategy 2: Query without ordering
+      try {
+        console.log("Strategy 2: Query without ordering");
+        const noOrderQuery = await supabase
+          .from("profiles")
+          .select("*");
 
-      if (noOrderQuery.error) {
-        console.error("❌ Query without ordering failed:", noOrderQuery.error);
-        throw new Error(`Database query failed: ${noOrderQuery.error.message}`);
+        if (!noOrderQuery.error) {
+          profiles = noOrderQuery.data;
+          profilesError = null;
+          console.log("✅ Strategy 2 succeeded");
+        } else {
+          throw noOrderQuery.error;
+        }
+      } catch (error2) {
+        console.warn("⚠️ Strategy 2 failed:", error2);
+
+        // Strategy 3: Basic fields only
+        try {
+          console.log("Strategy 3: Basic fields only");
+          const basicQuery = await supabase
+            .from("profiles")
+            .select("id, name, title, company, photo, linkedin, cv, portfolio, key_takeaways");
+
+          if (!basicQuery.error) {
+            profiles = basicQuery.data;
+            profilesError = null;
+            console.log("✅ Strategy 3 succeeded");
+          } else {
+            throw basicQuery.error;
+          }
+        } catch (error3) {
+          console.warn("⚠️ Strategy 3 failed:", error3);
+
+          // Strategy 4: Minimal query just to test connection
+          try {
+            console.log("Strategy 4: Minimal connection test");
+            const minimalQuery = await supabase
+              .from("profiles")
+              .select("id, name")
+              .limit(10);
+
+            if (!minimalQuery.error) {
+              console.log("✅ Strategy 4 succeeded - connection works but complex queries fail");
+              console.log("🚨 This suggests a data structure issue in the database");
+
+              // Return minimal data for now so admin can load
+              profiles = minimalQuery.data?.map(p => ({
+                ...p,
+                title: "Data structure issue",
+                keyTakeaways: {
+                  strengths: [],
+                  weaknesses: [],
+                  communicationStyle: [],
+                  waysToBringOutBest: []
+                },
+                transcripts: []
+              }));
+              profilesError = null;
+            } else {
+              throw minimalQuery.error;
+            }
+          } catch (error4) {
+            console.error("❌ All strategies failed");
+            profilesError = error4;
+          }
+        }
       }
-
-      console.log("✅ Simplified query worked, using that instead");
-      profiles = noOrderQuery.data;
-      profilesError = null;
+    }
     }
 
     if (profilesError) {
