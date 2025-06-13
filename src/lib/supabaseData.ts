@@ -6,6 +6,50 @@ import {
 } from "./supabase";
 import { Profile, Transcript, KeyTakeaways } from "./data";
 
+// Test Supabase connection and table access
+export async function testSupabaseConnection(): Promise<{
+  success: boolean;
+  message: string;
+  details?: any;
+}> {
+  try {
+    console.log("Testing Supabase connection...");
+
+    // Test basic connection
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("count")
+      .limit(1);
+
+    if (error) {
+      console.error("Supabase connection test failed:", error);
+      return {
+        success: false,
+        message: `Connection failed: ${error.message}`,
+        details: {
+          code: error.code,
+          details: error.details,
+          hint: error.hint,
+        },
+      };
+    }
+
+    console.log("Supabase connection test successful");
+    return {
+      success: true,
+      message: "Supabase connection is working",
+      details: data,
+    };
+  } catch (error) {
+    console.error("Supabase connection test error:", error);
+    return {
+      success: false,
+      message: `Test failed: ${error instanceof Error ? error.message : String(error)}`,
+      details: error,
+    };
+  }
+}
+
 // Transform database profile to app profile format
 function transformDatabaseProfile(
   dbProfile: DatabaseProfile,
