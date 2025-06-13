@@ -112,10 +112,23 @@ export default function AdminDashboard() {
             timeoutPromise,
           ])) as Profile[];
         } catch (profileError) {
-          console.warn(
-            "⚠️ Primary data provider failed, trying localStorage fallback:",
-            profileError,
-          );
+          console.warn("⚠️ Primary data provider failed, trying localStorage fallback:", profileError);
+
+          // Try localStorage fallback
+          try {
+            const { getAllProfiles } = await import("../lib/data");
+            profilesData = getAllProfiles();
+            console.log("✅ Fallback to localStorage successful");
+
+            // Force clear loading state since we have data
+            if (profilesData && profilesData.length > 0) {
+              console.log(`🔄 Found ${profilesData.length} profiles in localStorage, clearing loading state`);
+            }
+          } catch (fallbackError) {
+            console.error("❌ Even localStorage fallback failed:", fallbackError);
+            profilesData = [];
+          }
+        }
 
           // Try localStorage fallback
           try {
