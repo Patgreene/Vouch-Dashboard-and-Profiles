@@ -130,4 +130,4 @@ if (typeof window !== "undefined") {
   console.log("  - debugProfiles() - Test profile/transcript fetching");
 }
 
-export { debugSupabaseConnection, debugProfileFetch };
+// Functions are already exported above
