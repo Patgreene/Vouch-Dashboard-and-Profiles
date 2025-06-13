@@ -74,18 +74,36 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function loadData() {
       console.log("🔄 Starting AdminDashboard data load...");
+      const startTime = Date.now();
 
       try {
-        // Load profiles first
+        // Add timeout to prevent hanging
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(
+            () => reject(new Error("Data loading timeout after 10 seconds")),
+            10000,
+          );
+        });
+
+        // Load profiles first with timeout
         console.log("📥 Loading profiles...");
-        const profilesData = await dataProvider.getAllProfiles();
+        const profilesPromise = dataProvider.getAllProfiles();
+
+        const profilesData = (await Promise.race([
+          profilesPromise,
+          timeoutPromise,
+        ])) as Profile[];
         console.log("✅ Profiles loaded:", profilesData?.length || 0);
         setProfiles(profilesData || []);
 
         // Load analytics separately to prevent blocking
         console.log("📊 Loading analytics...");
         try {
-          const analyticsData = await dataProvider.getAnalytics();
+          const analyticsPromise = dataProvider.getAnalytics();
+          const analyticsData = await Promise.race([
+            analyticsPromise,
+            timeoutPromise,
+          ]);
           console.log("✅ Analytics loaded:", analyticsData);
           setLiveAnalytics(
             analyticsData || {
@@ -107,6 +125,13 @@ export default function AdminDashboard() {
         }
       } catch (error) {
         console.error("❌ Critical error loading dashboard data:", error);
+        console.error("Error details:", {
+          message: error instanceof Error ? error.message : String(error),
+          stack: error instanceof Error ? error.stack : undefined,
+          time: `${Date.now() - startTime}ms`,
+        });
+
+        // Set empty data on error
         setProfiles([]);
         setLiveAnalytics({
           totalPageViews: 0,
@@ -114,11 +139,15 @@ export default function AdminDashboard() {
           profileStats: [],
         });
       } finally {
-        console.log("✅ AdminDashboard loading complete");
+        const loadTime = Date.now() - startTime;
+        console.log(`✅ AdminDashboard loading complete (${loadTime}ms)`);
         setLoading(false);
       }
     }
-    loadData();
+
+    // Small delay to ensure the component is mounted
+    const timer = setTimeout(loadData, 100);
+    return () => clearTimeout(timer);
   }, []);
 
   // Filter profiles based on search term
