@@ -101,12 +101,36 @@ export default function AdminDashboard() {
 
         // Load profiles first with timeout
         console.log("📥 Loading profiles...");
-        const profilesPromise = dataProvider.getAllProfiles();
+        console.log("🔧 Using data provider:", dataProvider.getStorageType());
 
-        const profilesData = (await Promise.race([
-          profilesPromise,
-          timeoutPromise,
-        ])) as Profile[];
+        let profilesData: Profile[] = [];
+
+        try {
+          const profilesPromise = dataProvider.getAllProfiles();
+          profilesData = (await Promise.race([
+            profilesPromise,
+            timeoutPromise,
+          ])) as Profile[];
+        } catch (profileError) {
+          console.warn(
+            "⚠️ Primary data provider failed, trying localStorage fallback:",
+            profileError,
+          );
+
+          // Try localStorage fallback
+          try {
+            const { getAllProfiles } = await import("../lib/data");
+            profilesData = getAllProfiles();
+            console.log("✅ Fallback to localStorage successful");
+          } catch (fallbackError) {
+            console.error(
+              "❌ Even localStorage fallback failed:",
+              fallbackError,
+            );
+            profilesData = [];
+          }
+        }
+
         console.log("✅ Profiles loaded:", profilesData?.length || 0);
         setProfiles(profilesData || []);
 
