@@ -22,6 +22,7 @@ const loadNonCriticalAssets = async () => {
   if (import.meta.env.DEV) {
     await import("./utils/supabaseDebug.ts");
     await import("./utils/databaseHealthCheck.ts");
+    await import("./utils/profileDiagnostic.ts");
   }
 };
 
