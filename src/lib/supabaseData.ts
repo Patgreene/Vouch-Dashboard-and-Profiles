@@ -144,25 +144,56 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
     // First test basic connection
     console.log("🔍 Testing Supabase connection for profiles...");
 
-    const { data: profiles, error: profilesError } = await supabase
+    let profiles, profilesError;
+
+    // Try full query first
+    const fullQuery = await supabase
       .from("profiles")
       .select("*")
       .order("created_at", { ascending: false });
+
+    profiles = fullQuery.data;
+    profilesError = fullQuery.error;
+
+    // If 500 error, try simplified queries to isolate the issue
+    if (
+      profilesError &&
+      (profilesError.code === "500" || profilesError.message?.includes("500"))
+    ) {
+      console.error(
+        "❌ Full profiles query failed with 500 error, trying simplified queries...",
+      );
+
+      // Try basic table access
+      const basicQuery = await supabase
+        .from("profiles")
+        .select("id, name, title")
+        .limit(1);
+
+      if (basicQuery.error) {
+        console.error("❌ Even basic profiles query failed:", basicQuery.error);
+        throw new Error(
+          `Database table 'profiles' is not accessible: ${basicQuery.error.message}`,
+        );
+      }
+
+      // Try without ordering
+      const noOrderQuery = await supabase.from("profiles").select("*");
+
+      if (noOrderQuery.error) {
+        console.error("❌ Query without ordering failed:", noOrderQuery.error);
+        throw new Error(`Database query failed: ${noOrderQuery.error.message}`);
+      }
+
+      console.log("✅ Simplified query worked, using that instead");
+      profiles = noOrderQuery.data;
+      profilesError = null;
+    }
 
     if (profilesError) {
       console.error("❌ Profiles query failed:");
       console.error("Status:", profilesError.code);
       console.error("Message:", profilesError.message);
-
-      // Handle specific 500 errors
-      if (profilesError.message?.includes("500")) {
-        console.error("🚨 Database server error (500) - this usually means:");
-        console.error("1. Database schema issue (missing tables/columns)");
-        console.error("2. Invalid JSON structure in key_takeaways field");
-        console.error("3. Database server is down");
-        console.error("4. Permission/RLS policy blocking access");
-      }
-
       throw profilesError;
     }
 
