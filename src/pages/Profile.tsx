@@ -128,7 +128,10 @@ export default function Profile() {
       <KeyTakeaways takeaways={profile.keyTakeaways} />
 
       {/* Transcripts Section */}
-      <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <div
+        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+        style={{ margin: "-3px auto 0", padding: "11px 32px 24px" }}
+      >
         <div className="mb-6 sm:mb-8">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
             Transcripts ({profile.transcripts?.length || 0})

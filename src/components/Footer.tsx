@@ -1,6 +1,9 @@
 export function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-100 mt-16">
+    <footer
+      className="bg-white border-t border-gray-100"
+      style={{ marginTop: "25px" }}
+    >
       <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           <div className="flex items-center text-gray-500 text-sm gap-2">

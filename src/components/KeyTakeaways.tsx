@@ -74,7 +74,10 @@ export function KeyTakeaways({ takeaways }: KeyTakeawaysProps) {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+    <div
+      className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+      style={{ padding: "24px 32px 11px" }}
+    >
       <Card className="overflow-hidden">
         <div className="bg-gradient-to-r from-vouch-50 to-blue-50 border-b">
           <Button
