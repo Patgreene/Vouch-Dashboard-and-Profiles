@@ -40,10 +40,22 @@ export async function checkAndDeleteNathanProfile() {
 // Auto-run when imported
 if (typeof window !== "undefined") {
   // Make function available globally for console access
-  (window as any).checkAndDeleteNathanProfile = checkAndDeleteNathanProfile;
+export async function checkAndDeleteNathanProfile() {
+  console.log("🔍 Nathan profile deletion utility is disabled");
+  console.log("💡 Use profile validation tools instead:");
+  console.log("  - validateProfiles() to check all profiles");
+  console.log("  - validateAgainstSupabase() to find ghost profiles");
+  console.log("  - cleanupGhostProfiles() to remove orphaned profiles");
 
-  // Auto-run the check
-  checkAndDeleteNathanProfile().then((result) => {
-    console.log("🏁 Operation result:", result);
-  });
+  return { success: false, message: "Utility disabled - use validation tools instead" };
+}
+
+// Don't execute automatically to prevent crashes
+// checkAndDeleteNathanProfile().then((result) => {
+//   console.log("🏁 Operation result:", result);
+// });
+
+// Still expose it globally but disabled
+if (typeof window !== "undefined") {
+  (window as any).checkAndDeleteNathanProfile = checkAndDeleteNathanProfile;
 }
