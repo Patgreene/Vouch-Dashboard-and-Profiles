@@ -1,5 +1,5 @@
+import React, { Component, ErrorInfo, ReactNode } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Component, ErrorInfo, ReactNode } from "react";
 
 // Import components directly instead of lazy loading to debug the issue
 import Profile from "./pages/Profile";
