@@ -437,6 +437,22 @@ export default function AdminDashboard() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredProfiles.map((profile) => {
+                  // Safety check for profile data
+                  if (!profile || !profile.id || !profile.name) {
+                    return (
+                      <Card
+                        key={`invalid-${Math.random()}`}
+                        className="border-red-200"
+                      >
+                        <CardContent className="p-4">
+                          <div className="text-red-600 text-sm">
+                            ⚠️ Invalid profile data detected
+                          </div>
+                        </CardContent>
+                      </Card>
+                    );
+                  }
+
                   const profileStats = liveAnalytics.profileStats.find(
                     (stat: any) => stat.profileId === profile.id,
                   );
@@ -453,23 +469,37 @@ export default function AdminDashboard() {
                               {profile.photo ? (
                                 <img
                                   src={profile.photo}
-                                  alt={profile.name}
+                                  alt={profile.name || "Profile"}
                                   className="w-12 h-12 rounded-full object-cover"
                                   loading="lazy"
+                                  onError={(e) => {
+                                    // Handle broken image URLs
+                                    e.currentTarget.style.display = "none";
+                                    const fallback = e.currentTarget
+                                      .nextElementSibling as HTMLElement;
+                                    if (fallback)
+                                      fallback.style.display = "flex";
+                                  }}
                                 />
-                              ) : (
-                                <div className="w-12 h-12 rounded-full bg-vouch-100 flex items-center justify-center">
-                                  <span className="text-vouch-600 font-semibold text-lg">
-                                    {profile.name.charAt(0)}
-                                  </span>
-                                </div>
-                              )}
+                              ) : null}
+                              <div
+                                className="w-12 h-12 rounded-full bg-vouch-100 flex items-center justify-center"
+                                style={{
+                                  display: profile.photo ? "none" : "flex",
+                                }}
+                              >
+                                <span className="text-vouch-600 font-semibold text-lg">
+                                  {profile.name
+                                    ? profile.name.charAt(0).toUpperCase()
+                                    : "?"}
+                                </span>
+                              </div>
                               <div>
                                 <h3 className="font-semibold text-gray-900 text-sm">
-                                  {profile.name}
+                                  {profile.name || "Unknown Profile"}
                                 </h3>
                                 <p className="text-gray-600 text-xs">
-                                  {profile.title}
+                                  {profile.title || "No title"}
                                 </p>
                                 {profile.company && (
                                   <Badge
