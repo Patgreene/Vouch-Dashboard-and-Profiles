@@ -24,6 +24,10 @@ import { mockAnalytics, Profile } from "@/lib/data";
 import { analytics } from "@/lib/analytics";
 import { dataProvider } from "@/lib/dataProvider";
 import { downloadProfileBackup, importProfiles } from "@/lib/profileSync";
+import {
+  validateAndCleanProfiles,
+  validateProfilesAgainstSupabase,
+} from "@/utils/profileValidator";
 
 // Lazy load heavy ProfileForm component
 const ProfileForm = lazy(() =>
@@ -128,8 +132,27 @@ export default function AdminDashboard() {
           }
         }
 
-        console.log("✅ Profiles loaded:", profilesData?.length || 0);
-        setProfiles(profilesData || []);
+        console.log("✅ Raw profiles loaded:", profilesData?.length || 0);
+
+        // Validate and clean profiles to prevent crashes from malformed data
+        const { validProfiles, fixedProfiles, invalidProfiles, summary } =
+          validateAndCleanProfiles(profilesData || []);
+
+        console.log("📊", summary);
+
+        // Combine valid and fixed profiles
+        const allValidProfiles = [...validProfiles, ...fixedProfiles];
+
+        if (invalidProfiles.length > 0) {
+          console.warn("⚠️ Found invalid profiles that couldn't be fixed:");
+          invalidProfiles.forEach((profile, index) => {
+            console.warn(
+              `  ${index + 1}. ${profile?.name || "Unknown"} (${profile?.id || "No ID"})`,
+            );
+          });
+        }
+
+        setProfiles(allValidProfiles);
 
         // Load analytics separately to prevent blocking
         console.log("📊 Loading analytics...");
