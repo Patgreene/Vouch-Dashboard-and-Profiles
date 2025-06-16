@@ -4,10 +4,9 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // Set the base URL for GitHub Pages deployment
-  // Change this to your repository name: base: '/your-repo-name/'
-  // For custom domain or root deployment, use: base: '/'
-  base: mode === "production" ? "/your-repo-name/" : "/",
+  // Set the base URL for deployment
+  // For Vercel/Netlify/custom domain, use root path
+  base: "/",
 
   server: {
     host: "::",

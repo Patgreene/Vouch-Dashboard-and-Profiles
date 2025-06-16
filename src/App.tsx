@@ -80,16 +80,18 @@ function Welcome() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="https://www.vouchprofile.com/"
-            className="bg-vouch-600 text-white px-6 py-3 rounded-lg hover:bg-vouch-700 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-vouch-600 text-white px-6 py-3 rounded-lg hover:bg-vouch-700 transition-colors text-center"
           >
             Visit Main Site
           </a>
-          <a
-            href="/admin-stats-d1g3Yt9"
+          <button
+            onClick={() => (window.location.href = "/admin-stats-d1g3Yt9")}
             className="border border-vouch-600 text-vouch-600 px-6 py-3 rounded-lg hover:bg-vouch-50 transition-colors"
           >
             Admin Dashboard
-          </a>
+          </button>
         </div>
       </div>
     </div>
