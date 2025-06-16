@@ -15,8 +15,9 @@ const loadNonCriticalAssets = async () => {
   );
   initializeVisitorTracking();
 
-  // Load cleanup utility after everything else
-  await import("./utils/deleteNathanProfile.ts");
+  // Load profile validation and cleanup utilities
+  await import("./utils/profileValidator.ts");
+  await import("./utils/profileCleanup.ts");
 
   // Load debugging utilities (only in development)
   if (import.meta.env.DEV) {
