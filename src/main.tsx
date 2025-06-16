@@ -28,6 +28,7 @@ const loadNonCriticalAssets = async () => {
     await import("./utils/supabaseReconnect.ts");
     await import("./utils/simpleSupabaseQuery.ts");
     await import("./utils/quickAdminFix.ts");
+    await import("./utils/navigationFix.ts");
   }
 };
 
