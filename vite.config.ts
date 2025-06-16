@@ -4,6 +4,11 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // Set the base URL for GitHub Pages deployment
+  // Change this to your repository name: base: '/your-repo-name/'
+  // For custom domain or root deployment, use: base: '/'
+  base: mode === "production" ? "/your-repo-name/" : "/",
+
   server: {
     host: "::",
     port: 8080,
