@@ -103,6 +103,11 @@ function App() {
   React.useEffect(() => {
     console.log("🔄 App mounted, current path:", window.location.pathname);
     console.log("🔄 Current URL:", window.location.href);
+
+    // Auto-redirect to admin if on root and no profiles to show
+    if (window.location.pathname === "/") {
+      console.log("📍 On root path - ready to navigate to admin or profiles");
+    }
   }, []);
 
   return (
