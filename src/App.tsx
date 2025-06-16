@@ -59,16 +59,67 @@ class ErrorBoundary extends Component<
   }
 }
 
+// Welcome/Home component for root path
+function Welcome() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="text-center">
+        <div className="mb-8">
+          <div className="w-24 h-24 gradient-bg rounded-full flex items-center justify-center mx-auto mb-6">
+            <span className="text-white font-bold text-4xl">V</span>
+          </div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Welcome to Vouch
+          </h1>
+          <p className="text-gray-600 max-w-md mx-auto mb-8">
+            Professional profile showcase platform. Navigate to a specific
+            profile or admin dashboard.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="https://www.vouchprofile.com/"
+            className="bg-vouch-600 text-white px-6 py-3 rounded-lg hover:bg-vouch-700 transition-colors"
+          >
+            Visit Main Site
+          </a>
+          <a
+            href="/admin-stats-d1g3Yt9"
+            className="border border-vouch-600 text-vouch-600 px-6 py-3 rounded-lg hover:bg-vouch-50 transition-colors"
+          >
+            Admin Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
+  // Debug logging for routing
+  React.useEffect(() => {
+    console.log("🔄 App mounted, current path:", window.location.pathname);
+    console.log("🔄 Current URL:", window.location.href);
+  }, []);
+
   return (
     <ErrorBoundary>
       <BrowserRouter>
         <Routes>
+          {/* Home/Welcome route */}
+          <Route path="/" element={<Welcome />} />
+
+          {/* Profile routes - more specific matching */}
           <Route path="/profile/:id" element={<Profile />} />
+
           {/* Protected admin route - obfuscated URL */}
           <Route path="/admin-stats-d1g3Yt9" element={<AdminDashboard />} />
+
+          {/* Explicit not-found route */}
           <Route path="/not-found" element={<NotFound />} />
-          {/* Catch-all route for 404s - includes root "/" */}
+
+          {/* Catch-all route for 404s - must be last */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
