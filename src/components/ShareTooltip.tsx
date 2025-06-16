@@ -16,152 +16,155 @@ export function ShareTooltip({
   onShare,
   copied = false,
 }: ShareTooltipProps) {
-  const [isLocked, setIsLocked] = useState(false);
-  const [lockedPosition, setLockedPosition] = useState({ x: 0, y: 0 });
+  const [isPressed, setIsPressed] = useState(false);
   const [adjustedPosition, setAdjustedPosition] = useState({ x: 0, y: 0 });
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const [stablePosition, setStablePosition] = useState({ x: 0, y: 0 });
 
-  // Adjust position for mobile to ensure tooltip stays in viewport
+  // Lock position when tooltip becomes visible to prevent jumping
   useEffect(() => {
-    if (!visible) return;
+    if (visible) {
+      const adjustPosition = () => {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const tooltipWidth = 160; // Approximate tooltip width
+        const tooltipHeight = 80; // Approximate tooltip height
+        const padding = 16; // Padding from viewport edges
 
-    const adjustPosition = () => {
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-      const tooltipWidth = 140; // Approximate tooltip width
-      const tooltipHeight = 60; // Approximate tooltip height
-      const padding = 16; // Padding from viewport edges
+        let adjustedX = x;
+        let adjustedY = y;
 
-      let adjustedX = x;
-      let adjustedY = y;
+        // Adjust horizontal position
+        if (adjustedX - tooltipWidth / 2 < padding) {
+          adjustedX = tooltipWidth / 2 + padding;
+        } else if (adjustedX + tooltipWidth / 2 > viewportWidth - padding) {
+          adjustedX = viewportWidth - tooltipWidth / 2 - padding;
+        }
 
-      // Adjust horizontal position
-      if (adjustedX - tooltipWidth / 2 < padding) {
-        adjustedX = tooltipWidth / 2 + padding;
-      } else if (adjustedX + tooltipWidth / 2 > viewportWidth - padding) {
-        adjustedX = viewportWidth - tooltipWidth / 2 - padding;
-      }
+        // Adjust vertical position - always show above selection
+        adjustedY = Math.max(adjustedY - 20, tooltipHeight + padding);
 
-      // Adjust vertical position
-      if (adjustedY - tooltipHeight < padding) {
-        adjustedY = adjustedY + tooltipHeight + 20; // Show below selection
-      }
+        setAdjustedPosition({ x: adjustedX, y: adjustedY });
+        setStablePosition({ x: adjustedX, y: adjustedY });
+      };
 
-      setAdjustedPosition({ x: adjustedX, y: adjustedY });
-    };
-
-    adjustPosition();
-
-    // Recheck on window resize
-    window.addEventListener("resize", adjustPosition);
-    return () => window.removeEventListener("resize", adjustPosition);
+      adjustPosition();
+    }
   }, [visible, x, y]);
 
   if (!visible) return null;
 
-  // Use locked position if available, otherwise use adjusted position
-  const displayX = isLocked ? lockedPosition.x : adjustedPosition.x;
-  const displayY = isLocked ? lockedPosition.y : adjustedPosition.y;
-
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-
-    // Lock the tooltip position to prevent jumping
-    setIsLocked(true);
-    setLockedPosition({ x: adjustedPosition.x, y: adjustedPosition.y });
-
-    console.log("🔒 Tooltip position locked at", adjustedPosition);
+    setIsPressed(true);
+    console.log("🔒 Button pressed - position locked");
   };
 
   const handleMouseUp = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    console.log("🖱️ Mouse up on button");
+    if (isPressed) {
+      console.log("🚀 Executing share action on mouseup");
+
+      if (onShare) {
+        try {
+          onShare();
+          console.log("✅ Share action completed");
+        } catch (error) {
+          console.error("❌ Error in onShare:", error);
+        }
+      }
+    }
+
+    setIsPressed(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsPressed(false);
   };
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-
-    console.log(
-      "🔗 Share Link button clicked - preventing default and stopping propagation",
-    );
-
-    if (onShare) {
-      // Delay the clipboard operation to ensure the click event completes
-      setTimeout(() => {
-        console.log("🚀 Executing onShare after timeout");
-        try {
-          onShare();
-
-          // Unlock position after successful execution
-          setTimeout(() => {
-            setIsLocked(false);
-            console.log("🔓 Tooltip position unlocked");
-          }, 100);
-        } catch (error) {
-          console.log("❌ Error in onShare:", error);
-          setIsLocked(false);
-        }
-      }, 0);
-    } else {
-      console.log("❌ No onShare function provided");
-      setIsLocked(false);
-    }
+    // Click is handled by mouseup for better UX
   };
 
   return (
     <div
       ref={tooltipRef}
-      className="fixed z-50 animate-fade-in"
+      className="fixed z-50"
       style={{
-        left: displayX,
-        top: displayY,
+        left: stablePosition.x,
+        top: stablePosition.y,
         transform: "translateX(-50%) translateY(-100%)",
         zIndex: 9999,
         pointerEvents: "auto",
       }}
     >
-      <div className="bg-slate-900 text-white px-2 sm:px-3 py-2 rounded-lg shadow-lg flex items-center gap-2 text-xs sm:text-sm font-medium max-w-xs">
+      {/* Main tooltip container with modern styling */}
+      <div className="bg-white border border-gray-200 px-1 py-1 rounded-xl shadow-lg backdrop-blur-sm">
         <button
           onClick={handleClick}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
-          className="cursor-pointer px-2 sm:px-3 py-1 sm:py-2 bg-blue-600 hover:bg-blue-700 rounded flex items-center gap-1 sm:gap-2 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm"
+          onMouseLeave={handleMouseLeave}
+          className={`
+            group relative overflow-hidden
+            flex items-center gap-2 
+            px-4 py-2.5
+            bg-gradient-to-r from-vouch-500 to-vouch-600
+            hover:from-vouch-600 hover:to-vouch-700
+            text-white font-medium text-sm
+            rounded-lg
+            transition-all duration-200 ease-out
+            transform-gpu
+            shadow-sm hover:shadow-md
+            focus:outline-none focus:ring-2 focus:ring-vouch-500 focus:ring-offset-2 focus:ring-offset-white
+            ${isPressed ? "scale-[0.98] shadow-sm" : "scale-100"}
+            ${copied ? "from-green-500 to-green-600 hover:from-green-600 hover:to-green-700" : ""}
+          `}
           style={{
-            border: "none",
-            outline: "none",
+            minHeight: "40px",
             userSelect: "none",
-            pointerEvents: "auto",
-            color: "white",
-            fontWeight: "500",
-            minHeight: "32px",
+            WebkitUserSelect: "none",
+            position: "relative",
           }}
         >
-          {copied ? (
-            <>
-              <Check className="h-3 w-3 sm:h-4 sm:w-4" />
-              <span className="whitespace-nowrap">Copied!</span>
-            </>
-          ) : (
-            <>
-              <Share2 className="h-3 w-3 sm:h-4 sm:w-4" />
-              <span className="whitespace-nowrap">Share Link</span>
-            </>
-          )}
+          {/* Button content */}
+          <div className="flex items-center gap-2 relative z-10">
+            {copied ? (
+              <>
+                <Check className="h-4 w-4 stroke-2" />
+                <span className="whitespace-nowrap font-medium">Copied!</span>
+              </>
+            ) : (
+              <>
+                <Share2 className="h-4 w-4 stroke-2" />
+                <span className="whitespace-nowrap font-medium">
+                  Share Link
+                </span>
+              </>
+            )}
+          </div>
+
+          {/* Subtle shimmer effect on hover */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
+          </div>
         </button>
       </div>
 
-      {/* Arrow */}
+      {/* Arrow with matching styling */}
       <div
         className="absolute left-1/2 transform -translate-x-1/2 w-0 h-0"
         style={{
-          borderLeft: "6px solid transparent",
-          borderRight: "6px solid transparent",
-          borderTop: "6px solid rgb(15 23 42)",
+          borderLeft: "8px solid transparent",
+          borderRight: "8px solid transparent",
+          borderTop: "8px solid white",
           top: "100%",
+          filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.1))",
         }}
       />
     </div>
