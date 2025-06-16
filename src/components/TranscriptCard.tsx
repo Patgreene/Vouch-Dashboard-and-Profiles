@@ -36,22 +36,28 @@ export function TranscriptCard({
   const expanded = onToggle ? isExpanded : internalExpanded;
   const toggle = onToggle || (() => setInternalExpanded(!internalExpanded));
 
-  // Format transcript content into paragraphs
-  const paragraphs = transcript.content.split("\n\n").filter((p) => p.trim());
+  // Format transcript content into paragraphs with safe handling
+  const paragraphs = transcript?.content
+    ? transcript.content.split("\n\n").filter((p) => p.trim())
+    : [];
 
-  // Get initials for avatar fallback
-  const getInitials = (name: string) => {
+  // Get initials for avatar fallback with safe handling
+  const getInitials = (name: string | undefined) => {
+    if (!name || typeof name !== "string") return "?";
     return name
       .split(" ")
+      .filter((part) => part.length > 0)
       .map((n) => n[0])
       .join("")
-      .toUpperCase();
+      .toUpperCase()
+      .substring(0, 2); // Limit to 2 characters
   };
 
   // Simple preview text - first paragraph truncated with safe array access
   const previewText =
-    paragraphs.length > 0 ? paragraphs[0].substring(0, 200) + "..." : "";
-
+    paragraphs.length > 0 && paragraphs[0]
+      ? paragraphs[0].substring(0, 200) + "..."
+      : "No content available";
   // Handle text selection within this transcript
   const handleMouseUp = () => {
     if (expanded) {
@@ -152,8 +158,12 @@ export function TranscriptCard({
                     <UserCheck className="h-3 w-3" />
                     <span className="whitespace-nowrap">
                       by{" "}
-                      {transcript.interviewedBy?.split(" ")?.[0] ||
-                        transcript.interviewedBy}
+                      {transcript.interviewedBy
+                        ? transcript.interviewedBy
+                            .split(" ")
+                            .filter((part) => part.length > 0)[0] ||
+                          transcript.interviewedBy
+                        : "Unknown"}
                     </span>
                   </div>
                 )}
