@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Import components directly instead of lazy loading to debug the issue
 import Profile from "./pages/Profile";
-import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import { AdminRouteGuard } from "./components/AdminRouteGuard";
 
 // Error Boundary to catch component loading errors
 class ErrorBoundary extends Component<
@@ -113,8 +113,8 @@ function App() {
           {/* Profile routes - more specific matching */}
           <Route path="/profile/:id" element={<Profile />} />
 
-          {/* Protected admin route - obfuscated URL */}
-          <Route path="/admin-stats-d1g3Yt9" element={<AdminDashboard />} />
+          {/* Protected admin route - obfuscated URL with guard */}
+          <Route path="/admin-stats-d1g3Yt9" element={<AdminRouteGuard />} />
 
           {/* Explicit not-found route */}
           <Route path="/not-found" element={<NotFound />} />
