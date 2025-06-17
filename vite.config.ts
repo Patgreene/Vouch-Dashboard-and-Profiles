@@ -4,6 +4,10 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // Set the base URL for deployment
+  // For Vercel/Netlify/custom domain, use root path
+  base: '/',
+  
   server: {
     host: "::",
     port: 8080,
