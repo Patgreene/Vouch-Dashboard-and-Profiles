@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Transcript, Profile } from "@/lib/data";
+import { PaymentModal } from "@/components/PaymentModal";
 
 interface EnhancedTranscriptCardProps {
   transcript: Transcript;
@@ -25,6 +26,7 @@ interface EnhancedTranscriptCardProps {
   processHighlightFromUrl: (transcriptId: string) => void;
   mode: "received" | "given";
   recipientProfile?: Profile; // Only used for "given" mode
+  onVerificationChange?: (transcriptId: string, newStatus: "verified" | "pending" | "not_started") => void;
 }
 
 export function EnhancedTranscriptCard({
@@ -36,8 +38,10 @@ export function EnhancedTranscriptCard({
   processHighlightFromUrl,
   mode,
   recipientProfile,
+  onVerificationChange,
 }: EnhancedTranscriptCardProps) {
   const [internalExpanded, setInternalExpanded] = useState(isExpanded);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   // Use internal state if no external control
   const expanded = onToggle ? isExpanded : internalExpanded;
