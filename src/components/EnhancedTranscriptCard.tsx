@@ -121,7 +121,7 @@ export function EnhancedTranscriptCard({
             }}
           >
             <Shield className="h-3 w-3 mr-1" />
-            Verify
+            Verify now
           </Button>
         );
       default:
