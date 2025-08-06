@@ -607,6 +607,41 @@ export async function getAnalyticsFromSupabase() {
   }
 }
 
+// Optimized function to get given transcripts without loading all profiles
+export async function getGivenTranscriptsFromSupabase(speakerEmail: string) {
+  try {
+    console.log("🔍 Querying given transcripts for:", speakerEmail);
+
+    // Query transcripts directly by speaker email with JOIN to get profile data
+    const { data: transcripts, error: transcriptsError } = await supabase
+      .from("transcripts")
+      .select(`
+        *,
+        profiles!inner(*)
+      `)
+      .eq("speaker_email", speakerEmail)
+      .order("created_at", { ascending: false });
+
+    if (transcriptsError) {
+      console.error("Error fetching given transcripts:", transcriptsError);
+      throw transcriptsError;
+    }
+
+    console.log(`✅ Found ${transcripts?.length || 0} given transcripts`);
+
+    // Transform to expected format
+    const givenTranscripts = (transcripts || []).map((item) => ({
+      transcript: transformDatabaseTranscript(item),
+      recipientProfile: transformDatabaseProfile(item.profiles, []),
+    }));
+
+    return givenTranscripts;
+  } catch (error) {
+    console.error("Error in getGivenTranscriptsFromSupabase:", error);
+    return [];
+  }
+}
+
 // Migration function to move localStorage data to Supabase
 export async function migrateLocalStorageToSupabase(): Promise<{
   success: boolean;
