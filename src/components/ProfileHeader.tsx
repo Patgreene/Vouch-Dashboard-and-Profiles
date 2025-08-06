@@ -20,13 +20,16 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
     <div className="bg-white border-b border-gray-200">
       <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center space-y-4">
-          {/* "What is Vouch?" link - positioned absolutely for centering layout */}
+          {/* Back button - positioned absolutely for centering layout */}
           <div className="relative w-full">
             <a
-              href="https://www.vouchprofile.com/"
-              className="absolute top-0 right-0 text-vouch-600 hover:text-vouch-700 text-sm font-medium"
+              href="https://calling-20test.vercel.app/"
+              className="absolute top-0 right-0 inline-flex items-center gap-2 px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors duration-200"
             >
-              What is Vouch?
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back
             </a>
           </div>
 
