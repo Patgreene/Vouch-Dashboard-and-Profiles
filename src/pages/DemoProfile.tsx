@@ -195,11 +195,7 @@ export default function DemoProfile() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Demo Banner */}
-      <div className="bg-blue-600 text-white text-center py-2 text-sm">
-        📋 Demo Profile - This is a standalone example showing how Vouch
-        profiles work
-      </div>
+
 
       {/* Profile Header */}
       <ProfileHeader profile={demoProfile} />
