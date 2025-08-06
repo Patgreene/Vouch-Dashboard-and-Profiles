@@ -62,6 +62,7 @@ const initialFormData: FormData = {
       id: "",
       speakerName: "",
       speakerRole: "",
+      speakerEmail: "",
       speakerPhoto: "",
       content: "",
       interviewDate: "",
