@@ -49,13 +49,6 @@ const hints: Hint[] = [
     offsetX: -50,
     offsetY: -15,
     icon: Shield,
-    action: () => {
-      const verifyButton = document.querySelector(
-        "button:has(svg.lucide-shield)",
-      ) as HTMLButtonElement;
-      if (verifyButton) verifyButton.click();
-    },
-    actionText: "Try verification",
   },
   {
     id: "text-highlighting",
