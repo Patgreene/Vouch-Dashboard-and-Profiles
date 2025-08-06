@@ -69,6 +69,7 @@ const initialFormData: FormData = {
       speakerPhoto: "",
       content: "",
       interviewDate: "",
+      verificationStatus: "not_started",
     },
   ],
 };
@@ -118,6 +119,7 @@ export function ProfileForm({
               speakerPhoto: t.speakerPhoto || "",
               content: t.content || "",
               interviewDate: t.interviewDate || "",
+              verificationStatus: t.verificationStatus || "not_started"
             }))
           : initialFormData.transcripts,
       };
@@ -223,6 +225,7 @@ export function ProfileForm({
           speakerPhoto: "",
           content: "",
           interviewDate: "",
+          verificationStatus: "not_started",
         },
       ],
     }));
