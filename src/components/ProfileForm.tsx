@@ -274,12 +274,6 @@ export function ProfileForm({
 
     try {
       // Prepare final transcript data
-      const finalTranscripts = validTranscripts.map((transcript) => ({
-        ...transcript,
-        id: transcript.id || `transcript-${Date.now()}-${Math.random()}`,
-      }));
-
-      // Prepare final transcript data
       const finalTranscripts = mode === "full" ? validTranscripts.map((transcript) => ({
         ...transcript,
         id: transcript.id || `transcript-${Date.now()}-${Math.random()}`,
