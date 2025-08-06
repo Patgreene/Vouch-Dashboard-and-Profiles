@@ -24,27 +24,19 @@ const demoProfile = {
   portfolio: "https://www.vouchprofile.com/_files/ugd/9e6f36_d33d3698b6bd4749a0316343ad9d0cd0.pdf",
   keyTakeaways: {
     strengths: [
-      "User-centered design approach that consistently delivers results",
-      "Excellent collaboration skills across technical and non-technical teams",
-      "Strong analytical thinking combined with creative problem-solving",
-      "Proactive communication and project management"
+      "A keen eye for what matters: fast, clear, and flawless design."
     ],
     weaknesses: [
-      "Sometimes gets deeply focused on perfecting details",
-      "Could benefit from more experience with enterprise-scale design systems"
+      "Lara's learning that messy, fast, and collaborative often beats polished and late."
     ],
     communicationStyle: [
-      "Clear, structured communication with visual aids",
-      "Great at translating complex technical concepts into simple terms",
-      "Regularly shares progress updates and seeks feedback"
+      "Collaborating with Lara is a creative partnership - she listens, clarifies, and aligns teams for lasting impact."
     ],
     waysToBringOutBest: [
-      "Give her autonomy to explore creative solutions",
-      "Provide clear project goals and user success metrics",
-      "Include her in strategic discussions about product direction"
+      "Lara's work boosts metrics, doubles activation, and makes products easier to use, globally."
     ],
-    customTitle1: "Design Process",
-    customTitle2: "Collaboration Style"
+    customTitle1: "Collaborator",
+    customTitle2: "Activator"
   },
   transcripts: [
     {
