@@ -153,14 +153,17 @@ export function EmailMigrationButton() {
         // Save updated profile if changes were made
         if (needsUpdate) {
           try {
+            console.log(`🔄 Attempting to save profile: ${profile.name}`, updatedProfile);
             const success = await dataProvider.saveProfile(updatedProfile);
             if (success) {
               updatedProfiles++;
               console.log(`✅ Updated profile: ${profile.name}`);
             } else {
-              errors.push(`❌ Failed to save profile: ${profile.name}`);
+              console.error(`❌ Save returned false for profile: ${profile.name}`);
+              errors.push(`❌ Failed to save profile: ${profile.name} (save returned false)`);
             }
           } catch (error) {
+            console.error(`❌ Exception saving profile ${profile.name}:`, error);
             errors.push(`❌ Error saving profile ${profile.name}: ${error instanceof Error ? error.message : 'Unknown error'}`);
           }
         }
