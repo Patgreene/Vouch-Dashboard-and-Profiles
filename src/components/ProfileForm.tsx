@@ -912,48 +912,7 @@ export function ProfileForm({
                       )}
                     </div>
 
-                    {/* Speaker Photo Upload */}
-                    <div>
-                      <Label>Speaker Photo</Label>
-                      <div className="flex items-center gap-4">
-                        {transcript.speakerPhoto ? (
-                          <Avatar className="h-12 w-12">
-                            <AvatarImage
-                              src={transcript.speakerPhoto}
-                              alt={transcript.speakerName}
-                              className="object-cover object-center"
-                            />
-                            <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
-                              {getInitials(transcript.speakerName)}
-                            </AvatarFallback>
-                          </Avatar>
-                        ) : (
-                          <div className="h-12 w-12 bg-gray-100 rounded-full flex items-center justify-center">
-                            <User className="h-6 w-6 text-gray-400" />
-                          </div>
-                        )}
-                        <div className="flex-1">
-                          <Input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleSpeakerPhotoUpload(e, index)}
-                            className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-vouch-50 file:text-vouch-700 hover:file:bg-vouch-100"
-                          />
-                        </div>
-                        {transcript.speakerPhoto && (
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() =>
-                              updateTranscript(index, "speakerPhoto", "")
-                            }
-                          >
-                            Remove
-                          </Button>
-                        )}
-                      </div>
-                    </div>
+
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
