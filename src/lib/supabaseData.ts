@@ -106,6 +106,7 @@ function transformDatabaseTranscript(
     speakerPhoto: dbTranscript.speaker_photo || undefined,
     interviewDate: dbTranscript.interview_date || undefined,
     content: dbTranscript.content,
+    verificationStatus: dbTranscript.verification_status || "not_started",
   };
 }
 
@@ -136,6 +137,7 @@ function transformToDatabase(profile: Profile): {
       speaker_photo: t.speakerPhoto,
       interview_date: t.interviewDate,
       content: t.content,
+      verification_status: t.verificationStatus,
     })),
   };
 }
