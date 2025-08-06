@@ -2,7 +2,9 @@ import { useState, lazy, Suspense } from "react";
 import { ProfileHeader } from "@/components/ProfileHeader";
 import { KeyTakeaways } from "@/components/KeyTakeaways";
 import { EnhancedTranscriptCard } from "@/components/EnhancedTranscriptCard";
+import { ShareTooltip } from "@/components/ShareTooltip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useHighlight } from "@/hooks/useHighlight";
 
 // Lazy load Footer component
 const Footer = lazy(() =>
@@ -142,6 +144,15 @@ const demoGivenTranscripts = [
 export default function DemoProfile() {
   const [expandedTranscripts, setExpandedTranscripts] = useState<Set<string>>(new Set());
 
+  // Initialize highlight functionality for demo profile
+  const {
+    shareTooltip,
+    copiedFeedback,
+    handleShareLink,
+    handleTextSelection,
+    processHighlightFromUrl,
+  } = useHighlight("lara-rosu-demo");
+
   const toggleTranscript = (transcriptId: string) => {
     const newExpanded = new Set(expandedTranscripts);
     if (newExpanded.has(transcriptId)) {
@@ -150,15 +161,6 @@ export default function DemoProfile() {
       newExpanded.add(transcriptId);
     }
     setExpandedTranscripts(newExpanded);
-  };
-
-  // Mock handlers for demo
-  const handleTextSelection = (transcriptId: string) => {
-    console.log("Text selected in transcript:", transcriptId);
-  };
-
-  const processHighlightFromUrl = (transcriptId: string) => {
-    console.log("Processing highlight for:", transcriptId);
   };
 
   return (
@@ -238,6 +240,15 @@ export default function DemoProfile() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Share Tooltip for highlights */}
+      <ShareTooltip
+        visible={shareTooltip.visible}
+        x={shareTooltip.x}
+        y={shareTooltip.y}
+        onShare={handleShareLink}
+        copied={copiedFeedback}
+      />
 
       {/* Footer */}
       <Suspense fallback={<div>Loading...</div>}>
