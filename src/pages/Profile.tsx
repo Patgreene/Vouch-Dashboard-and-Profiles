@@ -3,6 +3,7 @@ import { useParams, Navigate } from "react-router-dom";
 import { ProfileHeader } from "@/components/ProfileHeader";
 import { KeyTakeaways } from "@/components/KeyTakeaways";
 import { TranscriptCard } from "@/components/TranscriptCard";
+import { EnhancedTranscriptCard } from "@/components/EnhancedTranscriptCard";
 import { ShareTooltip } from "@/components/ShareTooltip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { dataProvider } from "@/lib/dataProvider";
@@ -23,7 +24,7 @@ export default function Profile() {
   const [expandedTranscripts, setExpandedTranscripts] = useState<Set<string>>(
     new Set(),
   );
-  const [givenTranscripts, setGivenTranscripts] = useState<Transcript[]>([]);
+  const [givenTranscripts, setGivenTranscripts] = useState<Array<{ transcript: Transcript; recipientProfile: Profile }>>([]);
 
   // All hooks must be called before any conditional logic
   const {
@@ -51,8 +52,7 @@ export default function Profile() {
 
           // Load transcripts given by this person (where they are the speaker)
           const givenData = await dataProvider.getGivenTranscripts(profileData.name);
-          const given = givenData.map(item => item.transcript);
-          setGivenTranscripts(given);
+          setGivenTranscripts(givenData);
         } else {
           setProfile(null);
         }
@@ -157,7 +157,7 @@ export default function Profile() {
           <TabsContent value="received" className="space-y-4 sm:space-y-6">
             {profile.transcripts && profile.transcripts.length > 0 ? (
               profile.transcripts.map((transcript) => (
-                <TranscriptCard
+                <EnhancedTranscriptCard
                   key={`received-${profile.id}-${transcript.id}`}
                   transcript={transcript}
                   profileId={id}
@@ -165,6 +165,7 @@ export default function Profile() {
                   onToggle={() => toggleTranscript(transcript.id)}
                   onTextSelection={handleTextSelection}
                   processHighlightFromUrl={processHighlightFromUrl}
+                  mode="received"
                 />
               ))
             ) : (
@@ -176,8 +177,8 @@ export default function Profile() {
 
           <TabsContent value="given" className="space-y-4 sm:space-y-6">
             {givenTranscripts.length > 0 ? (
-              givenTranscripts.map((transcript) => (
-                <TranscriptCard
+              givenTranscripts.map(({ transcript, recipientProfile }) => (
+                <EnhancedTranscriptCard
                   key={`given-${transcript.id}`}
                   transcript={transcript}
                   profileId={id}
@@ -185,6 +186,8 @@ export default function Profile() {
                   onToggle={() => toggleTranscript(transcript.id)}
                   onTextSelection={handleTextSelection}
                   processHighlightFromUrl={processHighlightFromUrl}
+                  mode="given"
+                  recipientProfile={recipientProfile}
                 />
               ))
             ) : (
