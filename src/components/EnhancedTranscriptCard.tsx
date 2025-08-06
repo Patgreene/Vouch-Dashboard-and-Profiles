@@ -123,7 +123,7 @@ export function EnhancedTranscriptCard({
   };
 
   return (
-    <Card className="overflow-hidden transition-all duration-200 hover:shadow-md max-w-full">
+    <Card className="relative overflow-hidden transition-all duration-200 hover:shadow-md max-w-full">
       <Button
         variant="ghost"
         onClick={toggle}
