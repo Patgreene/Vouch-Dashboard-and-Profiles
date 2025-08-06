@@ -22,11 +22,15 @@ export function PaymentModal({
   transcriptId,
   speakerName,
 }: PaymentModalProps) {
-  console.log("PaymentModal rendered with isOpen:", isOpen, "transcriptId:", transcriptId);
+  console.log(
+    "PaymentModal rendered with isOpen:",
+    isOpen,
+    "transcriptId:",
+    transcriptId,
+  );
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-sm">
-
         <div className="text-center space-y-4 py-2">
           <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
             <Shield className="w-6 h-6 text-blue-600" />
@@ -36,9 +40,7 @@ export function PaymentModal({
             <h3 className="text-lg font-semibold text-gray-900 mb-1">
               Verify Transcript
             </h3>
-            <p className="text-sm text-gray-600">
-              by {speakerName}
-            </p>
+            <p className="text-sm text-gray-600">by {speakerName}</p>
           </div>
 
           <div className="py-2">
@@ -47,9 +49,10 @@ export function PaymentModal({
           </div>
 
           <div className="bg-blue-50 rounded-lg p-3 text-sm text-blue-800">
-            ✓ Professional verification<br/>
-            ✓ 2-3 days processing time<br/>
-            ✓ Authenticity guarantee
+            ✓ Professional verification
+            <br />
+            ✓ 2-3 days processing time
+            <br />✓ Authenticity guarantee
           </div>
 
           <Button onClick={onClose} className="w-full mt-4">

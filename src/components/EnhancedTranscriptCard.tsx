@@ -112,7 +112,10 @@ export function EnhancedTranscriptCard({
               e.preventDefault();
               e.stopPropagation();
               console.log("Transcript ID:", transcript.id);
-              console.log("Before state change - showPaymentModal:", showPaymentModal);
+              console.log(
+                "Before state change - showPaymentModal:",
+                showPaymentModal,
+              );
               setShowPaymentModal(true);
               console.log("Modal should now be open!");
             }}
