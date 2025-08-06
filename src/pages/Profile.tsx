@@ -108,6 +108,32 @@ export default function Profile() {
     setExpandedTranscripts(newExpanded);
   };
 
+  const handleVerificationChange = async (
+    transcriptId: string,
+    newStatus: "verified" | "pending" | "not_started"
+  ) => {
+    if (!profile) return;
+
+    // Update the transcript status locally
+    const updatedProfile = {
+      ...profile,
+      transcripts: profile.transcripts.map((t) =>
+        t.id === transcriptId ? { ...t, verificationStatus: newStatus } : t
+      ),
+    };
+
+    setProfile(updatedProfile);
+
+    // Save to database
+    try {
+      await dataProvider.saveProfile(updatedProfile);
+    } catch (error) {
+      console.error("Error updating verification status:", error);
+      // Revert on error
+      setProfile(profile);
+    }
+  };
+
   // Now handle conditional logic after all hooks
   if (!id) {
     return <Navigate to="/not-found" replace />;
@@ -170,6 +196,7 @@ export default function Profile() {
                   onTextSelection={handleTextSelection}
                   processHighlightFromUrl={processHighlightFromUrl}
                   mode="received"
+                  onVerificationChange={handleVerificationChange}
                 />
               ))
             ) : (
@@ -192,6 +219,7 @@ export default function Profile() {
                   processHighlightFromUrl={processHighlightFromUrl}
                   mode="given"
                   recipientProfile={recipientProfile}
+                  onVerificationChange={handleVerificationChange}
                 />
               ))
             ) : (
