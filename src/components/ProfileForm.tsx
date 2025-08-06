@@ -801,9 +801,11 @@ export function ProfileForm({
               </div>
             </CardContent>
           </Card>
+          )}
 
-          {/* Transcripts */}
-          <Card>
+          {/* Transcripts - Only show in full mode */}
+          {mode === "full" && (
+            <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Reference Transcripts</CardTitle>
