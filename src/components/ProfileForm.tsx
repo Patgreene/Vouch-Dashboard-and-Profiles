@@ -67,7 +67,6 @@ const initialFormData: FormData = {
       speakerPhoto: "",
       content: "",
       interviewDate: "",
-      interviewedBy: "",
     },
   ],
 };
@@ -220,7 +219,6 @@ export function ProfileForm({
           speakerPhoto: "",
           content: "",
           interviewDate: "",
-          interviewedBy: "",
         },
       ],
     }));
