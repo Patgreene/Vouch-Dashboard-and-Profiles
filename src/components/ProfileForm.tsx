@@ -97,7 +97,10 @@ export function ProfileForm({
         transcripts: editingProfile.transcripts.length
           ? editingProfile.transcripts.map(t => ({
               ...t,
-              speakerEmail: t.speakerEmail || ""
+              speakerEmail: t.speakerEmail || "",
+              speakerPhoto: t.speakerPhoto || "",
+              interviewDate: t.interviewDate || "",
+              interviewedBy: t.interviewedBy || ""
             }))
           : initialFormData.transcripts,
       };
