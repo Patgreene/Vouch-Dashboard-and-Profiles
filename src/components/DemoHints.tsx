@@ -95,23 +95,47 @@ export function DemoHints() {
     setHintPositions(newPositions);
   };
 
+  // Check which tab is active
+  const checkActiveTab = () => {
+    const receivedTab = document.querySelector('button[id*="trigger-received"]');
+    if (receivedTab) {
+      const isActive = receivedTab.getAttribute('data-state') === 'active';
+      setIsReceivedTabActive(isActive);
+    }
+  };
+
   // Update positions on mount and scroll
   useEffect(() => {
-    const timer = setTimeout(updatePositions, 500); // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      updatePositions();
+      checkActiveTab();
+    }, 500); // Small delay to ensure DOM is ready
 
     const handleScroll = () => updatePositions();
     const handleResize = () => updatePositions();
     const handleShowTutorial = () => setShowTutorial(true);
+    const handleTabChange = () => {
+      setTimeout(checkActiveTab, 100); // Small delay for tab state to update
+    };
 
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
     window.addEventListener('showHighlightTutorial', handleShowTutorial);
+
+    // Monitor for tab clicks
+    const tabList = document.querySelector('[role="tablist"]');
+    if (tabList) {
+      tabList.addEventListener('click', handleTabChange);
+    }
 
     return () => {
       clearTimeout(timer);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('showHighlightTutorial', handleShowTutorial);
+      if (tabList) {
+        tabList.removeEventListener('click', handleTabChange);
+      }
     };
   }, []);
 
