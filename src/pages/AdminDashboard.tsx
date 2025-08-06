@@ -164,7 +164,9 @@ export default function AdminDashboard() {
         setProfiles(allValidProfiles);
 
         // Skip analytics loading on initial dashboard load for better performance
-        console.log("⚡ Skipping analytics loading for faster dashboard performance");
+        console.log(
+          "⚡ Skipping analytics loading for faster dashboard performance",
+        );
       } catch (error) {
         console.error("❌ Critical error loading dashboard data:", error);
         console.error("Error details:", {
@@ -380,13 +382,20 @@ export default function AdminDashboard() {
           />
           <StatCard
             title="Total Transcripts"
-            value={profiles.reduce((acc, profile) => acc + (profile.transcripts?.length || 0), 0).toString()}
+            value={profiles
+              .reduce(
+                (acc, profile) => acc + (profile.transcripts?.length || 0),
+                0,
+              )
+              .toString()}
             icon={FileText}
           />
           <Card className="hover:shadow-md transition-shadow cursor-pointer">
             <Link to="/admin/analytics" className="block h-full">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">View Analytics</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  View Analytics
+                </CardTitle>
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -399,7 +408,9 @@ export default function AdminDashboard() {
           </Card>
           <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Users</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Active Users
+              </CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -531,8 +542,10 @@ export default function AdminDashboard() {
 
                             {/* Quick Info */}
                             <div className="flex gap-4 text-xs text-gray-500 mb-3">
-                              <span>Transcripts: {profile.transcripts?.length || 0}</span>
-                              <span>Email: {profile.email || 'None'}</span>
+                              <span>
+                                Transcripts: {profile.transcripts?.length || 0}
+                              </span>
+                              <span>Email: {profile.email || "None"}</span>
                             </div>
 
                             {/* Actions */}
