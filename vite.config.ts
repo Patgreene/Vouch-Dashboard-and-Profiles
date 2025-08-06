@@ -6,8 +6,13 @@ import path from "path";
 export default defineConfig(({ mode }) => ({
   // Set the base URL for deployment
   // For Vercel/Netlify/custom domain, use root path
+<<<<<<< HEAD
   base: "/",
 
+=======
+  base: '/',
+  
+>>>>>>> 3815bcb9d3edcd16f520589d7029f571bea026a2
   server: {
     host: "::",
     port: 8080,
