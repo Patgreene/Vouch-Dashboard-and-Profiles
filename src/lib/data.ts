@@ -29,7 +29,6 @@ export interface Transcript {
   speakerPhoto?: string;
   content: string;
   interviewDate?: string;
-  interviewedBy?: string;
 }
 
 export interface Analytics {
