@@ -105,12 +105,19 @@ export function DemoHints() {
 
   // Check which tab is active
   const checkActiveTab = () => {
-    const receivedTab = Array.from(document.querySelectorAll('button[role="tab"]')).find(
-      tab => tab.textContent?.includes('Received')
-    );
+    const receivedTab = document.querySelector('#radix-\\:r0\\:-trigger-received') as HTMLButtonElement;
     if (receivedTab) {
       const isActive = receivedTab.getAttribute('data-state') === 'active';
       setIsReceivedTabActive(isActive);
+    } else {
+      // Fallback to text-based search
+      const fallbackTab = Array.from(document.querySelectorAll('button[role="tab"]')).find(
+        tab => tab.textContent?.includes('Received')
+      );
+      if (fallbackTab) {
+        const isActive = fallbackTab.getAttribute('data-state') === 'active';
+        setIsReceivedTabActive(isActive);
+      }
     }
   };
 
