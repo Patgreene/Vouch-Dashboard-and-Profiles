@@ -269,50 +269,41 @@ export function DemoHints() {
                 {/* Mini Demo Container */}
                 <div className="bg-white rounded-lg border shadow-sm relative" style={{ height: '200px' }}>
                   {/* Step 1: Mock transcript card (collapsed) */}
-                  <div className="absolute inset-2 transition-all duration-1000 ease-out demo-step-1">
-                    <div className="bg-white border rounded-lg p-3 shadow-sm">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 bg-blue-100 rounded-full"></div>
-                        <div>
-                          <div className="text-xs font-medium">Clara Jensen</div>
-                          <div className="text-xs text-gray-500">Product Designer</div>
+                  <div className="absolute inset-2 demo-step-1">
+                    <div className="bg-white border rounded-lg shadow-sm overflow-hidden">
+                      <div className="p-3">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-6 h-6 bg-blue-100 rounded-full"></div>
+                          <div className="flex-1">
+                            <div className="text-xs font-medium">Clara Jensen</div>
+                            <div className="text-xs text-gray-500">Product Designer</div>
+                          </div>
+                          <div className="relative">
+                            {/* Down arrow with click indicator */}
+                            <svg className="w-4 h-4 text-gray-500 demo-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                            <div className="absolute inset-0 w-8 h-8 -m-2 border-2 border-blue-500 rounded-full demo-click-indicator"></div>
+                          </div>
                         </div>
-                        <div className="ml-auto">
-                          <div className="w-4 h-4 bg-gray-200 rounded animate-pulse cursor-pointer"></div>
-                        </div>
-                      </div>
-                      <div className="text-xs text-gray-600 line-clamp-2">
-                        Lara's design process is incredibly methodical...
-                      </div>
-                    </div>
-
-                    {/* Click indicator */}
-                    <div className="absolute top-3 right-3 w-8 h-8 border-2 border-blue-500 rounded-full animate-ping opacity-70"></div>
-                  </div>
-
-                  {/* Step 2: Expanded transcript with text selection */}
-                  <div className="absolute inset-2 transition-all duration-1000 ease-out demo-step-2" style={{ opacity: 0, transform: 'scale(0.95)' }}>
-                    <div className="bg-white border rounded-lg p-3 shadow-sm">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 bg-blue-100 rounded-full"></div>
-                        <div>
-                          <div className="text-xs font-medium">Clara Jensen</div>
-                          <div className="text-xs text-gray-500">Product Designer</div>
+                        <div className="text-xs text-gray-600">
+                          Lara's design process is incredibly methodical...
                         </div>
                       </div>
-                      <div className="text-xs text-gray-700 leading-relaxed">
-                        Lara's <span className="bg-yellow-200 px-1 rounded demo-highlight">design process is incredibly methodical</span> and she creates detailed user journeys that make sense.
-                      </div>
-                    </div>
 
-                    {/* Selection animation */}
-                    <div className="absolute" style={{ top: '45px', left: '50px', width: '120px', height: '2px' }}>
-                      <div className="h-full bg-blue-400 rounded demo-selection-line" style={{ width: '0%' }}></div>
+                      {/* Expandable content (initially hidden) */}
+                      <div className="demo-expanded-content" style={{ height: '0px', overflow: 'hidden' }}>
+                        <div className="px-3 pb-3">
+                          <div className="text-xs text-gray-700 leading-relaxed">
+                            Lara's <span className="demo-highlight">design process is incredibly methodical</span> and she creates detailed user journeys that make sense from both user and technical perspectives.
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
                   {/* Step 3: Share tooltip */}
-                  <div className="absolute demo-step-3" style={{ top: '20px', left: '50%', transform: 'translateX(-50%)', opacity: 0 }}>
+                  <div className="absolute demo-step-3" style={{ top: '60px', left: '50%', transform: 'translateX(-50%)', opacity: 0 }}>
                     <div className="bg-blue-600 text-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-medium flex items-center gap-2 cursor-pointer">
                       <Share2 className="w-3 h-3" />
                       Share Link
@@ -324,7 +315,7 @@ export function DemoHints() {
                   </div>
 
                   {/* Step 4: Success feedback */}
-                  <div className="absolute demo-step-4" style={{ top: '20px', left: '50%', transform: 'translateX(-50%)', opacity: 0 }}>
+                  <div className="absolute demo-step-4" style={{ top: '60px', left: '50%', transform: 'translateX(-50%)', opacity: 0 }}>
                     <div className="bg-green-600 text-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-medium flex items-center gap-2">
                       <CheckCircle className="w-3 h-3" />
                       Copied!
@@ -371,8 +362,10 @@ export function DemoHints() {
         }
 
         /* Demo Animation Styles */
-        .demo-step-1 { animation: demo-step-1 8s infinite; }
-        .demo-step-2 { animation: demo-step-2 8s infinite; }
+        .demo-step-1 { animation: none; } /* Always visible */
+        .demo-expanded-content { animation: content-expand 8s infinite; }
+        .demo-click-indicator { animation: click-pulse 8s infinite; }
+        .demo-arrow { animation: arrow-rotate 8s infinite; }
         .demo-step-3 { animation: demo-step-3 8s infinite; }
         .demo-step-4 { animation: demo-step-4 8s infinite; }
 
@@ -381,30 +374,34 @@ export function DemoHints() {
         .demo-progress-3 { animation: progress-3 8s infinite; }
         .demo-progress-4 { animation: progress-4 8s infinite; }
 
-        .demo-selection-line { animation: selection-grow 8s infinite; }
         .demo-highlight { animation: highlight-fade 8s infinite; }
 
-        @keyframes demo-step-1 {
-          0%, 20% { opacity: 1; transform: scale(1); }
-          25%, 100% { opacity: 0; transform: scale(0.95); }
+        @keyframes content-expand {
+          0%, 20% { height: 0px; }
+          25%, 100% { height: 60px; }
         }
 
-        @keyframes demo-step-2 {
-          0%, 20% { opacity: 0; transform: scale(0.95); }
-          25%, 75% { opacity: 1; transform: scale(1); }
-          80%, 100% { opacity: 0; transform: scale(0.95); }
+        @keyframes click-pulse {
+          0%, 15% { opacity: 0.7; transform: scale(1); }
+          18% { opacity: 0; transform: scale(1.2); }
+          20%, 100% { opacity: 0; transform: scale(1); }
+        }
+
+        @keyframes arrow-rotate {
+          0%, 20% { transform: rotate(0deg); }
+          25%, 100% { transform: rotate(180deg); }
         }
 
         @keyframes demo-step-3 {
-          0%, 50% { opacity: 0; transform: translateX(-50%) translateY(10px); }
-          55%, 75% { opacity: 1; transform: translateX(-50%) translateY(0); }
-          80%, 100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+          0%, 40% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+          45%, 65% { opacity: 1; transform: translateX(-50%) translateY(0); }
+          70%, 100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
         }
 
         @keyframes demo-step-4 {
-          0%, 75% { opacity: 0; transform: translateX(-50%) scale(0.8); }
-          80%, 95% { opacity: 1; transform: translateX(-50%) scale(1); }
-          100% { opacity: 0; transform: translateX(-50%) scale(1.1); }
+          0%, 65% { opacity: 0; transform: translateX(-50%) scale(0.8); }
+          70%, 85% { opacity: 1; transform: translateX(-50%) scale(1); }
+          90%, 100% { opacity: 0; transform: translateX(-50%) scale(1.1); }
         }
 
         @keyframes progress-1 {
@@ -414,31 +411,24 @@ export function DemoHints() {
 
         @keyframes progress-2 {
           0%, 25% { background-color: #d1d5db; }
-          25%, 50% { background-color: #2563eb; }
-          50%, 100% { background-color: #d1d5db; }
+          25%, 45% { background-color: #2563eb; }
+          45%, 100% { background-color: #d1d5db; }
         }
 
         @keyframes progress-3 {
-          0%, 50% { background-color: #d1d5db; }
-          50%, 75% { background-color: #2563eb; }
-          75%, 100% { background-color: #d1d5db; }
+          0%, 40% { background-color: #d1d5db; }
+          40%, 65% { background-color: #2563eb; }
+          65%, 100% { background-color: #d1d5db; }
         }
 
         @keyframes progress-4 {
-          0%, 75% { background-color: #d1d5db; }
-          75%, 100% { background-color: #2563eb; }
-        }
-
-        @keyframes selection-grow {
-          0%, 30% { width: 0%; }
-          35%, 50% { width: 100%; }
-          55%, 100% { width: 100%; }
+          0%, 65% { background-color: #d1d5db; }
+          65%, 100% { background-color: #2563eb; }
         }
 
         @keyframes highlight-fade {
-          0%, 35% { background-color: transparent; }
-          40%, 75% { background-color: #fef3c7; }
-          80%, 100% { background-color: #fef3c7; }
+          0%, 30% { background-color: transparent; }
+          35%, 100% { background-color: #fef3c7; }
         }
       `}</style>
     </>
