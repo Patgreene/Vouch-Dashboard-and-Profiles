@@ -109,6 +109,7 @@ export function EnhancedTranscriptCard({
             className="h-6 px-2 text-xs text-blue-600 border-blue-200 hover:bg-blue-50"
             onClick={(e) => {
               e.stopPropagation(); // Prevent card toggle
+              console.log("Verify button clicked!", transcript.id);
               setShowPaymentModal(true);
             }}
           >
