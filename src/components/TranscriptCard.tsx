@@ -137,36 +137,20 @@ export function TranscriptCard({
           {/* Right side - Metadata and expand icon */}
           <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 sm:gap-2 shrink-0">
             {/* Interview Metadata */}
-            {(transcript.interviewDate || transcript.interviewedBy) && (
+            {transcript.interviewDate && (
               <div className="flex flex-row sm:flex-col items-center sm:items-end gap-1 sm:gap-1 text-xs text-gray-400">
-                {transcript.interviewDate && (
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    <span className="whitespace-nowrap">
-                      {new Date(transcript.interviewDate).toLocaleDateString(
-                        "en-US",
-                        {
-                          year: "numeric",
-                          month: "short",
-                        },
-                      )}
-                    </span>
-                  </div>
-                )}
-                {transcript.interviewedBy && (
-                  <div className="flex items-center gap-1">
-                    <UserCheck className="h-3 w-3" />
-                    <span className="whitespace-nowrap">
-                      by{" "}
-                      {transcript.interviewedBy
-                        ? transcript.interviewedBy
-                            .split(" ")
-                            .filter((part) => part.length > 0)[0] ||
-                          transcript.interviewedBy
-                        : "Unknown"}
-                    </span>
-                  </div>
-                )}
+                <div className="flex items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+                  <span className="whitespace-nowrap">
+                    {new Date(transcript.interviewDate).toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "short",
+                      },
+                    )}
+                  </span>
+                </div>
               </div>
             )}
 
