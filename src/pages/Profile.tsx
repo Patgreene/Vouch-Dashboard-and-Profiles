@@ -153,9 +153,9 @@ export default function Profile() {
         <Tabs defaultValue="received" className="w-full">
           <div className="mb-6 sm:mb-8">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
-              Transcripts
+              Interview Transcripts
             </h2>
-            <TabsList className="grid w-full grid-cols-2 max-w-md">
+            <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="received" className="text-sm">
                 Received ({profile.transcripts?.length || 0})
               </TabsTrigger>

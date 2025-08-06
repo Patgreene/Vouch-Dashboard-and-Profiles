@@ -176,8 +176,8 @@ export function EnhancedTranscriptCard({
 
                 {/* Context for "given" mode */}
                 {mode === "given" && recipientProfile && (
-                  <div className="flex items-center gap-2 mb-2 text-sm text-gray-600">
-                    <span>Testimonial about</span>
+                <div className="flex items-center gap-2 mb-2 text-sm text-gray-600">
+                  <span>Vouching for</span>
                     <ArrowRight className="h-3 w-3" />
                     <div className="flex items-center gap-1">
                       <Avatar className="h-5 w-5">
