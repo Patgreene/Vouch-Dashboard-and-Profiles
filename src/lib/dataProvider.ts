@@ -48,24 +48,40 @@ export class DataProvider {
   }
 
   async getGivenTranscripts(speakerEmail: string) {
-    const allProfiles = await this.getAllProfiles();
-    const givenTranscripts: Array<{
-      transcript: any;
-      recipientProfile: Profile;
-    }> = [];
+    if (this.useSupabase) {
+      // Optimized: Query transcripts directly by speaker email
+      return await this.getGivenTranscriptsFromSupabase(speakerEmail);
+    } else {
+      // Fallback for localStorage
+      const allProfiles = await this.getAllProfiles();
+      const givenTranscripts: Array<{
+        transcript: any;
+        recipientProfile: Profile;
+      }> = [];
 
-    allProfiles.forEach((profile) => {
-      profile.transcripts.forEach((transcript) => {
-        if (transcript.speakerEmail === speakerEmail) {
-          givenTranscripts.push({
-            transcript,
-            recipientProfile: profile,
-          });
-        }
+      allProfiles.forEach((profile) => {
+        profile.transcripts.forEach((transcript) => {
+          if (transcript.speakerEmail === speakerEmail) {
+            givenTranscripts.push({
+              transcript,
+              recipientProfile: profile,
+            });
+          }
+        });
       });
-    });
 
-    return givenTranscripts;
+      return givenTranscripts;
+    }
+  }
+
+  private async getGivenTranscriptsFromSupabase(speakerEmail: string) {
+    try {
+      const { getGivenTranscriptsFromSupabase } = await import("./supabaseData");
+      return await getGivenTranscriptsFromSupabase(speakerEmail);
+    } catch (error) {
+      console.error("Error loading given transcripts from Supabase:", error);
+      return [];
+    }
   }
 
   async saveProfile(profile: Profile): Promise<boolean> {
