@@ -42,7 +42,6 @@ export interface DatabaseTranscript {
   speaker_email: string;
   speaker_photo?: string;
   interview_date?: string;
-  interviewed_by?: string;
   content: string;
   created_at?: string;
   updated_at?: string;
