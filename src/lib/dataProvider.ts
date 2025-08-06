@@ -47,13 +47,13 @@ export class DataProvider {
     return getLocalProfileById(id) || null;
   }
 
-  async getGivenTranscripts(speakerName: string) {
+  async getGivenTranscripts(speakerEmail: string) {
     const allProfiles = await this.getAllProfiles();
     const givenTranscripts: Array<{ transcript: any; recipientProfile: Profile }> = [];
 
     allProfiles.forEach(profile => {
       profile.transcripts.forEach(transcript => {
-        if (transcript.speakerName === speakerName) {
+        if (transcript.speakerEmail === speakerEmail) {
           givenTranscripts.push({
             transcript,
             recipientProfile: profile
