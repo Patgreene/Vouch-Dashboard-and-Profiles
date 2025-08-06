@@ -603,6 +603,7 @@ export default function AdminDashboard() {
             onClose={handleCloseForm}
             onSave={handleSaveProfile}
             editingProfile={editingProfile}
+            mode={editingProfile ? "full" : "simple"}
           />
         </Suspense>
       )}
