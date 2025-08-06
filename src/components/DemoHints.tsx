@@ -60,10 +60,16 @@ const hints: Hint[] = [
     offsetY: 10,
     icon: Users,
     action: () => {
-      const givenTab = Array.from(document.querySelectorAll('button[role="tab"]')).find(
-        tab => tab.textContent?.includes('Given')
-      ) as HTMLButtonElement;
-      if (givenTab) givenTab.click();
+      const givenTab = document.querySelector('#radix-\\:r0\\:-trigger-given') as HTMLButtonElement;
+      if (givenTab) {
+        givenTab.click();
+      } else {
+        // Fallback to text-based search if ID doesn't work
+        const fallbackTab = Array.from(document.querySelectorAll('button[role="tab"]')).find(
+          tab => tab.textContent?.includes('Given')
+        ) as HTMLButtonElement;
+        if (fallbackTab) fallbackTab.click();
+      }
     },
     actionText: "View given testimonials",
   },
