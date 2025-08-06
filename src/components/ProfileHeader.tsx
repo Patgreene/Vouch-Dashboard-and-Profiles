@@ -24,7 +24,7 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
           <div className="relative w-full">
             <a
               href="https://calling-20test.vercel.app/"
-              className="absolute top-0 right-0 inline-flex items-center gap-2 px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+              className="absolute top-0 left-0 inline-flex items-center gap-2 px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors duration-200"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
