@@ -52,7 +52,7 @@ const demoProfile = {
       speakerName: "Clara Jensen",
       speakerRole: "Head of Product Design",
       speakerEmail: "clara@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      speakerPhoto: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       interviewDate: "2024-06-15",
       content: "Lara joined our design team on a 6-month freelance contract, originally to support a product refresh and ended up becoming instrumental in a full UX overhaul. What stood out from day one was her ability to ask the right questions. She didn't just take our brief and run with it; she dug deeper into our user data, challenged some of our assumptions, and helped us see gaps we hadn't noticed.\n\nHer design process is incredibly methodical. She starts with thorough user research, creates detailed user journeys, and then builds wireframes that actually make sense from both a user and technical perspective. But what really impressed me was how she balanced creativity with practicality. Every design decision came with a clear rationale tied back to user needs or business goals.\n\nWorking with Lara was refreshingly collaborative. She regularly shared her progress, incorporated feedback gracefully, and always came prepared with multiple options when presenting concepts. The final designs she delivered resulted in a 40% increase in user engagement and significantly reduced support tickets related to navigation confusion.",
       verificationStatus: "verified" as const
@@ -72,7 +72,7 @@ const demoProfile = {
       speakerName: "David Nari",
       speakerRole: "Senior Frontend Developer",
       speakerEmail: "david@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      speakerPhoto: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       interviewDate: "2025-05-10",
       content: "I worked with Lara on a couple of startup projects where she handled the full UX/UI flow and let me just say, handing off designs from her is a developer's dream. Her files are clean, her logic is sound, and she actually thinks about implementation complexity when designing. She uses consistent spacing, proper component structures, and always includes hover states and edge cases.\n\nBut beyond the technical execution, Lara just gets how users think. She has this intuitive understanding of user behavior that shows up in every interaction she designs. Buttons are exactly where you expect them, navigation flows feel natural, and complex features somehow feel simple to use.\n\nWhat really sets Lara apart is her willingness to iterate based on real user feedback. I've worked with designers who get precious about their work, but Lara actively seeks out ways to improve. She'll test prototypes, gather feedback, and refine designs until they're genuinely user-friendly, not just visually appealing.",
       verificationStatus: "verified" as const
