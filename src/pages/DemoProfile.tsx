@@ -162,6 +162,17 @@ export default function DemoProfile() {
     new Set(),
   );
 
+  // Check URL parameters on load to expand highlighted transcript
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const transcriptId = urlParams.get("t");
+
+    if (transcriptId) {
+      // Expand the transcript that contains the highlight
+      setExpandedTranscripts(new Set([transcriptId]));
+    }
+  }, []);
+
   // Initialize demo-specific highlight functionality
   const {
     shareTooltip,
