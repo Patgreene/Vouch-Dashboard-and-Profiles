@@ -4,8 +4,9 @@ import { ProfileHeader } from "@/components/ProfileHeader";
 import { KeyTakeaways } from "@/components/KeyTakeaways";
 import { TranscriptCard } from "@/components/TranscriptCard";
 import { ShareTooltip } from "@/components/ShareTooltip";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { dataProvider } from "@/lib/dataProvider";
-import { Profile } from "@/lib/data";
+import { Profile, Transcript } from "@/lib/data";
 import { useHighlight } from "@/hooks/useHighlight";
 
 // Lazy load Footer component
@@ -22,6 +23,7 @@ export default function Profile() {
   const [expandedTranscripts, setExpandedTranscripts] = useState<Set<string>>(
     new Set(),
   );
+  const [givenTranscripts, setGivenTranscripts] = useState<Transcript[]>([]);
 
   // All hooks must be called before any conditional logic
   const {
@@ -46,6 +48,20 @@ export default function Profile() {
 
         if (profileData) {
           setProfile(profileData);
+
+          // Load transcripts given by this person (where they are the speaker)
+          const allProfiles = await dataProvider.getAllProfiles();
+          const given: Transcript[] = [];
+
+          allProfiles.forEach(otherProfile => {
+            otherProfile.transcripts.forEach(transcript => {
+              if (transcript.speakerName === profileData.name) {
+                given.push(transcript);
+              }
+            });
+          });
+
+          setGivenTranscripts(given);
         } else {
           setProfile(null);
         }
@@ -132,29 +148,61 @@ export default function Profile() {
         className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
         style={{ margin: "-3px auto 0", padding: "11px 32px 24px" }}
       >
-        <div className="mb-6 sm:mb-8">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
-            Transcripts ({profile.transcripts?.length || 0})
-          </h2>
-        </div>
+        <Tabs defaultValue="received" className="w-full">
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
+              Transcripts
+            </h2>
+            <TabsList className="grid w-full grid-cols-2 max-w-md">
+              <TabsTrigger value="received" className="text-sm">
+                Received ({profile.transcripts?.length || 0})
+              </TabsTrigger>
+              <TabsTrigger value="given" className="text-sm">
+                Given ({givenTranscripts.length})
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
-        <div className="space-y-4 sm:space-y-6">
-          {profile.transcripts?.map((transcript) => (
-            <TranscriptCard
-              key={`${profile.id}-${transcript.id}`}
-              transcript={transcript}
-              profileId={id}
-              isExpanded={expandedTranscripts.has(transcript.id)}
-              onToggle={() => toggleTranscript(transcript.id)}
-              onTextSelection={handleTextSelection}
-              processHighlightFromUrl={processHighlightFromUrl}
-            />
-          )) || (
-            <div className="text-center py-8 text-gray-500">
-              No transcripts available
-            </div>
-          )}
-        </div>
+          <TabsContent value="received" className="space-y-4 sm:space-y-6">
+            {profile.transcripts && profile.transcripts.length > 0 ? (
+              profile.transcripts.map((transcript) => (
+                <TranscriptCard
+                  key={`received-${profile.id}-${transcript.id}`}
+                  transcript={transcript}
+                  profileId={id}
+                  isExpanded={expandedTranscripts.has(transcript.id)}
+                  onToggle={() => toggleTranscript(transcript.id)}
+                  onTextSelection={handleTextSelection}
+                  processHighlightFromUrl={processHighlightFromUrl}
+                />
+              ))
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                No received transcripts available
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="given" className="space-y-4 sm:space-y-6">
+            {givenTranscripts.length > 0 ? (
+              givenTranscripts.map((transcript) => (
+                <TranscriptCard
+                  key={`given-${transcript.id}`}
+                  transcript={transcript}
+                  profileId={id}
+                  isExpanded={expandedTranscripts.has(transcript.id)}
+                  onToggle={() => toggleTranscript(transcript.id)}
+                  onTextSelection={handleTextSelection}
+                  processHighlightFromUrl={processHighlightFromUrl}
+                />
+              ))
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                No given transcripts available
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Share Tooltip */}
