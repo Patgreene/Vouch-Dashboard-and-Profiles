@@ -137,12 +137,15 @@ export function EnhancedTranscriptCard({
                 </div>
               )}
 
-              <div className="flex items-center gap-2 mb-2">
-                <Briefcase className="h-3 w-3 sm:h-4 sm:w-4 text-gray-500 shrink-0" />
-                <Badge variant="outline" className="text-xs sm:text-sm">
-                  {transcript.speakerRole}
-                </Badge>
-              </div>
+              {/* Only show speaker role in received mode */}
+              {mode === "received" && (
+                <div className="flex items-center gap-2 mb-2">
+                  <Briefcase className="h-3 w-3 sm:h-4 sm:w-4 text-gray-500 shrink-0" />
+                  <Badge variant="outline" className="text-xs sm:text-sm">
+                    {transcript.speakerRole}
+                  </Badge>
+                </div>
+              )}
 
               {!expanded && (
                 <p
