@@ -53,6 +53,7 @@ export const sampleProfiles: Profile[] = [
     id: "danielle-davis",
     name: "Danielle Davis",
     title: "Product Designer",
+    email: "danielle.davis@meta.com",
     company: "Meta",
     photo:
       "https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F12b15b8f8bff40339e9a75ad3f1509c3",
