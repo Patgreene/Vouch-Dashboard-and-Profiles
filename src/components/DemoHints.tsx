@@ -144,11 +144,10 @@ export function DemoHints() {
   return (
     <>
       {hints.map((hint) => {
-        const isCompleted = completedHints.has(hint.id);
         const isActive = activeHint === hint.id;
         const position = hintPositions[hint.id];
 
-        if (isCompleted || !position) return null;
+        if (!position) return null;
 
         return (
           <div
