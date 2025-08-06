@@ -615,10 +615,12 @@ export async function getGivenTranscriptsFromSupabase(speakerEmail: string) {
     // Query transcripts directly by speaker email with JOIN to get profile data
     const { data: transcripts, error: transcriptsError } = await supabase
       .from("transcripts")
-      .select(`
+      .select(
+        `
         *,
         profiles!inner(*)
-      `)
+      `,
+      )
       .eq("speaker_email", speakerEmail)
       .order("created_at", { ascending: false });
 

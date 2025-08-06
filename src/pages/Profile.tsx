@@ -55,7 +55,8 @@ export default function Profile() {
           setProfile(profileData);
 
           // Load given transcripts in parallel (non-blocking)
-          dataProvider.getGivenTranscripts(profileData.email)
+          dataProvider
+            .getGivenTranscripts(profileData.email)
             .then(setGivenTranscripts)
             .catch((error) => {
               console.error("Error loading given transcripts:", error);
