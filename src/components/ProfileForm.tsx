@@ -578,8 +578,9 @@ export function ProfileForm({
             </CardContent>
           </Card>
 
-          {/* Key Takeaways */}
-          <Card>
+          {/* Key Takeaways - Only show in full mode */}
+          {mode === "full" && (
+            <Card>
             <CardHeader>
               <CardTitle>Key Takeaways</CardTitle>
             </CardHeader>
