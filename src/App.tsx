@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // Import components directly instead of lazy loading to debug the issue
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import DemoProfile from "./pages/DemoProfile";
 import { AdminRouteGuard } from "./components/AdminRouteGuard";
 
 // Error Boundary to catch component loading errors
