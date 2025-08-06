@@ -28,7 +28,6 @@ import {
   validateAndCleanProfiles,
   validateProfilesAgainstSupabase,
 } from "@/utils/profileValidator";
-import { EmailMigrationButton } from "@/components/EmailMigrationButton";
 
 // Lazy load heavy ProfileForm component
 const ProfileForm = lazy(() =>
@@ -365,9 +364,6 @@ export default function AdminDashboard() {
             </div>
           </div>
         </div>
-
-        {/* Email Migration Tool */}
-        <EmailMigrationButton />
 
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
