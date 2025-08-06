@@ -7,7 +7,7 @@ import { EnhancedTranscriptCard } from "@/components/EnhancedTranscriptCard";
 import { ShareTooltip } from "@/components/ShareTooltip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { dataProvider } from "@/lib/dataProvider";
-import { Profile, Transcript } from "@/lib/data";
+import { Profile as ProfileInterface, Transcript } from "@/lib/data";
 import { useHighlight } from "@/hooks/useHighlight";
 
 // Lazy load Footer component
@@ -19,7 +19,7 @@ const Footer = lazy(() =>
 
 export default function Profile() {
   const { id } = useParams<{ id: string }>();
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<ProfileInterface | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedTranscripts, setExpandedTranscripts] = useState<Set<string>>(
     new Set(),
