@@ -132,12 +132,10 @@ export function DemoHints() {
     if (hint.action) {
       hint.action();
     }
-    setCompletedHints(prev => new Set([...prev, hint.id]));
     setActiveHint(null);
   };
 
   const handleDismiss = (hintId: string) => {
-    setCompletedHints(prev => new Set([...prev, hintId]));
     if (activeHint === hintId) {
       setActiveHint(null);
     }
