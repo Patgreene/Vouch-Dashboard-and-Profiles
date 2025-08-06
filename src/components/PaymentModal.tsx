@@ -22,6 +22,7 @@ export function PaymentModal({
   transcriptId,
   speakerName,
 }: PaymentModalProps) {
+  console.log("PaymentModal rendered with isOpen:", isOpen, "transcriptId:", transcriptId);
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
