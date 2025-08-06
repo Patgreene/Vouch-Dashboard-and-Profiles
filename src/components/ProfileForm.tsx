@@ -817,6 +817,21 @@ export function ProfileForm({
                         placeholder="Senior Manager at Company"
                       />
                     </div>
+                    <div className="md:col-span-2">
+                      <Label>Speaker Email *</Label>
+                      <Input
+                        type="email"
+                        value={transcript.speakerEmail}
+                        onChange={(e) =>
+                          updateTranscript(index, "speakerEmail", e.target.value)
+                        }
+                        placeholder="john.smith@company.com"
+                        required
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Used to match transcripts across profiles (not shown publicly)
+                      </p>
+                    </div>
                   </div>
 
                   {/* Speaker Photo Upload */}
