@@ -195,6 +195,7 @@ export function ProfileForm({
           id: `transcript-${Date.now()}`,
           speakerName: "",
           speakerRole: "",
+          speakerEmail: "",
           speakerPhoto: "",
           content: "",
           interviewDate: "",
