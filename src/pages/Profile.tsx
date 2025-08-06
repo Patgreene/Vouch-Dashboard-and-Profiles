@@ -25,7 +25,7 @@ export default function Profile() {
     new Set(),
   );
   const [givenTranscripts, setGivenTranscripts] = useState<
-    Array<{ transcript: Transcript; recipientProfile: Profile }>
+    Array<{ transcript: Transcript; recipientProfile: ProfileInterface }>
   >([]);
 
   // All hooks must be called before any conditional logic
