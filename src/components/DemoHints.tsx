@@ -60,7 +60,7 @@ const hints: Hint[] = [
     offsetY: 10,
     icon: Users,
     action: () => {
-      const givenTab = document.querySelector('button[data-state="inactive"]') as HTMLButtonElement;
+      const givenTab = document.querySelector('button[id*="trigger-given"]') as HTMLButtonElement;
       if (givenTab) givenTab.click();
     },
     actionText: "View given testimonials",
