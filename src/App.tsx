@@ -88,6 +88,12 @@ function Welcome() {
             Visit Main Site
           </a>
           <button
+            onClick={() => (window.location.href = "/demo")}
+            className="border border-vouch-600 text-vouch-600 px-6 py-3 rounded-lg hover:bg-vouch-50 transition-colors"
+          >
+            View Demo Profile
+          </button>
+          <button
             onClick={() => (window.location.href = "/admin-stats-d1g3Yt9")}
             className="border border-vouch-600 text-vouch-600 px-6 py-3 rounded-lg hover:bg-vouch-50 transition-colors"
           >
