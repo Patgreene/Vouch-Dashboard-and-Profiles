@@ -43,7 +43,7 @@ export interface DatabaseTranscript {
   speaker_photo?: string;
   interview_date?: string;
   content: string;
-  verification_status: "verified" | "pending" | "not_started";
+  verification_status?: "verified" | "pending" | "not_started";
   created_at?: string;
   updated_at?: string;
 }
