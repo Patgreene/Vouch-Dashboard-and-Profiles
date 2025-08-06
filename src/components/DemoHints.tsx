@@ -267,25 +267,95 @@ export function DemoHints() {
 
             {/* Content */}
             <div className="p-6 space-y-4">
-              <div className="bg-blue-50 rounded-lg p-4">
-                <h4 className="font-medium text-blue-900 mb-2">How to highlight text:</h4>
-                <ol className="space-y-2 text-sm text-blue-800">
-                  <li className="flex items-start gap-2">
-                    <span className="flex-shrink-0 w-5 h-5 bg-blue-200 rounded-full flex items-center justify-center text-xs font-medium text-blue-800">1</span>
-                    <span>Click any transcript to expand it</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="flex-shrink-0 w-5 h-5 bg-blue-200 rounded-full flex items-center justify-center text-xs font-medium text-blue-800">2</span>
-                    <span>Select any text with your mouse/finger</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="flex-shrink-0 w-5 h-5 bg-blue-200 rounded-full flex items-center justify-center text-xs font-medium text-blue-800">3</span>
-                    <span>Click "Share Link" in the tooltip</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="flex-shrink-0 w-5 h-5 bg-blue-200 rounded-full flex items-center justify-center text-xs font-medium text-blue-800">4</span>
-                    <span>Share the copied link with anyone!</span>
-                  </li>
+              {/* Animated Demo */}
+              <div className="bg-gray-50 rounded-lg p-4 relative overflow-hidden">
+                <div className="text-center mb-3">
+                  <h4 className="font-medium text-gray-900 mb-1">Watch the demo:</h4>
+                  <p className="text-xs text-gray-600">Animation shows how to highlight and share text</p>
+                </div>
+
+                {/* Mini Demo Container */}
+                <div className="bg-white rounded-lg border shadow-sm relative" style={{ height: '200px' }}>
+                  {/* Step 1: Mock transcript card (collapsed) */}
+                  <div className="absolute inset-2 transition-all duration-1000 ease-out demo-step-1">
+                    <div className="bg-white border rounded-lg p-3 shadow-sm">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-6 h-6 bg-blue-100 rounded-full"></div>
+                        <div>
+                          <div className="text-xs font-medium">Clara Jensen</div>
+                          <div className="text-xs text-gray-500">Product Designer</div>
+                        </div>
+                        <div className="ml-auto">
+                          <div className="w-4 h-4 bg-gray-200 rounded animate-pulse cursor-pointer"></div>
+                        </div>
+                      </div>
+                      <div className="text-xs text-gray-600 line-clamp-2">
+                        Lara's design process is incredibly methodical...
+                      </div>
+                    </div>
+
+                    {/* Click indicator */}
+                    <div className="absolute top-3 right-3 w-8 h-8 border-2 border-blue-500 rounded-full animate-ping opacity-70"></div>
+                  </div>
+
+                  {/* Step 2: Expanded transcript with text selection */}
+                  <div className="absolute inset-2 transition-all duration-1000 ease-out demo-step-2" style={{ opacity: 0, transform: 'scale(0.95)' }}>
+                    <div className="bg-white border rounded-lg p-3 shadow-sm">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-6 h-6 bg-blue-100 rounded-full"></div>
+                        <div>
+                          <div className="text-xs font-medium">Clara Jensen</div>
+                          <div className="text-xs text-gray-500">Product Designer</div>
+                        </div>
+                      </div>
+                      <div className="text-xs text-gray-700 leading-relaxed">
+                        Lara's <span className="bg-yellow-200 px-1 rounded demo-highlight">design process is incredibly methodical</span> and she creates detailed user journeys that make sense.
+                      </div>
+                    </div>
+
+                    {/* Selection animation */}
+                    <div className="absolute" style={{ top: '45px', left: '50px', width: '120px', height: '2px' }}>
+                      <div className="h-full bg-blue-400 rounded demo-selection-line" style={{ width: '0%' }}></div>
+                    </div>
+                  </div>
+
+                  {/* Step 3: Share tooltip */}
+                  <div className="absolute demo-step-3" style={{ top: '20px', left: '50%', transform: 'translateX(-50%)', opacity: 0 }}>
+                    <div className="bg-blue-600 text-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-medium flex items-center gap-2 cursor-pointer">
+                      <Share2 className="w-3 h-3" />
+                      Share Link
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-blue-600"></div>
+                    </div>
+
+                    {/* Click indicator */}
+                    <div className="absolute inset-0 border-2 border-white rounded-lg animate-ping"></div>
+                  </div>
+
+                  {/* Step 4: Success feedback */}
+                  <div className="absolute demo-step-4" style={{ top: '20px', left: '50%', transform: 'translateX(-50%)', opacity: 0 }}>
+                    <div className="bg-green-600 text-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-medium flex items-center gap-2">
+                      <CheckCircle className="w-3 h-3" />
+                      Copied!
+                    </div>
+                  </div>
+                </div>
+
+                {/* Progress indicator */}
+                <div className="flex justify-center mt-3 gap-1">
+                  <div className="w-2 h-2 rounded-full bg-blue-600 demo-progress-1"></div>
+                  <div className="w-2 h-2 rounded-full bg-gray-300 demo-progress-2"></div>
+                  <div className="w-2 h-2 rounded-full bg-gray-300 demo-progress-3"></div>
+                  <div className="w-2 h-2 rounded-full bg-gray-300 demo-progress-4"></div>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 rounded-lg p-3">
+                <h4 className="font-medium text-blue-900 mb-2">Steps:</h4>
+                <ol className="space-y-1 text-sm text-blue-800">
+                  <li><span className="font-medium">1.</span> Tap any transcript to expand</li>
+                  <li><span className="font-medium">2.</span> Touch & drag to select text</li>
+                  <li><span className="font-medium">3.</span> Tap "Share Link" button</li>
+                  <li><span className="font-medium">4.</span> Link copied - share anywhere!</li>
                 </ol>
               </div>
 
@@ -295,9 +365,9 @@ export function DemoHints() {
                     <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
                   <div>
-                    <p className="text-yellow-800 text-sm font-medium">Try it now!</p>
+                    <p className="text-yellow-800 text-sm font-medium">Try it yourself!</p>
                     <p className="text-yellow-700 text-xs mt-1">
-                      Close this popup and try highlighting text in any transcript below.
+                      Close this popup and try it on any transcript below.
                     </p>
                   </div>
                 </div>
@@ -328,6 +398,76 @@ export function DemoHints() {
             opacity: 1;
             transform: translateY(0);
           }
+        }
+
+        /* Demo Animation Styles */
+        .demo-step-1 { animation: demo-step-1 8s infinite; }
+        .demo-step-2 { animation: demo-step-2 8s infinite; }
+        .demo-step-3 { animation: demo-step-3 8s infinite; }
+        .demo-step-4 { animation: demo-step-4 8s infinite; }
+
+        .demo-progress-1 { animation: progress-1 8s infinite; }
+        .demo-progress-2 { animation: progress-2 8s infinite; }
+        .demo-progress-3 { animation: progress-3 8s infinite; }
+        .demo-progress-4 { animation: progress-4 8s infinite; }
+
+        .demo-selection-line { animation: selection-grow 8s infinite; }
+        .demo-highlight { animation: highlight-fade 8s infinite; }
+
+        @keyframes demo-step-1 {
+          0%, 20% { opacity: 1; transform: scale(1); }
+          25%, 100% { opacity: 0; transform: scale(0.95); }
+        }
+
+        @keyframes demo-step-2 {
+          0%, 20% { opacity: 0; transform: scale(0.95); }
+          25%, 50% { opacity: 1; transform: scale(1); }
+          55%, 100% { opacity: 0; transform: scale(0.95); }
+        }
+
+        @keyframes demo-step-3 {
+          0%, 50% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+          55%, 75% { opacity: 1; transform: translateX(-50%) translateY(0); }
+          80%, 100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+        }
+
+        @keyframes demo-step-4 {
+          0%, 75% { opacity: 0; transform: translateX(-50%) scale(0.8); }
+          80%, 95% { opacity: 1; transform: translateX(-50%) scale(1); }
+          100% { opacity: 0; transform: translateX(-50%) scale(1.1); }
+        }
+
+        @keyframes progress-1 {
+          0%, 25% { background-color: #2563eb; }
+          25%, 100% { background-color: #d1d5db; }
+        }
+
+        @keyframes progress-2 {
+          0%, 25% { background-color: #d1d5db; }
+          25%, 50% { background-color: #2563eb; }
+          50%, 100% { background-color: #d1d5db; }
+        }
+
+        @keyframes progress-3 {
+          0%, 50% { background-color: #d1d5db; }
+          50%, 75% { background-color: #2563eb; }
+          75%, 100% { background-color: #d1d5db; }
+        }
+
+        @keyframes progress-4 {
+          0%, 75% { background-color: #d1d5db; }
+          75%, 100% { background-color: #2563eb; }
+        }
+
+        @keyframes selection-grow {
+          0%, 30% { width: 0%; }
+          35%, 50% { width: 100%; }
+          55%, 100% { width: 100%; }
+        }
+
+        @keyframes highlight-fade {
+          0%, 35% { background-color: transparent; }
+          40%, 100% { background-color: #fef3c7; }
         }
       `}</style>
     </>
