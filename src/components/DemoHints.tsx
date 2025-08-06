@@ -60,7 +60,9 @@ const hints: Hint[] = [
     offsetY: 10,
     icon: Users,
     action: () => {
-      const givenTab = document.querySelector('button[id*="trigger-given"]') as HTMLButtonElement;
+      const givenTab = Array.from(document.querySelectorAll('button[role="tab"]')).find(
+        tab => tab.textContent?.includes('Given')
+      ) as HTMLButtonElement;
       if (givenTab) givenTab.click();
     },
     actionText: "View given testimonials",
