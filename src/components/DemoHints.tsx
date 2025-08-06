@@ -251,7 +251,7 @@ export function DemoHints() {
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b">
               <h3 className="text-lg font-semibold text-gray-900">
-                Text Highlighting Demo
+                Link to Highlight
               </h3>
               <button
                 onClick={() => setShowTutorial(false)}
