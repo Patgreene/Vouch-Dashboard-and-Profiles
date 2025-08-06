@@ -18,7 +18,7 @@ const demoProfile = {
   title: "UX/UI Designer",
   email: "lara@example.com",
   company: "Freelance",
-  photo: "https://images.unsplash.com/photo-1494790108755-2616b612b77c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+  photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
   linkedIn: "https://www.linkedin.com",
   cv: "https://346e5b85-9540-4d6d-9b91-a5687962078d.filesusr.com/ugd/9e6f36_e43a83ee41994d668a468ea4a187bbe9.pdf",
   portfolio: "https://www.vouchprofile.com/_files/ugd/9e6f36_d33d3698b6bd4749a0316343ad9d0cd0.pdf",
@@ -52,7 +52,7 @@ const demoProfile = {
       speakerName: "Clara Jensen",
       speakerRole: "Head of Product Design",
       speakerEmail: "clara@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      speakerPhoto: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       interviewDate: "2024-06-15",
       content: "Lara joined our design team on a 6-month freelance contract, originally to support a product refresh and ended up becoming instrumental in a full UX overhaul. What stood out from day one was her ability to ask the right questions. She didn't just take our brief and run with it; she dug deeper into our user data, challenged some of our assumptions, and helped us see gaps we hadn't noticed.\n\nHer design process is incredibly methodical. She starts with thorough user research, creates detailed user journeys, and then builds wireframes that actually make sense from both a user and technical perspective. But what really impressed me was how she balanced creativity with practicality. Every design decision came with a clear rationale tied back to user needs or business goals.\n\nWorking with Lara was refreshingly collaborative. She regularly shared her progress, incorporated feedback gracefully, and always came prepared with multiple options when presenting concepts. The final designs she delivered resulted in a 40% increase in user engagement and significantly reduced support tickets related to navigation confusion.",
       verificationStatus: "verified" as const
@@ -62,7 +62,7 @@ const demoProfile = {
       speakerName: "Tomás Ortega",
       speakerRole: "Co-founder at Looply",
       speakerEmail: "tomas@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      speakerPhoto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
       interviewDate: "2025-07-20",
       content: "We brought Lara in during a make-or-break moment our MVP was functional, but users weren't sticking. Engagement was flat, and we couldn't figure out why. Lara didn't just come in with a Figma file; she spent the first two weeks actually using our product, talking to our existing users, and identifying friction points we were completely blind to.\n\nWhat I loved about working with Lara is that she thinks like a founder. She understood that every design decision had to move the needle on our key metrics. She proposed solutions that weren't just beautiful, but were specifically designed to increase user retention and reduce churn. Her redesign of our onboarding flow alone improved our day-7 retention from 23% to 67%.\n\nLara also has this rare ability to work fast without sacrificing quality. In a startup environment where everything is urgent, she managed to deliver polished, user-tested designs on tight timelines. She became an extension of our core team, and honestly, I can't imagine launching without her input.",
       verificationStatus: "not_started" as const
@@ -72,7 +72,7 @@ const demoProfile = {
       speakerName: "David Nari",
       speakerRole: "Senior Frontend Developer",
       speakerEmail: "david@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      speakerPhoto: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       interviewDate: "2025-05-10",
       content: "I worked with Lara on a couple of startup projects where she handled the full UX/UI flow and let me just say, handing off designs from her is a developer's dream. Her files are clean, her logic is sound, and she actually thinks about implementation complexity when designing. She uses consistent spacing, proper component structures, and always includes hover states and edge cases.\n\nBut beyond the technical execution, Lara just gets how users think. She has this intuitive understanding of user behavior that shows up in every interaction she designs. Buttons are exactly where you expect them, navigation flows feel natural, and complex features somehow feel simple to use.\n\nWhat really sets Lara apart is her willingness to iterate based on real user feedback. I've worked with designers who get precious about their work, but Lara actively seeks out ways to improve. She'll test prototypes, gather feedback, and refine designs until they're genuinely user-friendly, not just visually appealing.",
       verificationStatus: "verified" as const
@@ -82,7 +82,7 @@ const demoProfile = {
       speakerName: "Amira Shah",
       speakerRole: "Founder at Kindling",
       speakerEmail: "amira@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      speakerPhoto: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
       interviewDate: "2024-08-05",
       content: "Lara was instrumental in helping us design our mobile app from the ground up. As a non-technical founder, I was worried about the complexity of translating our vision into a user-friendly mobile experience. Lara not only understood our vision but helped refine and improve it through her design process.\n\nShe has this wonderful ability to balance user needs with business objectives. Every design recommendation came with clear reasoning about how it would impact user experience and, ultimately, our bottom line. She helped us prioritize features based on user value and implementation complexity, which was incredibly valuable for a resource-constrained startup.\n\nThe app Lara designed for us launched to fantastic user reviews, with particular praise for its intuitive interface and smooth user experience. Six months post-launch, we're seeing strong user retention and minimal support requests related to usability issues. Lara's work laid the foundation for our product's success.",
       verificationStatus: "pending" as const
@@ -107,7 +107,7 @@ const demoGivenTranscripts = [
       name: "Marcus Chen",
       title: "Senior Backend Engineer",
       email: "marcus@example.com",
-      photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
       company: "FinTech Startup",
       keyTakeaways: {
         strengths: [],
@@ -122,7 +122,7 @@ const demoGivenTranscripts = [
     transcript: {
       id: "demo-given-2",
       speakerName: "Lara Rosu",
-      speakerRole: "UX/UI Designer", 
+      speakerRole: "UX/UI Designer",
       speakerEmail: "lara@example.com",
       speakerPhoto: "https://images.unsplash.com/photo-1494790108755-2616b612b77c?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
       interviewDate: "2024-10-03",
@@ -134,7 +134,7 @@ const demoGivenTranscripts = [
       name: "Sarah Williams",
       title: "Senior Project Manager",
       email: "sarah@example.com",
-      photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      photo: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
       company: "E-commerce Agency",
       keyTakeaways: {
         strengths: [],
