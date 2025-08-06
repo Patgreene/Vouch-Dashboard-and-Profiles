@@ -929,6 +929,24 @@ export function ProfileForm({
                           }
                         />
                       </div>
+                      <div>
+                        <Label>Verification Status</Label>
+                        <Select
+                          value={transcript.verificationStatus}
+                          onValueChange={(value: "verified" | "pending" | "not_started") =>
+                            updateTranscript(index, "verificationStatus", value)
+                          }
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="verified">✅ Verified</SelectItem>
+                            <SelectItem value="pending">🕐 Pending</SelectItem>
+                            <SelectItem value="not_started">🛡️ Not Started</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
                     </div>
                     <div>
                       <Label>Transcript Content *</Label>
