@@ -6,6 +6,7 @@ import {
   deleteProfileFromSupabase,
   trackEventInSupabase,
   getAnalyticsFromSupabase,
+  getGivenTranscriptsFromSupabase,
 } from "./supabaseData";
 
 // Check if Supabase is configured
