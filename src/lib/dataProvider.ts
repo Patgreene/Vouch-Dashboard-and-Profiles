@@ -77,7 +77,6 @@ export class DataProvider {
 
   private async getGivenTranscriptsFromSupabase(speakerEmail: string) {
     try {
-      const { getGivenTranscriptsFromSupabase } = await import("./supabaseData");
       return await getGivenTranscriptsFromSupabase(speakerEmail);
     } catch (error) {
       console.error("Error loading given transcripts from Supabase:", error);
