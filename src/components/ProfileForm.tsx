@@ -502,13 +502,15 @@ export function ProfileForm({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="title">Job Title *</Label>
+                  <Label htmlFor="title">
+                    Job Title {mode === "full" ? "*" : "(optional)"}
+                  </Label>
                   <Input
                     id="title"
                     value={formData.title}
                     onChange={(e) => updateBasicField("title", e.target.value)}
                     placeholder="Senior Software Engineer"
-                    required
+                    required={mode === "full"}
                   />
                 </div>
                 <div>
@@ -526,7 +528,7 @@ export function ProfileForm({
                   </p>
                 </div>
                 <div>
-                  <Label htmlFor="company">Company</Label>
+                  <Label htmlFor="company">Company (optional)</Label>
                   <Input
                     id="company"
                     value={formData.company}
@@ -538,39 +540,41 @@ export function ProfileForm({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="linkedin">LinkedIn URL</Label>
-                  <Input
-                    id="linkedin"
-                    value={formData.linkedIn}
-                    onChange={(e) =>
-                      updateBasicField("linkedIn", e.target.value)
-                    }
-                    placeholder="https://..."
-                  />
+              {mode === "full" && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="linkedin">LinkedIn URL</Label>
+                    <Input
+                      id="linkedin"
+                      value={formData.linkedIn}
+                      onChange={(e) =>
+                        updateBasicField("linkedIn", e.target.value)
+                      }
+                      placeholder="https://..."
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="cv">CV URL</Label>
+                    <Input
+                      id="cv"
+                      value={formData.cv}
+                      onChange={(e) => updateBasicField("cv", e.target.value)}
+                      placeholder="https://..."
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="portfolio">Portfolio URL</Label>
+                    <Input
+                      id="portfolio"
+                      value={formData.portfolio}
+                      onChange={(e) =>
+                        updateBasicField("portfolio", e.target.value)
+                      }
+                      placeholder="https://..."
+                    />
+                  </div>
                 </div>
-                <div>
-                  <Label htmlFor="cv">CV URL</Label>
-                  <Input
-                    id="cv"
-                    value={formData.cv}
-                    onChange={(e) => updateBasicField("cv", e.target.value)}
-                    placeholder="https://..."
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="portfolio">Portfolio URL</Label>
-                  <Input
-                    id="portfolio"
-                    value={formData.portfolio}
-                    onChange={(e) =>
-                      updateBasicField("portfolio", e.target.value)
-                    }
-                    placeholder="https://..."
-                  />
-                </div>
-              </div>
+              )}
             </CardContent>
           </Card>
 
