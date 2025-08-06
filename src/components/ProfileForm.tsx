@@ -87,6 +87,7 @@ export function ProfileForm({
     if (editingProfile) {
       return {
         ...editingProfile,
+        email: editingProfile.email || "",
         company: editingProfile.company || "",
         photo: editingProfile.photo || "",
         linkedIn: editingProfile.linkedIn || "",
@@ -94,7 +95,10 @@ export function ProfileForm({
         portfolio: editingProfile.portfolio || "",
         keyTakeaways: editingProfile.keyTakeaways,
         transcripts: editingProfile.transcripts.length
-          ? editingProfile.transcripts
+          ? editingProfile.transcripts.map(t => ({
+              ...t,
+              speakerEmail: t.speakerEmail || ""
+            }))
           : initialFormData.transcripts,
       };
     }
