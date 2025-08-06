@@ -3,6 +3,7 @@ import { ProfileHeader } from "@/components/ProfileHeader";
 import { KeyTakeaways } from "@/components/KeyTakeaways";
 import { EnhancedTranscriptCard } from "@/components/EnhancedTranscriptCard";
 import { ShareTooltip } from "@/components/ShareTooltip";
+import { DemoHints } from "@/components/DemoHints";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useDemoHighlight } from "@/hooks/useDemoHighlight";
 
@@ -270,6 +271,9 @@ export default function DemoProfile() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Demo Help Hints */}
+      <DemoHints />
 
       {/* Share Tooltip for highlights */}
       <ShareTooltip
