@@ -93,7 +93,14 @@ export function ProfileForm({
         linkedIn: editingProfile.linkedIn || "",
         cv: editingProfile.cv || "",
         portfolio: editingProfile.portfolio || "",
-        keyTakeaways: editingProfile.keyTakeaways,
+        keyTakeaways: {
+          strengths: editingProfile.keyTakeaways.strengths || [],
+          weaknesses: editingProfile.keyTakeaways.weaknesses || [],
+          communicationStyle: editingProfile.keyTakeaways.communicationStyle || [],
+          waysToBringOutBest: editingProfile.keyTakeaways.waysToBringOutBest || [],
+          customTitle1: editingProfile.keyTakeaways.customTitle1 || "",
+          customTitle2: editingProfile.keyTakeaways.customTitle2 || "",
+        },
         transcripts: editingProfile.transcripts.length
           ? editingProfile.transcripts.map(t => ({
               ...t,
