@@ -371,31 +371,44 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <StatCard
             title="Total Profiles"
             value={profiles.length.toString()}
             icon={Users}
           />
           <StatCard
-            title="Total Page Views"
-            value={liveAnalytics.totalPageViews.toString()}
-            icon={Eye}
-          />
-          <StatCard
-            title="Total Quote Views"
-            value={liveAnalytics.totalQuoteViews.toString()}
+            title="Total Transcripts"
+            value={profiles.reduce((acc, profile) => acc + (profile.transcripts?.length || 0), 0).toString()}
             icon={FileText}
           />
-          <StatCard title="Total Shares" value="0" icon={Share2} />
-          <StatCard
-            title="Unique Visitors"
-            value={liveAnalytics.profileStats
-              .reduce((acc, stat: any) => acc + (stat.uniqueVisitors || 0), 0)
-              .toString()}
-            icon={TrendingUp}
-          />
+          <Card className="hover:shadow-md transition-shadow cursor-pointer">
+            <Link to="/admin/analytics" className="block h-full">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">View Analytics</CardTitle>
+                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">📊</div>
+                <p className="text-xs text-muted-foreground">
+                  Page views, quotes & more
+                </p>
+              </CardContent>
+            </Link>
+          </Card>
+          <Card className="hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Active Users</CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">🚀</div>
+              <p className="text-xs text-muted-foreground">
+                Fast loading enabled
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Profiles Section */}
