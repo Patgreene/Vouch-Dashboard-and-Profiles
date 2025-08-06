@@ -13,7 +13,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Profile, Transcript } from "@/lib/data";
 import { dataProvider } from "@/lib/dataProvider";
@@ -394,12 +400,14 @@ export function TranscriptForm({
                     />
                   </div>
                   <div>
-                    <Label htmlFor="verificationStatus">Verification Status</Label>
+                    <Label htmlFor="verificationStatus">
+                      Verification Status
+                    </Label>
                     <Select
                       value={formData.verificationStatus}
-                      onValueChange={(value: "verified" | "pending" | "not_started") =>
-                        updateField("verificationStatus", value)
-                      }
+                      onValueChange={(
+                        value: "verified" | "pending" | "not_started",
+                      ) => updateField("verificationStatus", value)}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select status" />
@@ -407,7 +415,9 @@ export function TranscriptForm({
                       <SelectContent>
                         <SelectItem value="verified">✅ Verified</SelectItem>
                         <SelectItem value="pending">🕐 Pending</SelectItem>
-                        <SelectItem value="not_started">🛡️ Not Started</SelectItem>
+                        <SelectItem value="not_started">
+                          🛡️ Not Started
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
