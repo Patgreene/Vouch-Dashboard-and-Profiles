@@ -5,7 +5,6 @@ import {
   User,
   Briefcase,
   Calendar,
-  UserCheck,
   ArrowRight,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
