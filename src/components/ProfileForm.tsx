@@ -86,7 +86,9 @@ export function ProfileForm({
   const [formData, setFormData] = useState<FormData>(() => {
     if (editingProfile) {
       return {
-        ...editingProfile,
+        id: editingProfile.id || `profile-${Date.now()}`,
+        name: editingProfile.name || "",
+        title: editingProfile.title || "",
         email: editingProfile.email || "",
         company: editingProfile.company || "",
         photo: editingProfile.photo || "",
@@ -94,18 +96,21 @@ export function ProfileForm({
         cv: editingProfile.cv || "",
         portfolio: editingProfile.portfolio || "",
         keyTakeaways: {
-          strengths: editingProfile.keyTakeaways.strengths || [],
-          weaknesses: editingProfile.keyTakeaways.weaknesses || [],
-          communicationStyle: editingProfile.keyTakeaways.communicationStyle || [],
-          waysToBringOutBest: editingProfile.keyTakeaways.waysToBringOutBest || [],
-          customTitle1: editingProfile.keyTakeaways.customTitle1 || "",
-          customTitle2: editingProfile.keyTakeaways.customTitle2 || "",
+          strengths: editingProfile.keyTakeaways?.strengths || [],
+          weaknesses: editingProfile.keyTakeaways?.weaknesses || [],
+          communicationStyle: editingProfile.keyTakeaways?.communicationStyle || [],
+          waysToBringOutBest: editingProfile.keyTakeaways?.waysToBringOutBest || [],
+          customTitle1: editingProfile.keyTakeaways?.customTitle1 || "",
+          customTitle2: editingProfile.keyTakeaways?.customTitle2 || "",
         },
-        transcripts: editingProfile.transcripts.length
+        transcripts: editingProfile.transcripts?.length
           ? editingProfile.transcripts.map(t => ({
-              ...t,
+              id: t.id || "",
+              speakerName: t.speakerName || "",
+              speakerRole: t.speakerRole || "",
               speakerEmail: t.speakerEmail || "",
               speakerPhoto: t.speakerPhoto || "",
+              content: t.content || "",
               interviewDate: t.interviewDate || "",
               interviewedBy: t.interviewedBy || ""
             }))
