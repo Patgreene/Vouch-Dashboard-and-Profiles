@@ -29,6 +29,7 @@ interface FormData {
   id: string;
   name: string;
   title: string;
+  email: string;
   company: string;
   photo: string;
   linkedIn: string;
@@ -42,6 +43,7 @@ const initialFormData: FormData = {
   id: "",
   name: "",
   title: "",
+  email: "",
   company: "",
   photo: "",
   linkedIn: "",
