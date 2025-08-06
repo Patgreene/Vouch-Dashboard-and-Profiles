@@ -37,6 +37,13 @@ const ProfileForm = lazy(() =>
   })),
 );
 
+// Lazy load TranscriptForm component
+const TranscriptForm = lazy(() =>
+  import("@/components/TranscriptForm").then((module) => ({
+    default: module.TranscriptForm,
+  })),
+);
+
 interface StatCardProps {
   title: string;
   value: string;
@@ -228,6 +235,16 @@ export default function AdminDashboard() {
   const handleCloseForm = () => {
     setShowProfileForm(false);
     setEditingProfile(null);
+  };
+
+  const handleCloseTranscriptForm = () => {
+    setShowTranscriptForm(false);
+  };
+
+  const handleTranscriptSaved = async () => {
+    // Refresh profiles list after transcript is saved
+    const updatedProfiles = await dataProvider.getAllProfiles();
+    setProfiles(updatedProfiles);
   };
 
   const handleSaveProfile = async (profile: Profile) => {
@@ -614,6 +631,26 @@ export default function AdminDashboard() {
             onSave={handleSaveProfile}
             editingProfile={editingProfile}
             mode={editingProfile ? "full" : "simple"}
+          />
+        </Suspense>
+      )}
+
+      {/* Transcript Creation Form - Lazy loaded */}
+      {showTranscriptForm && (
+        <Suspense
+          fallback={
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+              <div className="bg-white rounded-lg p-8 text-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-vouch-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading transcript form...</p>
+              </div>
+            </div>
+          }
+        >
+          <TranscriptForm
+            onClose={handleCloseTranscriptForm}
+            onSave={handleTranscriptSaved}
+            profiles={profiles}
           />
         </Suspense>
       )}
