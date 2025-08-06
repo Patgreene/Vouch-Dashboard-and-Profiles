@@ -84,6 +84,13 @@ export function EnhancedTranscriptCard({
     }
   }, [expanded, transcript.id, processHighlightFromUrl]);
 
+  // Handle payment success
+  const handlePaymentSuccess = () => {
+    if (onVerificationChange) {
+      onVerificationChange(transcript.id, "pending");
+    }
+  };
+
   // Verification status component
   const VerificationStatus = () => {
     switch (transcript.verificationStatus) {
@@ -107,6 +114,10 @@ export function EnhancedTranscriptCard({
             variant="outline"
             size="sm"
             className="h-6 px-2 text-xs text-blue-600 border-blue-200 hover:bg-blue-50"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent card toggle
+              setShowPaymentModal(true);
+            }}
           >
             <Shield className="h-3 w-3 mr-1" />
             Verify
