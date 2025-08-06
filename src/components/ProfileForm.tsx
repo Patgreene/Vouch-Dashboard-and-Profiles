@@ -83,6 +83,7 @@ export function ProfileForm({
     "idle" | "success" | "error"
   >("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isKeyTakeawaysExpanded, setIsKeyTakeawaysExpanded] = useState(false);
 
   const [formData, setFormData] = useState<FormData>(() => {
     if (editingProfile) {
