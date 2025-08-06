@@ -112,8 +112,7 @@ export function ProfileForm({
               speakerEmail: t.speakerEmail || "",
               speakerPhoto: t.speakerPhoto || "",
               content: t.content || "",
-              interviewDate: t.interviewDate || "",
-              interviewedBy: t.interviewedBy || ""
+              interviewDate: t.interviewDate || ""
             }))
           : initialFormData.transcripts,
       };
