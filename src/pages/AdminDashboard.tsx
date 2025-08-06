@@ -15,6 +15,7 @@ import {
   Download,
   Upload,
   Search,
+  MessageSquare,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -73,6 +74,7 @@ export default function AdminDashboard() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [showProfileForm, setShowProfileForm] = useState(false);
   const [editingProfile, setEditingProfile] = useState<Profile | null>(null);
+  const [showTranscriptForm, setShowTranscriptForm] = useState(false);
   const [copiedProfileId, setCopiedProfileId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [liveAnalytics, setLiveAnalytics] = useState({
@@ -353,6 +355,14 @@ export default function AdminDashboard() {
               >
                 <Download className="h-4 w-4" />
                 Export
+              </Button>
+              <Button
+                onClick={() => setShowTranscriptForm(true)}
+                variant="outline"
+                className="flex items-center gap-2"
+              >
+                <MessageSquare className="h-4 w-4" />
+                New Transcript
               </Button>
               <Button
                 onClick={handleCreateProfile}
