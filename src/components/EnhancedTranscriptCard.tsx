@@ -110,7 +110,9 @@ export function EnhancedTranscriptCard({
             onClick={(e) => {
               e.stopPropagation(); // Prevent card toggle
               console.log("Verify button clicked!", transcript.id);
+              console.log("Current modal state:", showPaymentModal);
               setShowPaymentModal(true);
+              console.log("Modal state after setting to true:", true);
             }}
           >
             <Shield className="h-3 w-3 mr-1" />
