@@ -97,7 +97,7 @@ const demoGivenTranscripts = [
       speakerName: "Lara Rosu",
       speakerRole: "UX/UI Designer",
       speakerEmail: "lara@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1494790108755-2616b612b77c?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      speakerPhoto: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
       interviewDate: "2024-09-12",
       content: "I had the pleasure of working with Marcus on a fintech project where precision and user trust were absolutely critical. What immediately stood out was his deep understanding of both the technical requirements and user psychology in financial applications. Marcus has this rare ability to build complex backend systems while keeping the end-user experience at the forefront of every decision.\n\nHis code is exceptionally clean and well-documented, which made collaboration seamless. But what really impressed me was his proactive approach to identifying potential UX issues before they became problems. He would regularly suggest technical solutions that enhanced the user experience, showing a level of product thinking that goes far beyond traditional development.\n\nMarcus is also incredibly reliable under pressure. During our product launch, when we encountered unexpected technical challenges, he worked tirelessly to resolve issues while keeping the team informed and maintaining quality standards. His technical expertise combined with his collaborative spirit makes him an invaluable team member.",
       verificationStatus: "verified" as const
@@ -124,7 +124,7 @@ const demoGivenTranscripts = [
       speakerName: "Lara Rosu",
       speakerRole: "UX/UI Designer",
       speakerEmail: "lara@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1494790108755-2616b612b77c?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      speakerPhoto: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
       interviewDate: "2024-10-03",
       content: "Working with Sarah on our e-commerce platform redesign was an absolute joy. As a project manager, Sarah has this incredible ability to keep complex projects on track while maintaining team morale and ensuring quality doesn't suffer. She creates an environment where everyone feels heard and valued, which brings out the best in the entire team.\n\nWhat sets Sarah apart is her strategic thinking combined with meticulous attention to detail. She doesn't just manage timelines; she anticipates potential roadblocks and creates contingency plans. Her communication style is clear and consistent, ensuring everyone stays aligned on priorities and deliverables.\n\nSarah also has a genuine understanding of user experience principles, which made our collaboration particularly effective. She knew when to push back on scope creep and when to advocate for design changes that would improve the user experience. The project delivered on time, within budget, and exceeded our user satisfaction targets.",
       verificationStatus: "pending" as const
