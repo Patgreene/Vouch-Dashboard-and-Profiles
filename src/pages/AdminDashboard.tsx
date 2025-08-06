@@ -28,6 +28,7 @@ import {
   validateAndCleanProfiles,
   validateProfilesAgainstSupabase,
 } from "@/utils/profileValidator";
+import { EmailMigrationButton } from "@/components/EmailMigrationButton";
 
 // Lazy load heavy ProfileForm component
 const ProfileForm = lazy(() =>
@@ -111,7 +112,7 @@ export default function AdminDashboard() {
         try {
           // Try data provider first (Supabase or localStorage)
           profilesData = await dataProvider.getAllProfiles();
-          console.log("✅ Data provider successful");
+          console.log("��� Data provider successful");
         } catch (dataProviderError) {
           console.warn(
             "⚠️ Data provider failed, trying localStorage fallback:",
