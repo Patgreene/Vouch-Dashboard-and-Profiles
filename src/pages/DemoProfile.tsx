@@ -4,7 +4,7 @@ import { KeyTakeaways } from "@/components/KeyTakeaways";
 import { EnhancedTranscriptCard } from "@/components/EnhancedTranscriptCard";
 import { ShareTooltip } from "@/components/ShareTooltip";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useHighlight } from "@/hooks/useHighlight";
+import { useDemoHighlight } from "@/hooks/useDemoHighlight";
 
 // Lazy load Footer component
 const Footer = lazy(() =>
@@ -162,14 +162,14 @@ export default function DemoProfile() {
     new Set(),
   );
 
-  // Initialize highlight functionality for demo profile
+  // Initialize demo-specific highlight functionality
   const {
     shareTooltip,
     copiedFeedback,
     handleShareLink,
     handleTextSelection,
     processHighlightFromUrl,
-  } = useHighlight("lara-rosu-demo");
+  } = useDemoHighlight();
 
   const toggleTranscript = (transcriptId: string) => {
     const newExpanded = new Set(expandedTranscripts);
