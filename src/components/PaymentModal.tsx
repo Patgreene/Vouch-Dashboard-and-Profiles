@@ -52,7 +52,6 @@ export function PaymentModal({
             ✓ Professional verification
             <br />
             ✓ 2-3 days processing time
-            <br />✓ Authenticity guarantee
           </div>
 
           <Button onClick={onClose} className="w-full mt-4">
