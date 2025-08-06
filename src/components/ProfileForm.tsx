@@ -23,6 +23,7 @@ interface ProfileFormProps {
   onClose: () => void;
   onSave: (profile: Profile) => void;
   editingProfile?: Profile | null;
+  mode?: "simple" | "full"; // Add mode prop for simple vs full form
 }
 
 interface FormData {
@@ -75,6 +76,7 @@ export function ProfileForm({
   onClose,
   onSave,
   editingProfile,
+  mode = "full", // Default to full mode for editing
 }: ProfileFormProps) {
   // Progress states
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -239,9 +241,9 @@ export function ProfileForm({
     setErrorMessage("");
 
     // Validate required fields
-    if (!formData.name.trim() || !formData.title.trim() || !formData.email.trim()) {
+    if (!formData.name.trim() || !formData.email.trim()) {
       setSubmitStatus("error");
-      setErrorMessage("Please fill in all required fields (Name, Title, and Email).");
+      setErrorMessage("Please fill in all required fields (Name and Email).");
       return;
     }
 
@@ -253,15 +255,18 @@ export function ProfileForm({
       return;
     }
 
-    // Validate transcripts
-    const validTranscripts = formData.transcripts.filter(
-      (t) => t.speakerName.trim() && t.speakerRole.trim() && t.speakerEmail.trim() && t.content.trim(),
-    );
+    // For simple mode, skip transcript validation
+    let validTranscripts = [];
+    if (mode === "full") {
+      validTranscripts = formData.transcripts.filter(
+        (t) => t.speakerName.trim() && t.speakerRole.trim() && t.speakerEmail.trim() && t.content.trim(),
+      );
 
-    if (validTranscripts.length === 0) {
-      setSubmitStatus("error");
-      setErrorMessage("Please add at least one complete transcript.");
-      return;
+      if (validTranscripts.length === 0) {
+        setSubmitStatus("error");
+        setErrorMessage("Please add at least one complete transcript.");
+        return;
+      }
     }
 
     // Start loading state
@@ -274,12 +279,18 @@ export function ProfileForm({
         id: transcript.id || `transcript-${Date.now()}-${Math.random()}`,
       }));
 
+      // Prepare final transcript data
+      const finalTranscripts = mode === "full" ? validTranscripts.map((transcript) => ({
+        ...transcript,
+        id: transcript.id || `transcript-${Date.now()}-${Math.random()}`,
+      })) : [];
+
       const profile: Profile = {
         ...formData,
         // Ensure ID is set (use existing ID for edits, or generated ID for new profiles)
         id: editingProfile ? editingProfile.id : formData.id,
         transcripts: finalTranscripts,
-        keyTakeaways: {
+        keyTakeaways: mode === "full" ? {
           strengths: formData.keyTakeaways.strengths.filter((s) => s.trim()),
           weaknesses: formData.keyTakeaways.weaknesses.filter((w) => w.trim()),
           communicationStyle: formData.keyTakeaways.communicationStyle.filter(
@@ -290,6 +301,11 @@ export function ProfileForm({
           ),
           customTitle1: formData.keyTakeaways.customTitle1?.trim() || undefined,
           customTitle2: formData.keyTakeaways.customTitle2?.trim() || undefined,
+        } : {
+          strengths: [],
+          weaknesses: [],
+          communicationStyle: [],
+          waysToBringOutBest: [],
         },
       };
 
