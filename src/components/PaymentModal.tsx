@@ -43,59 +43,34 @@ export function PaymentModal({
           </div>
         </DialogHeader>
 
-        <div className="space-y-6">
-          {/* Transcript Info */}
-          <Card className="bg-gray-50">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="font-medium text-gray-900">
-                    Transcript by {speakerName}
-                  </h4>
-                  <p className="text-sm text-gray-600">ID: {transcriptId}</p>
-                </div>
-                <Badge variant="outline">Verification</Badge>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Pricing Display */}
-          <div className="border rounded-lg p-6 text-center">
-            <div className="space-y-3">
-              <h3 className="text-lg font-semibold text-gray-900">
-                Transcript Verification
-              </h3>
-              <div className="text-4xl font-bold text-blue-600">$19.00</div>
-              <p className="text-sm text-gray-600">One-time payment</p>
-            </div>
+        <div className="text-center space-y-4 py-2">
+          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
+            <Shield className="w-6 h-6 text-blue-600" />
           </div>
 
-          {/* Info Message */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div className="flex items-start gap-3">
-              <Shield className="w-5 h-5 text-blue-600 mt-0.5" />
-              <div>
-                <h4 className="font-medium text-blue-900 mb-1">
-                  Verification Process
-                </h4>
-                <p className="text-sm text-blue-800">
-                  Professional transcript verification ensures authenticity and
-                  credibility for your testimonials.
-                </p>
-              </div>
-            </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">
+              Verify Transcript
+            </h3>
+            <p className="text-sm text-gray-600">
+              by {speakerName}
+            </p>
           </div>
 
-          {/* Action Button */}
-          <div className="pt-2">
-            <Button onClick={onClose} className="w-full" size="lg">
-              Close
-            </Button>
+          <div className="py-2">
+            <div className="text-3xl font-bold text-blue-600 mb-1">$19</div>
+            <p className="text-sm text-gray-600">One-time payment</p>
           </div>
 
-          <div className="text-xs text-gray-500 text-center">
-            <p>💡 Payment integration coming soon</p>
+          <div className="bg-blue-50 rounded-lg p-3 text-sm text-blue-800">
+            ✓ Professional verification<br/>
+            ✓ 2-3 days processing time<br/>
+            ✓ Authenticity guarantee
           </div>
+
+          <Button onClick={onClose} className="w-full mt-4">
+            Close
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
