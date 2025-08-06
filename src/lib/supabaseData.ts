@@ -106,7 +106,7 @@ function transformDatabaseTranscript(
     speakerPhoto: dbTranscript.speaker_photo || undefined,
     interviewDate: dbTranscript.interview_date || undefined,
     content: dbTranscript.content,
-    verificationStatus: (dbTranscript as any).verification_status || "not_started",
+    verificationStatus: dbTranscript.verification_status || "not_started",
   };
 }
 
@@ -152,7 +152,7 @@ export async function getAllProfilesFromSupabase(): Promise<Profile[]> {
     let profilesError: any = null;
 
     // Try multiple query strategies to bypass 500 errors
-    console.log("🔍 Attempting multiple query strategies...");
+    console.log("�� Attempting multiple query strategies...");
 
     // Strategy 1: Full query with ordering
     try {
