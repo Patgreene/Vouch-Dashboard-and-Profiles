@@ -2,6 +2,7 @@ export interface Profile {
   id: string;
   name: string;
   title: string;
+  email: string;
   company?: string;
   photo?: string;
   linkedIn?: string;
@@ -24,6 +25,7 @@ export interface Transcript {
   id: string;
   speakerName: string;
   speakerRole: string;
+  speakerEmail: string;
   speakerPhoto?: string;
   content: string;
   interviewDate?: string;
