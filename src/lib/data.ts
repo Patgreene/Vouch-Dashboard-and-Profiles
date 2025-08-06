@@ -29,6 +29,7 @@ export interface Transcript {
   speakerPhoto?: string;
   content: string;
   interviewDate?: string;
+  verificationStatus: "verified" | "pending" | "not_started";
 }
 
 export interface Analytics {
