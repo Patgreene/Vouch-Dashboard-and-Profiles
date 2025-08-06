@@ -105,7 +105,6 @@ function transformDatabaseTranscript(
     speakerEmail: dbTranscript.speaker_email,
     speakerPhoto: dbTranscript.speaker_photo || undefined,
     interviewDate: dbTranscript.interview_date || undefined,
-    interviewedBy: dbTranscript.interviewed_by || undefined,
     content: dbTranscript.content,
   };
 }
@@ -136,7 +135,6 @@ function transformToDatabase(profile: Profile): {
       speaker_email: t.speakerEmail,
       speaker_photo: t.speakerPhoto,
       interview_date: t.interviewDate,
-      interviewed_by: t.interviewedBy,
       content: t.content,
     })),
   };
