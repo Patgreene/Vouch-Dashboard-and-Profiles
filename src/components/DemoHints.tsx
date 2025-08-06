@@ -54,7 +54,7 @@ const hints: Hint[] = [
   {
     id: "given-received",
     title: "Two-Way Testimonials",
-    description: "See who has Vouched for Lara AND who she has Vouched for - complete picture.",
+    description: "See who Vouched for Lara and vice versa - complete picture.",
     targetSelector: '[role="tablist"]',
     offsetX: 120,
     offsetY: 10,
