@@ -90,6 +90,7 @@ export const sampleProfiles: Profile[] = [
         id: "john-smith-1",
         speakerName: "John Smith",
         speakerRole: "Former Manager at Meta",
+        speakerEmail: "john.smith@meta.com",
         speakerPhoto:
           "https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2Fc23b394bcb414e518b67da03015e7462",
         interviewDate: "2024-02-15",
@@ -101,6 +102,7 @@ export const sampleProfiles: Profile[] = [
         id: "sarah-chen-1",
         speakerName: "Sarah Chen",
         speakerRole: "Senior Frontend Engineer at Meta",
+        speakerEmail: "sarah.chen@meta.com",
         speakerPhoto:
           "https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2Fb6ab5424d2fd409aab6810d78e472129",
         interviewDate: "2024-02-18",
@@ -112,6 +114,7 @@ export const sampleProfiles: Profile[] = [
         id: "mike-rodriguez-1",
         speakerName: "Mike Rodriguez",
         speakerRole: "Product Manager at Meta",
+        speakerEmail: "mike.rodriguez@meta.com",
         speakerPhoto:
           "https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F25e8ad8ea1e845d8a5748dfa7ddc260d",
         interviewDate: "2024-02-20",
