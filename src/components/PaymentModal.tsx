@@ -53,7 +53,7 @@ export function PaymentModal({
           </div>
 
           <Button onClick={onClose} className="w-full mt-4">
-            Close
+            Pay Now
           </Button>
         </div>
       </DialogContent>
