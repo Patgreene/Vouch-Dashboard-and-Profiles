@@ -7,10 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Shield,
-  X,
-} from "lucide-react";
+import { Shield, X } from "lucide-react";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -25,7 +22,6 @@ export function PaymentModal({
   transcriptId,
   speakerName,
 }: PaymentModalProps) {
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
@@ -82,7 +78,8 @@ export function PaymentModal({
                   Verification Process
                 </h4>
                 <p className="text-sm text-blue-800">
-                  Professional transcript verification ensures authenticity and credibility for your testimonials.
+                  Professional transcript verification ensures authenticity and
+                  credibility for your testimonials.
                 </p>
               </div>
             </div>
