@@ -414,30 +414,6 @@ export function ProfileForm({
               <CardTitle>Basic Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* Preview */}
-              {formData.name && (
-                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                  <Avatar className="h-16 w-16 ring-2 ring-gray-200 profile-avatar-medium">
-                    <AvatarImage
-                      src={formData.photo}
-                      alt={formData.name}
-                      className="object-cover object-center"
-                    />
-                    <AvatarFallback className="text-lg font-semibold bg-vouch-100 text-vouch-600">
-                      {getInitials(formData.name)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h3 className="text-xl font-bold">{formData.name}</h3>
-                    <p className="text-gray-600">{formData.title}</p>
-                    {formData.company && (
-                      <Badge variant="outline" className="mt-1">
-                        {formData.company}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              )}
 
               {/* Photo Upload */}
               <div>
@@ -942,37 +918,7 @@ export function ProfileForm({
                       />
                     </div>
 
-                    {/* Preview */}
-                    {transcript.speakerName && (
-                      <div className="p-3 bg-gray-50 rounded-lg">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Avatar className="h-10 w-10">
-                            <AvatarImage
-                              src={transcript.speakerPhoto}
-                              alt={transcript.speakerName}
-                              className="object-cover object-center"
-                            />
-                            <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
-                              {getInitials(transcript.speakerName)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="font-semibold text-sm">
-                              {transcript.speakerName}
-                            </div>
-                            <div className="text-xs text-gray-600">
-                              {transcript.speakerRole}
-                            </div>
-                          </div>
-                        </div>
-                        {transcript.content && (
-                          <p className="text-sm text-gray-700 leading-relaxed">
-                            {transcript.content.substring(0, 200)}
-                            {transcript.content.length > 200 && "..."}
-                          </p>
-                        )}
-                      </div>
-                    )}
+
                   </div>
                 ))}
               </CardContent>
