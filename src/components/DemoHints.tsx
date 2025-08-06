@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, HelpCircle, CheckCircle, MousePointer, Users, FileText, Shield } from "lucide-react";
+import { X, HelpCircle, CheckCircle, MousePointer, Users, FileText, Shield, Share2 } from "lucide-react";
 
 interface Hint {
   id: string;
