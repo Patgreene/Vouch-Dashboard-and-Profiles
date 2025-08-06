@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { ProfileHeader } from "@/components/ProfileHeader";
 import { KeyTakeaways } from "@/components/KeyTakeaways";
 import { EnhancedTranscriptCard } from "@/components/EnhancedTranscriptCard";

@@ -187,7 +187,7 @@ export function useDemoHighlight() {
     const endOffset = urlParams.get("e");
 
     if (urlTranscriptId === transcriptId && startOffset && endOffset) {
-      // Find and highlight the text
+      // Find and highlight the text - increased delay to allow transcript expansion
       setTimeout(async () => {
         const transcriptElement = document.getElementById(
           `transcript-${transcriptId}`,
@@ -265,11 +265,14 @@ export function useDemoHighlight() {
               range.insertNode(highlightSpan);
             }
 
-            // Scroll to the highlighted section
-            highlightSpan.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-            });
+            // Scroll to the highlighted section with better positioning
+            setTimeout(() => {
+              highlightSpan.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "nearest",
+              });
+            }, 100);
 
             console.log("Demo highlight applied successfully");
           } catch (error) {
@@ -281,7 +284,7 @@ export function useDemoHighlight() {
             });
           }
         }
-      }, 500);
+      }, 1000);
     }
   }, []);
 
