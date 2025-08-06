@@ -220,15 +220,23 @@ export function ProfileForm({
     setErrorMessage("");
 
     // Validate required fields
-    if (!formData.name.trim() || !formData.title.trim()) {
+    if (!formData.name.trim() || !formData.title.trim() || !formData.email.trim()) {
       setSubmitStatus("error");
-      setErrorMessage("Please fill in all required fields (Name and Title).");
+      setErrorMessage("Please fill in all required fields (Name, Title, and Email).");
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      setSubmitStatus("error");
+      setErrorMessage("Please enter a valid email address.");
       return;
     }
 
     // Validate transcripts
     const validTranscripts = formData.transcripts.filter(
-      (t) => t.speakerName.trim() && t.speakerRole.trim() && t.content.trim(),
+      (t) => t.speakerName.trim() && t.speakerRole.trim() && t.speakerEmail.trim() && t.content.trim(),
     );
 
     if (validTranscripts.length === 0) {
