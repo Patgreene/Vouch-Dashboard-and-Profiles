@@ -80,6 +80,39 @@ export function EnhancedTranscriptCard({
     }
   }, [expanded, transcript.id, processHighlightFromUrl]);
 
+  // Verification status component
+  const VerificationStatus = () => {
+    switch (transcript.verificationStatus) {
+      case "verified":
+        return (
+          <div className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-full text-xs font-medium">
+            <CheckCircle className="h-3 w-3" />
+            <span>Verified</span>
+          </div>
+        );
+      case "pending":
+        return (
+          <div className="flex items-center gap-1 text-orange-600 bg-orange-50 px-2 py-1 rounded-full text-xs font-medium">
+            <Clock className="h-3 w-3" />
+            <span>Pending</span>
+          </div>
+        );
+      case "not_started":
+        return (
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-6 px-2 text-xs text-blue-600 border-blue-200 hover:bg-blue-50"
+          >
+            <Shield className="h-3 w-3 mr-1" />
+            Verify
+          </Button>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Card className="overflow-hidden transition-all duration-200 hover:shadow-md max-w-full">
       <Button
