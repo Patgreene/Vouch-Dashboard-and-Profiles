@@ -172,6 +172,11 @@ export function DemoHints() {
         const isActive = activeHint === hint.id;
         const position = hintPositions[hint.id];
 
+        // Only show text-highlighting and verification hints on received tab
+        if ((hint.id === 'text-highlighting' || hint.id === 'verification') && !isReceivedTabActive) {
+          return null;
+        }
+
         if (!position) return null;
 
         return (
