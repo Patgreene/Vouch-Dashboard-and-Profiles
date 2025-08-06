@@ -50,8 +50,7 @@ export function PaymentModal({
 
           <div className="bg-blue-50 rounded-lg p-3 text-sm text-blue-800">
             ✓ Professional verification
-            <br />
-            ✓ 2-3 days processing time
+            <br />✓ 2-3 days processing time
           </div>
 
           <Button onClick={onClose} className="w-full mt-4">
