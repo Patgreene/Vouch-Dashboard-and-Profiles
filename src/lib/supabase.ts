@@ -18,6 +18,7 @@ export interface DatabaseProfile {
   id: string;
   name: string;
   title: string;
+  email: string;
   company?: string;
   photo?: string;
   linkedin?: string;
@@ -38,6 +39,7 @@ export interface DatabaseTranscript {
   profile_id: string;
   speaker_name: string;
   speaker_role: string;
+  speaker_email: string;
   speaker_photo?: string;
   interview_date?: string;
   interviewed_by?: string;
