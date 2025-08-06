@@ -163,29 +163,8 @@ export default function AdminDashboard() {
 
         setProfiles(allValidProfiles);
 
-        // Load analytics separately to prevent blocking
-        console.log("📊 Loading analytics...");
-        try {
-          const analyticsData = await dataProvider.getAnalytics();
-          console.log("✅ Analytics loaded:", analyticsData);
-          setLiveAnalytics(
-            analyticsData || {
-              totalPageViews: 0,
-              totalQuoteViews: 0,
-              profileStats: [],
-            },
-          );
-        } catch (analyticsError) {
-          console.warn(
-            "⚠️ Analytics loading failed, using fallback:",
-            analyticsError,
-          );
-          setLiveAnalytics({
-            totalPageViews: 0,
-            totalQuoteViews: 0,
-            profileStats: [],
-          });
-        }
+        // Skip analytics loading on initial dashboard load for better performance
+        console.log("⚡ Skipping analytics loading for faster dashboard performance");
       } catch (error) {
         console.error("❌ Critical error loading dashboard data:", error);
         console.error("Error details:", {
