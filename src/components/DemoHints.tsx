@@ -54,10 +54,10 @@ const hints: Hint[] = [
   {
     id: "given-received",
     title: "Two-Way Testimonials",
-    description: "See testimonials Lara received AND ones she's given to others - complete professional picture.",
+    description: "See who has Vouched for Lara AND who she has Vouched for - complete picture.",
     targetSelector: '[role="tablist"]',
-    offsetX: -40,
-    offsetY: -15,
+    offsetX: 120,
+    offsetY: 10,
     icon: Users,
     action: () => {
       const givenTab = document.querySelector('button[data-state="inactive"]') as HTMLButtonElement;
@@ -211,8 +211,8 @@ export function DemoHints() {
                     </p>
 
                     {/* Actions */}
-                    <div className="flex items-center justify-between">
-                      {hint.action && hint.actionText && (
+                    {hint.action && hint.actionText && (
+                      <div className="flex justify-start">
                         <button
                           onClick={() => handleAction(hint)}
                           className="
@@ -224,20 +224,8 @@ export function DemoHints() {
                         >
                           {hint.actionText}
                         </button>
-                      )}
-
-                      <button
-                        onClick={() => handleDismiss(hint.id)}
-                        className="
-                          flex items-center gap-1 px-2 py-1.5
-                          text-gray-500 hover:text-gray-700 text-xs
-                          transition-colors duration-200
-                        "
-                      >
-                        <CheckCircle className="w-3 h-3" />
-                        Got it
-                      </button>
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
