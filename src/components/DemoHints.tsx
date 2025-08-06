@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
-import { X, HelpCircle, CheckCircle, MousePointer, Users, FileText, Shield, Share2 } from "lucide-react";
+import {
+  X,
+  HelpCircle,
+  CheckCircle,
+  MousePointer,
+  Users,
+  FileText,
+  Shield,
+  Share2,
+} from "lucide-react";
 
 interface Hint {
   id: string;
@@ -17,13 +26,16 @@ const hints: Hint[] = [
   {
     id: "key-takeaways",
     title: "Key Takeaways",
-    description: "AI-extracted insights from all testimonials showing strengths, challenges, and working style.",
+    description:
+      "AI-extracted insights from all testimonials showing strengths, challenges, and working style.",
     targetSelector: '[data-loc*="KeyTakeaways"]',
     offsetX: -50,
     offsetY: 20,
     icon: FileText,
     action: () => {
-      const button = document.querySelector('[data-loc*="KeyTakeaways"] button') as HTMLButtonElement;
+      const button = document.querySelector(
+        '[data-loc*="KeyTakeaways"] button',
+      ) as HTMLButtonElement;
       if (button) button.click();
     },
     actionText: "Click to expand",
@@ -31,13 +43,16 @@ const hints: Hint[] = [
   {
     id: "verification",
     title: "Verification System",
-    description: "Green badges have been professionally verified by Vouch. Companies or users can pay for verification.",
-    targetSelector: 'button:has(svg.lucide-shield)',
+    description:
+      "Green badges have been professionally verified by Vouch. Companies or users can pay for verification.",
+    targetSelector: "button:has(svg.lucide-shield)",
     offsetX: -50,
     offsetY: -15,
     icon: Shield,
     action: () => {
-      const verifyButton = document.querySelector('button:has(svg.lucide-shield)') as HTMLButtonElement;
+      const verifyButton = document.querySelector(
+        "button:has(svg.lucide-shield)",
+      ) as HTMLButtonElement;
       if (verifyButton) verifyButton.click();
     },
     actionText: "Try verification",
@@ -45,8 +60,9 @@ const hints: Hint[] = [
   {
     id: "text-highlighting",
     title: "Share Specific Quotes",
-    description: "Select any text in testimonials to create shareable links to specific quotes.",
-    targetSelector: '.space-y-4.sm\\:space-y-6 > div:first-child',
+    description:
+      "Select any text in testimonials to create shareable links to specific quotes.",
+    targetSelector: ".space-y-4.sm\\:space-y-6 > div:first-child",
     offsetX: -50,
     offsetY: 100,
     icon: MousePointer,
@@ -65,7 +81,9 @@ const hints: Hint[] = [
 export function DemoHints() {
   const [activeHint, setActiveHint] = useState<string | null>(null);
   const [completedHints, setCompletedHints] = useState<Set<string>>(new Set());
-  const [hintPositions, setHintPositions] = useState<Record<string, { x: number; y: number }>>({});
+  const [hintPositions, setHintPositions] = useState<
+    Record<string, { x: number; y: number }>
+  >({});
   const [showTutorial, setShowTutorial] = useState(false);
   const [isReceivedTabActive, setIsReceivedTabActive] = useState(true);
 
@@ -77,8 +95,10 @@ export function DemoHints() {
       const element = document.querySelector(hint.targetSelector);
       if (element) {
         const rect = element.getBoundingClientRect();
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft =
+          window.pageXOffset || document.documentElement.scrollLeft;
 
         newPositions[hint.id] = {
           x: rect.left + scrollLeft + (hint.offsetX || 0),
@@ -92,17 +112,19 @@ export function DemoHints() {
 
   // Check which tab is active
   const checkActiveTab = () => {
-    const receivedTab = document.querySelector('#radix-\\:r0\\:-trigger-received') as HTMLButtonElement;
+    const receivedTab = document.querySelector(
+      "#radix-\\:r0\\:-trigger-received",
+    ) as HTMLButtonElement;
     if (receivedTab) {
-      const isActive = receivedTab.getAttribute('data-state') === 'active';
+      const isActive = receivedTab.getAttribute("data-state") === "active";
       setIsReceivedTabActive(isActive);
     } else {
       // Fallback to text-based search
-      const fallbackTab = Array.from(document.querySelectorAll('button[role="tab"]')).find(
-        tab => tab.textContent?.includes('Received')
-      );
+      const fallbackTab = Array.from(
+        document.querySelectorAll('button[role="tab"]'),
+      ).find((tab) => tab.textContent?.includes("Received"));
       if (fallbackTab) {
-        const isActive = fallbackTab.getAttribute('data-state') === 'active';
+        const isActive = fallbackTab.getAttribute("data-state") === "active";
         setIsReceivedTabActive(isActive);
       }
     }
@@ -122,23 +144,23 @@ export function DemoHints() {
       setTimeout(checkActiveTab, 100); // Small delay for tab state to update
     };
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('showHighlightTutorial', handleShowTutorial);
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("showHighlightTutorial", handleShowTutorial);
 
     // Monitor for tab clicks
     const tabList = document.querySelector('[role="tablist"]');
     if (tabList) {
-      tabList.addEventListener('click', handleTabChange);
+      tabList.addEventListener("click", handleTabChange);
     }
 
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('showHighlightTutorial', handleShowTutorial);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("showHighlightTutorial", handleShowTutorial);
       if (tabList) {
-        tabList.removeEventListener('click', handleTabChange);
+        tabList.removeEventListener("click", handleTabChange);
       }
     };
   }, []);
@@ -177,7 +199,10 @@ export function DemoHints() {
         const position = hintPositions[hint.id];
 
         // Only show text-highlighting and verification hints on received tab
-        if ((hint.id === 'text-highlighting' || hint.id === 'verification') && !isReceivedTabActive) {
+        if (
+          (hint.id === "text-highlighting" || hint.id === "verification") &&
+          !isReceivedTabActive
+        ) {
           return null;
         }
 
@@ -189,7 +214,7 @@ export function DemoHints() {
             className="absolute z-50"
             style={{
               left: `${position.x}px`,
-              top: `${position.y}px`
+              top: `${position.y}px`,
             }}
           >
             {/* Hint Badge */}
@@ -206,9 +231,8 @@ export function DemoHints() {
                   transform hover:scale-110
                   border-2 border-white
                   flex items-center justify-center
-                  ${isActive ? 'ring-4 ring-blue-200' : ''}
+                  ${isActive ? "ring-4 ring-blue-200" : ""}
                 `}
-
               >
                 <HelpCircle className="w-4 h-4" />
 
@@ -296,9 +320,11 @@ export function DemoHints() {
             <div className="p-6">
               {/* Animated Demo */}
               <div className="bg-gray-50 rounded-lg p-4 relative overflow-hidden">
-
                 {/* Mini Demo Container */}
-                <div className="bg-white rounded-lg border shadow-sm relative" style={{ height: '200px' }}>
+                <div
+                  className="bg-white rounded-lg border shadow-sm relative"
+                  style={{ height: "200px" }}
+                >
                   {/* Step 1: Mock transcript card (collapsed) */}
                   <div className="absolute inset-2 demo-step-1">
                     <div className="bg-white border rounded-lg shadow-sm overflow-hidden">
@@ -306,13 +332,27 @@ export function DemoHints() {
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-6 h-6 bg-blue-100 rounded-full"></div>
                           <div className="flex-1">
-                            <div className="text-xs font-medium">Clara Jensen</div>
-                            <div className="text-xs text-gray-500">Product Designer</div>
+                            <div className="text-xs font-medium">
+                              Clara Jensen
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              Product Designer
+                            </div>
                           </div>
                           <div className="relative">
                             {/* Down arrow with click indicator */}
-                            <svg className="w-4 h-4 text-gray-500 demo-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            <svg
+                              className="w-4 h-4 text-gray-500 demo-arrow"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 9l-7 7-7-7"
+                              />
                             </svg>
                             <div className="absolute inset-0 w-8 h-8 -m-2 border-2 border-blue-500 rounded-full demo-click-indicator"></div>
                           </div>
@@ -323,10 +363,18 @@ export function DemoHints() {
                       </div>
 
                       {/* Expandable content (initially hidden) */}
-                      <div className="demo-expanded-content" style={{ height: '0px', overflow: 'hidden' }}>
+                      <div
+                        className="demo-expanded-content"
+                        style={{ height: "0px", overflow: "hidden" }}
+                      >
                         <div className="px-3 pb-3">
                           <div className="text-xs text-gray-700 leading-relaxed">
-                            Lara's <span className="demo-highlight">design process is incredibly methodical</span> and she creates detailed user journeys that make sense from both user and technical perspectives.
+                            Lara's{" "}
+                            <span className="demo-highlight">
+                              design process is incredibly methodical
+                            </span>{" "}
+                            and she creates detailed user journeys that make
+                            sense from both user and technical perspectives.
                           </div>
                         </div>
                       </div>
@@ -334,7 +382,15 @@ export function DemoHints() {
                   </div>
 
                   {/* Step 3: Share tooltip */}
-                  <div className="absolute demo-step-3" style={{ top: '60px', left: '50%', transform: 'translateX(-50%)', opacity: 0 }}>
+                  <div
+                    className="absolute demo-step-3"
+                    style={{
+                      top: "60px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      opacity: 0,
+                    }}
+                  >
                     <div className="bg-blue-600 text-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-medium flex items-center gap-2 cursor-pointer">
                       <Share2 className="w-3 h-3" />
                       Share Link
@@ -346,7 +402,15 @@ export function DemoHints() {
                   </div>
 
                   {/* Step 4: Success feedback */}
-                  <div className="absolute demo-step-4" style={{ top: '60px', left: '50%', transform: 'translateX(-50%)', opacity: 0 }}>
+                  <div
+                    className="absolute demo-step-4"
+                    style={{
+                      top: "60px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      opacity: 0,
+                    }}
+                  >
                     <div className="bg-green-600 text-white px-3 py-1.5 rounded-lg shadow-lg text-xs font-medium flex items-center gap-2">
                       <CheckCircle className="w-3 h-3" />
                       Copied!
@@ -362,8 +426,6 @@ export function DemoHints() {
                   <div className="w-2 h-2 rounded-full bg-gray-300 demo-progress-4"></div>
                 </div>
               </div>
-
-
             </div>
 
             {/* Footer */}
