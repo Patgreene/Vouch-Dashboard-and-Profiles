@@ -816,6 +816,7 @@ export function ProfileForm({
                   </div>
                 </div>
               </CardContent>
+              )}
             </Card>
           )}
 
