@@ -427,8 +427,24 @@ export function DemoHints() {
         }
 
         @keyframes highlight-fade {
-          0%, 30% { background-color: transparent; }
-          35%, 100% { background-color: #fef3c7; }
+          0%, 30% {
+            background: linear-gradient(to left, #fef3c7 0%, #fef3c7 0%, transparent 0%, transparent 100%);
+          }
+          35% {
+            background: linear-gradient(to left, #fef3c7 0%, #fef3c7 20%, transparent 20%, transparent 100%);
+          }
+          40% {
+            background: linear-gradient(to left, #fef3c7 0%, #fef3c7 40%, transparent 40%, transparent 100%);
+          }
+          45% {
+            background: linear-gradient(to left, #fef3c7 0%, #fef3c7 60%, transparent 60%, transparent 100%);
+          }
+          50% {
+            background: linear-gradient(to left, #fef3c7 0%, #fef3c7 80%, transparent 80%, transparent 100%);
+          }
+          55%, 100% {
+            background: linear-gradient(to left, #fef3c7 0%, #fef3c7 100%, transparent 100%, transparent 100%);
+          }
         }
       `}</style>
     </>
