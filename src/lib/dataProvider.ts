@@ -47,6 +47,24 @@ export class DataProvider {
     return getLocalProfileById(id) || null;
   }
 
+  async getGivenTranscripts(speakerName: string) {
+    const allProfiles = await this.getAllProfiles();
+    const givenTranscripts: Array<{ transcript: any; recipientProfile: Profile }> = [];
+
+    allProfiles.forEach(profile => {
+      profile.transcripts.forEach(transcript => {
+        if (transcript.speakerName === speakerName) {
+          givenTranscripts.push({
+            transcript,
+            recipientProfile: profile
+          });
+        }
+      });
+    });
+
+    return givenTranscripts;
+  }
+
   async saveProfile(profile: Profile): Promise<boolean> {
     if (this.useSupabase) {
       return await saveProfileToSupabase(profile);
