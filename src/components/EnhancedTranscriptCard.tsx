@@ -285,6 +285,14 @@ export function EnhancedTranscriptCard({
           </div>
         </CardContent>
       )}
+
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onSuccess={handlePaymentSuccess}
+        transcriptId={transcript.id}
+        speakerName={transcript.speakerName}
+      />
     </Card>
   );
 }
