@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Profile, Transcript } from "@/lib/data";
 import { dataProvider } from "@/lib/dataProvider";
@@ -28,6 +29,7 @@ interface FormData {
   voucheeEmail: string;
   content: string;
   interviewDate: string;
+  verificationStatus: "verified" | "pending" | "not_started";
 }
 
 export function TranscriptForm({
@@ -40,6 +42,7 @@ export function TranscriptForm({
     voucheeEmail: "",
     content: "",
     interviewDate: "",
+    verificationStatus: "not_started",
   });
 
   const [voucherProfile, setVoucherProfile] = useState<Profile | null>(null);
@@ -141,6 +144,7 @@ export function TranscriptForm({
         speakerPhoto: voucherProfile.photo || "",
         content: formData.content.trim(),
         interviewDate: formData.interviewDate || "",
+        verificationStatus: formData.verificationStatus,
       };
 
       // Add transcript to vouchee's profile
