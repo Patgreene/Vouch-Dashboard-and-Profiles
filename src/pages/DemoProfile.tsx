@@ -20,25 +20,27 @@ const demoProfile = {
   title: "UX/UI Designer",
   email: "lara@example.com",
   company: "Freelance",
-  photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
+  photo:
+    "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
   linkedIn: "https://www.linkedin.com",
   cv: "https://346e5b85-9540-4d6d-9b91-a5687962078d.filesusr.com/ugd/9e6f36_e43a83ee41994d668a468ea4a187bbe9.pdf",
-  portfolio: "https://www.vouchprofile.com/_files/ugd/9e6f36_d33d3698b6bd4749a0316343ad9d0cd0.pdf",
+  portfolio:
+    "https://www.vouchprofile.com/_files/ugd/9e6f36_d33d3698b6bd4749a0316343ad9d0cd0.pdf",
   keyTakeaways: {
     strengths: [
-      "A keen eye for what matters: fast, clear, and flawless design."
+      "A keen eye for what matters: fast, clear, and flawless design.",
     ],
     weaknesses: [
-      "Lara's learning that messy, fast, and collaborative often beats polished and late."
+      "Lara's learning that messy, fast, and collaborative often beats polished and late.",
     ],
     communicationStyle: [
-      "Collaborating with Lara is a creative partnership - she listens, clarifies, and aligns teams for lasting impact."
+      "Collaborating with Lara is a creative partnership - she listens, clarifies, and aligns teams for lasting impact.",
     ],
     waysToBringOutBest: [
-      "Lara's work boosts metrics, doubles activation, and makes products easier to use, globally."
+      "Lara's work boosts metrics, doubles activation, and makes products easier to use, globally.",
     ],
     customTitle1: "Collaborator",
-    customTitle2: "Activator"
+    customTitle2: "Activator",
   },
   transcripts: [
     {
@@ -46,42 +48,50 @@ const demoProfile = {
       speakerName: "Clara Jensen",
       speakerRole: "Head of Product Design",
       speakerEmail: "clara@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       interviewDate: "2024-06-15",
-      content: "Lara joined our design team on a 6-month freelance contract, originally to support a product refresh and ended up becoming instrumental in a full UX overhaul. What stood out from day one was her ability to ask the right questions. She didn't just take our brief and run with it; she dug deeper into our user data, challenged some of our assumptions, and helped us see gaps we hadn't noticed.\n\nHer design process is incredibly methodical. She starts with thorough user research, creates detailed user journeys, and then builds wireframes that actually make sense from both a user and technical perspective. But what really impressed me was how she balanced creativity with practicality. Every design decision came with a clear rationale tied back to user needs or business goals.\n\nWorking with Lara was refreshingly collaborative. She regularly shared her progress, incorporated feedback gracefully, and always came prepared with multiple options when presenting concepts. The final designs she delivered resulted in a 40% increase in user engagement and significantly reduced support tickets related to navigation confusion.",
-      verificationStatus: "verified" as const
+      content:
+        "Lara joined our design team on a 6-month freelance contract, originally to support a product refresh and ended up becoming instrumental in a full UX overhaul. What stood out from day one was her ability to ask the right questions. She didn't just take our brief and run with it; she dug deeper into our user data, challenged some of our assumptions, and helped us see gaps we hadn't noticed.\n\nHer design process is incredibly methodical. She starts with thorough user research, creates detailed user journeys, and then builds wireframes that actually make sense from both a user and technical perspective. But what really impressed me was how she balanced creativity with practicality. Every design decision came with a clear rationale tied back to user needs or business goals.\n\nWorking with Lara was refreshingly collaborative. She regularly shared her progress, incorporated feedback gracefully, and always came prepared with multiple options when presenting concepts. The final designs she delivered resulted in a 40% increase in user engagement and significantly reduced support tickets related to navigation confusion.",
+      verificationStatus: "verified" as const,
     },
     {
       id: "demo-transcript-2",
       speakerName: "Tomás Ortega",
       speakerRole: "Co-founder at Looply",
       speakerEmail: "tomas@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
       interviewDate: "2025-07-20",
-      content: "We brought Lara in during a make-or-break moment our MVP was functional, but users weren't sticking. Engagement was flat, and we couldn't figure out why. Lara didn't just come in with a Figma file; she spent the first two weeks actually using our product, talking to our existing users, and identifying friction points we were completely blind to.\n\nWhat I loved about working with Lara is that she thinks like a founder. She understood that every design decision had to move the needle on our key metrics. She proposed solutions that weren't just beautiful, but were specifically designed to increase user retention and reduce churn. Her redesign of our onboarding flow alone improved our day-7 retention from 23% to 67%.\n\nLara also has this rare ability to work fast without sacrificing quality. In a startup environment where everything is urgent, she managed to deliver polished, user-tested designs on tight timelines. She became an extension of our core team, and honestly, I can't imagine launching without her input.",
-      verificationStatus: "not_started" as const
+      content:
+        "We brought Lara in during a make-or-break moment our MVP was functional, but users weren't sticking. Engagement was flat, and we couldn't figure out why. Lara didn't just come in with a Figma file; she spent the first two weeks actually using our product, talking to our existing users, and identifying friction points we were completely blind to.\n\nWhat I loved about working with Lara is that she thinks like a founder. She understood that every design decision had to move the needle on our key metrics. She proposed solutions that weren't just beautiful, but were specifically designed to increase user retention and reduce churn. Her redesign of our onboarding flow alone improved our day-7 retention from 23% to 67%.\n\nLara also has this rare ability to work fast without sacrificing quality. In a startup environment where everything is urgent, she managed to deliver polished, user-tested designs on tight timelines. She became an extension of our core team, and honestly, I can't imagine launching without her input.",
+      verificationStatus: "not_started" as const,
     },
     {
       id: "demo-transcript-3",
       speakerName: "David Nari",
       speakerRole: "Senior Frontend Developer",
       speakerEmail: "david@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       interviewDate: "2025-05-10",
-      content: "I worked with Lara on a couple of startup projects where she handled the full UX/UI flow and let me just say, handing off designs from her is a developer's dream. Her files are clean, her logic is sound, and she actually thinks about implementation complexity when designing. She uses consistent spacing, proper component structures, and always includes hover states and edge cases.\n\nBut beyond the technical execution, Lara just gets how users think. She has this intuitive understanding of user behavior that shows up in every interaction she designs. Buttons are exactly where you expect them, navigation flows feel natural, and complex features somehow feel simple to use.\n\nWhat really sets Lara apart is her willingness to iterate based on real user feedback. I've worked with designers who get precious about their work, but Lara actively seeks out ways to improve. She'll test prototypes, gather feedback, and refine designs until they're genuinely user-friendly, not just visually appealing.",
-      verificationStatus: "verified" as const
+      content:
+        "I worked with Lara on a couple of startup projects where she handled the full UX/UI flow and let me just say, handing off designs from her is a developer's dream. Her files are clean, her logic is sound, and she actually thinks about implementation complexity when designing. She uses consistent spacing, proper component structures, and always includes hover states and edge cases.\n\nBut beyond the technical execution, Lara just gets how users think. She has this intuitive understanding of user behavior that shows up in every interaction she designs. Buttons are exactly where you expect them, navigation flows feel natural, and complex features somehow feel simple to use.\n\nWhat really sets Lara apart is her willingness to iterate based on real user feedback. I've worked with designers who get precious about their work, but Lara actively seeks out ways to improve. She'll test prototypes, gather feedback, and refine designs until they're genuinely user-friendly, not just visually appealing.",
+      verificationStatus: "verified" as const,
     },
     {
       id: "demo-transcript-4",
       speakerName: "Amira Shah",
       speakerRole: "Founder at Kindling",
       speakerEmail: "amira@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
       interviewDate: "2024-08-05",
-      content: "Lara was instrumental in helping us design our mobile app from the ground up. As a non-technical founder, I was worried about the complexity of translating our vision into a user-friendly mobile experience. Lara not only understood our vision but helped refine and improve it through her design process.\n\nShe has this wonderful ability to balance user needs with business objectives. Every design recommendation came with clear reasoning about how it would impact user experience and, ultimately, our bottom line. She helped us prioritize features based on user value and implementation complexity, which was incredibly valuable for a resource-constrained startup.\n\nThe app Lara designed for us launched to fantastic user reviews, with particular praise for its intuitive interface and smooth user experience. Six months post-launch, we're seeing strong user retention and minimal support requests related to usability issues. Lara's work laid the foundation for our product's success.",
-      verificationStatus: "pending" as const
-    }
-  ]
+      content:
+        "Lara was instrumental in helping us design our mobile app from the ground up. As a non-technical founder, I was worried about the complexity of translating our vision into a user-friendly mobile experience. Lara not only understood our vision but helped refine and improve it through her design process.\n\nShe has this wonderful ability to balance user needs with business objectives. Every design recommendation came with clear reasoning about how it would impact user experience and, ultimately, our bottom line. She helped us prioritize features based on user value and implementation complexity, which was incredibly valuable for a resource-constrained startup.\n\nThe app Lara designed for us launched to fantastic user reviews, with particular praise for its intuitive interface and smooth user experience. Six months post-launch, we're seeing strong user retention and minimal support requests related to usability issues. Lara's work laid the foundation for our product's success.",
+      verificationStatus: "pending" as const,
+    },
+  ],
 };
 
 const demoGivenTranscripts = [
@@ -91,26 +101,29 @@ const demoGivenTranscripts = [
       speakerName: "Lara Rosu",
       speakerRole: "UX/UI Designer",
       speakerEmail: "lara@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
       interviewDate: "2024-09-12",
-      content: "I had the pleasure of working with Marcus on a fintech project where precision and user trust were absolutely critical. What immediately stood out was his deep understanding of both the technical requirements and user psychology in financial applications. Marcus has this rare ability to build complex backend systems while keeping the end-user experience at the forefront of every decision.\n\nHis code is exceptionally clean and well-documented, which made collaboration seamless. But what really impressed me was his proactive approach to identifying potential UX issues before they became problems. He would regularly suggest technical solutions that enhanced the user experience, showing a level of product thinking that goes far beyond traditional development.\n\nMarcus is also incredibly reliable under pressure. During our product launch, when we encountered unexpected technical challenges, he worked tirelessly to resolve issues while keeping the team informed and maintaining quality standards. His technical expertise combined with his collaborative spirit makes him an invaluable team member.",
-      verificationStatus: "verified" as const
+      content:
+        "I had the pleasure of working with Marcus on a fintech project where precision and user trust were absolutely critical. What immediately stood out was his deep understanding of both the technical requirements and user psychology in financial applications. Marcus has this rare ability to build complex backend systems while keeping the end-user experience at the forefront of every decision.\n\nHis code is exceptionally clean and well-documented, which made collaboration seamless. But what really impressed me was his proactive approach to identifying potential UX issues before they became problems. He would regularly suggest technical solutions that enhanced the user experience, showing a level of product thinking that goes far beyond traditional development.\n\nMarcus is also incredibly reliable under pressure. During our product launch, when we encountered unexpected technical challenges, he worked tirelessly to resolve issues while keeping the team informed and maintaining quality standards. His technical expertise combined with his collaborative spirit makes him an invaluable team member.",
+      verificationStatus: "verified" as const,
     },
     recipientProfile: {
       id: "marcus-demo",
       name: "Marcus Chen",
       title: "Senior Backend Engineer",
       email: "marcus@example.com",
-      photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      photo:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
       company: "FinTech Startup",
       keyTakeaways: {
         strengths: [],
         weaknesses: [],
         communicationStyle: [],
-        waysToBringOutBest: []
+        waysToBringOutBest: [],
       },
-      transcripts: []
-    }
+      transcripts: [],
+    },
   },
   {
     transcript: {
@@ -118,31 +131,36 @@ const demoGivenTranscripts = [
       speakerName: "Lara Rosu",
       speakerRole: "UX/UI Designer",
       speakerEmail: "lara@example.com",
-      speakerPhoto: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
       interviewDate: "2024-10-03",
-      content: "Working with Sarah on our e-commerce platform redesign was an absolute joy. As a project manager, Sarah has this incredible ability to keep complex projects on track while maintaining team morale and ensuring quality doesn't suffer. She creates an environment where everyone feels heard and valued, which brings out the best in the entire team.\n\nWhat sets Sarah apart is her strategic thinking combined with meticulous attention to detail. She doesn't just manage timelines; she anticipates potential roadblocks and creates contingency plans. Her communication style is clear and consistent, ensuring everyone stays aligned on priorities and deliverables.\n\nSarah also has a genuine understanding of user experience principles, which made our collaboration particularly effective. She knew when to push back on scope creep and when to advocate for design changes that would improve the user experience. The project delivered on time, within budget, and exceeded our user satisfaction targets.",
-      verificationStatus: "pending" as const
+      content:
+        "Working with Sarah on our e-commerce platform redesign was an absolute joy. As a project manager, Sarah has this incredible ability to keep complex projects on track while maintaining team morale and ensuring quality doesn't suffer. She creates an environment where everyone feels heard and valued, which brings out the best in the entire team.\n\nWhat sets Sarah apart is her strategic thinking combined with meticulous attention to detail. She doesn't just manage timelines; she anticipates potential roadblocks and creates contingency plans. Her communication style is clear and consistent, ensuring everyone stays aligned on priorities and deliverables.\n\nSarah also has a genuine understanding of user experience principles, which made our collaboration particularly effective. She knew when to push back on scope creep and when to advocate for design changes that would improve the user experience. The project delivered on time, within budget, and exceeded our user satisfaction targets.",
+      verificationStatus: "pending" as const,
     },
     recipientProfile: {
       id: "sarah-demo",
       name: "Sarah Williams",
       title: "Senior Project Manager",
       email: "sarah@example.com",
-      photo: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      photo:
+        "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
       company: "E-commerce Agency",
       keyTakeaways: {
         strengths: [],
         weaknesses: [],
         communicationStyle: [],
-        waysToBringOutBest: []
+        waysToBringOutBest: [],
       },
-      transcripts: []
-    }
-  }
+      transcripts: [],
+    },
+  },
 ];
 
 export default function DemoProfile() {
-  const [expandedTranscripts, setExpandedTranscripts] = useState<Set<string>>(new Set());
+  const [expandedTranscripts, setExpandedTranscripts] = useState<Set<string>>(
+    new Set(),
+  );
 
   // Initialize highlight functionality for demo profile
   const {
@@ -167,7 +185,8 @@ export default function DemoProfile() {
     <div className="min-h-screen bg-gray-50">
       {/* Demo Banner */}
       <div className="bg-blue-600 text-white text-center py-2 text-sm">
-        📋 Demo Profile - This is a standalone example showing how Vouch profiles work
+        📋 Demo Profile - This is a standalone example showing how Vouch
+        profiles work
       </div>
 
       {/* Profile Header */}
