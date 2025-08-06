@@ -864,55 +864,52 @@ export function ProfileForm({
                       )}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label>Speaker Name *</Label>
-                        <Input
-                          value={transcript.speakerName}
-                          onChange={(e) =>
-                            updateTranscript(
-                              index,
-                              "speakerName",
-                              e.target.value,
-                            )
-                          }
-                          placeholder="John Smith"
-                        />
+                    {/* Read-only Speaker Information */}
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <Label className="text-sm font-medium text-gray-700">
+                            Speaker Information
+                          </Label>
+                          <p className="text-xs text-gray-500 mt-1">
+                            Speaker details can only be edited through their own profile
+                          </p>
+                        </div>
+                        {transcript.speakerEmail && (
+                          <Badge variant="outline" className="text-xs">
+                            {transcript.speakerEmail}
+                          </Badge>
+                        )}
                       </div>
-                      <div>
-                        <Label>Speaker Role *</Label>
-                        <Input
-                          value={transcript.speakerRole}
-                          onChange={(e) =>
-                            updateTranscript(
-                              index,
-                              "speakerRole",
-                              e.target.value,
-                            )
-                          }
-                          placeholder="Senior Manager at Company"
-                        />
-                      </div>
-                      <div className="md:col-span-2">
-                        <Label>Speaker Email *</Label>
-                        <Input
-                          type="email"
-                          value={transcript.speakerEmail}
-                          onChange={(e) =>
-                            updateTranscript(
-                              index,
-                              "speakerEmail",
-                              e.target.value,
-                            )
-                          }
-                          placeholder="john.smith@company.com"
-                          required
-                        />
-                        <p className="text-xs text-gray-500 mt-1">
-                          Used to match transcripts across profiles (not shown
-                          publicly)
-                        </p>
-                      </div>
+
+                      {transcript.speakerName && (
+                        <div className="flex items-center gap-3">
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage
+                              src={transcript.speakerPhoto}
+                              alt={transcript.speakerName}
+                              className="object-cover object-center"
+                            />
+                            <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
+                              {getInitials(transcript.speakerName)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="font-semibold text-sm">
+                              {transcript.speakerName}
+                            </div>
+                            <div className="text-xs text-gray-600">
+                              {transcript.speakerRole}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {!transcript.speakerName && (
+                        <div className="text-sm text-gray-500 italic">
+                          No speaker information available
+                        </div>
+                      )}
                     </div>
 
                     {/* Speaker Photo Upload */}
