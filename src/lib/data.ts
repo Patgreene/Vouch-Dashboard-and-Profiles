@@ -128,6 +128,7 @@ export const sampleProfiles: Profile[] = [
     id: "alex-morgan",
     name: "Alex Morgan",
     title: "Full Stack Engineer",
+    email: "alex.morgan@spotify.com",
     company: "Spotify",
     linkedIn: "https://linkedin.com/in/alexmorgan",
     portfolio: "https://alexmorgan.dev",
@@ -161,6 +162,7 @@ export const sampleProfiles: Profile[] = [
         id: "emma-wilson-1",
         speakerName: "Emma Wilson",
         speakerRole: "Engineering Manager at Spotify",
+        speakerEmail: "emma.wilson@spotify.com",
         speakerPhoto:
           "https://cdn.builder.io/api/v1/image/assets%2F0ae055adc12b40c09e57a54de8259fb8%2F23d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8",
         interviewDate: "2024-01-25",
