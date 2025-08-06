@@ -217,14 +217,14 @@ export function DemoHints() {
                 className={`
                   group relative
                   w-8 h-8 rounded-full
-                  bg-gradient-to-r from-blue-500 to-blue-600
-                  hover:from-blue-600 hover:to-blue-700
+                  bg-gradient-to-r from-orange-500 to-orange-600
+                  hover:from-orange-600 hover:to-orange-700
                   text-white shadow-lg hover:shadow-xl
                   transition-all duration-200 ease-out
                   transform hover:scale-110
                   border-2 border-white
                   flex items-center justify-center
-                  ${isActive ? "ring-4 ring-blue-200" : ""}
+                  ${isActive ? "ring-4 ring-orange-200" : ""}
                 `}
               >
                 <HelpCircle className="w-4 h-4" />
