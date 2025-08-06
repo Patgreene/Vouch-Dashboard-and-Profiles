@@ -9,6 +9,7 @@ CREATE TABLE profiles (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
   title TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL,
   company TEXT,
   photo TEXT,
   linkedin TEXT,
@@ -25,6 +26,7 @@ CREATE TABLE transcripts (
   profile_id TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
   speaker_name TEXT NOT NULL,
   speaker_role TEXT NOT NULL,
+  speaker_email TEXT NOT NULL,
   speaker_photo TEXT,
   interview_date DATE,
   interviewed_by TEXT,
@@ -44,6 +46,8 @@ CREATE TABLE analytics (
 
 -- Indexes for better performance
 CREATE INDEX idx_transcripts_profile_id ON transcripts(profile_id);
+CREATE INDEX idx_transcripts_speaker_email ON transcripts(speaker_email);
+CREATE INDEX idx_profiles_email ON profiles(email);
 CREATE INDEX idx_analytics_profile_id ON analytics(profile_id);
 CREATE INDEX idx_analytics_event_type ON analytics(event_type);
 CREATE INDEX idx_analytics_created_at ON analytics(created_at);
