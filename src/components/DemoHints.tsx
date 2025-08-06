@@ -99,7 +99,9 @@ export function DemoHints() {
 
   // Check which tab is active
   const checkActiveTab = () => {
-    const receivedTab = document.querySelector('button[id*="trigger-received"]');
+    const receivedTab = Array.from(document.querySelectorAll('button[role="tab"]')).find(
+      tab => tab.textContent?.includes('Received')
+    );
     if (receivedTab) {
       const isActive = receivedTab.getAttribute('data-state') === 'active';
       setIsReceivedTabActive(isActive);
