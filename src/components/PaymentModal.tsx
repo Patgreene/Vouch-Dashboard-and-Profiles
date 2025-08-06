@@ -25,23 +25,7 @@ export function PaymentModal({
   console.log("PaymentModal rendered with isOpen:", isOpen, "transcriptId:", transcriptId);
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <div className="flex items-center justify-between">
-            <DialogTitle className="flex items-center gap-2">
-              <Shield className="w-5 h-5 text-blue-600" />
-              Verify Transcript
-            </DialogTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onClose}
-              className="h-6 w-6 p-0"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-        </DialogHeader>
+      <DialogContent className="sm:max-w-sm">
 
         <div className="text-center space-y-4 py-2">
           <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
