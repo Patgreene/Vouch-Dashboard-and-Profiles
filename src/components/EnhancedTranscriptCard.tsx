@@ -243,6 +243,11 @@ export function EnhancedTranscriptCard({
         </div>
       </Button>
 
+      {/* Verification Status positioned outside button to avoid nesting */}
+      <div className="absolute top-4 right-4 z-10">
+        <VerificationStatus />
+      </div>
+
       {expanded && (
         <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6 pt-0">
           <div
