@@ -379,18 +379,38 @@ export function TranscriptForm({
                   />
                 </div>
 
-                <div>
-                  <Label htmlFor="interviewDate">
-                    Interview Date (optional)
-                  </Label>
-                  <Input
-                    id="interviewDate"
-                    type="date"
-                    value={formData.interviewDate}
-                    onChange={(e) =>
-                      updateField("interviewDate", e.target.value)
-                    }
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="interviewDate">
+                      Interview Date (optional)
+                    </Label>
+                    <Input
+                      id="interviewDate"
+                      type="date"
+                      value={formData.interviewDate}
+                      onChange={(e) =>
+                        updateField("interviewDate", e.target.value)
+                      }
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="verificationStatus">Verification Status</Label>
+                    <Select
+                      value={formData.verificationStatus}
+                      onValueChange={(value: "verified" | "pending" | "not_started") =>
+                        updateField("verificationStatus", value)
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="verified">✅ Verified</SelectItem>
+                        <SelectItem value="pending">🕐 Pending</SelectItem>
+                        <SelectItem value="not_started">🛡️ Not Started</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </CardContent>
             </Card>
