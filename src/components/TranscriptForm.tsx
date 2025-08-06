@@ -21,7 +21,6 @@ interface FormData {
   voucheeEmail: string;
   content: string;
   interviewDate: string;
-  interviewedBy: string;
 }
 
 export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProps) {
@@ -30,7 +29,6 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
     voucheeEmail: "",
     content: "",
     interviewDate: "",
-    interviewedBy: "",
   });
 
   const [voucherProfile, setVoucherProfile] = useState<Profile | null>(null);
@@ -72,7 +70,7 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     setSubmitStatus("idle");
     setErrorMessage("");
 
@@ -113,7 +111,6 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
         speakerPhoto: voucherProfile.photo || "",
         content: formData.content.trim(),
         interviewDate: formData.interviewDate || "",
-        interviewedBy: formData.interviewedBy.trim() || "",
       };
 
       // Add transcript to vouchee's profile
@@ -124,7 +121,7 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
 
       // Save updated profile
       const success = await dataProvider.saveProfile(updatedVoucheeProfile);
-      
+
       if (success) {
         setSubmitStatus("success");
         setTimeout(() => {
@@ -336,25 +333,14 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="interviewDate">Interview Date (optional)</Label>
-                    <Input
-                      id="interviewDate"
-                      type="date"
-                      value={formData.interviewDate}
-                      onChange={(e) => updateField("interviewDate", e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="interviewedBy">Interviewed By (optional)</Label>
-                    <Input
-                      id="interviewedBy"
-                      value={formData.interviewedBy}
-                      onChange={(e) => updateField("interviewedBy", e.target.value)}
-                      placeholder="e.g., Sarah Johnson, HR Partner"
-                    />
-                  </div>
+                <div>
+                  <Label htmlFor="interviewDate">Interview Date (optional)</Label>
+                  <Input
+                    id="interviewDate"
+                    type="date"
+                    value={formData.interviewDate}
+                    onChange={(e) => updateField("interviewDate", e.target.value)}
+                  />
                 </div>
               </CardContent>
             </Card>
