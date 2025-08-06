@@ -996,6 +996,7 @@ export function ProfileForm({
               ))}
             </CardContent>
           </Card>
+          )}
 
           {/* Form Actions */}
           <div className="pt-6 border-t border-gray-200">
