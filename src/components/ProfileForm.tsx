@@ -477,6 +477,20 @@ export function ProfileForm({
                   />
                 </div>
                 <div>
+                  <Label htmlFor="email">Email Address *</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => updateBasicField("email", e.target.value)}
+                    placeholder="john.doe@company.com"
+                    required
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Used for identification (not shown publicly)
+                  </p>
+                </div>
+                <div>
                   <Label htmlFor="company">Company</Label>
                   <Input
                     id="company"
