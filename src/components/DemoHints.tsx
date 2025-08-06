@@ -19,7 +19,7 @@ const hints: Hint[] = [
     title: "Key Takeaways",
     description: "AI-extracted insights from all testimonials showing strengths, challenges, and working style.",
     targetSelector: '[data-loc*="KeyTakeaways"]',
-    offsetX: -30,
+    offsetX: -50,
     offsetY: 20,
     icon: FileText,
     action: () => {
@@ -33,7 +33,7 @@ const hints: Hint[] = [
     title: "Verification System",
     description: "Green badges have been professionally verified by Vouch. Companies or users can pay for verification.",
     targetSelector: 'button:has(svg.lucide-shield)',
-    offsetX: -10,
+    offsetX: -50,
     offsetY: -15,
     icon: Shield,
     action: () => {
@@ -47,7 +47,7 @@ const hints: Hint[] = [
     title: "Share Specific Quotes",
     description: "Select any text in testimonials to create shareable links to specific quotes.",
     targetSelector: '.space-y-4.sm\\:space-y-6 > div:first-child',
-    offsetX: 20,
+    offsetX: -50,
     offsetY: 100,
     icon: MousePointer,
   },
@@ -56,7 +56,7 @@ const hints: Hint[] = [
     title: "Two-Way Testimonials",
     description: "See who Vouched for Lara and vice versa - complete picture.",
     targetSelector: '[role="tablist"]',
-    offsetX: 120,
+    offsetX: -50,
     offsetY: 10,
     icon: Users,
     action: () => {
