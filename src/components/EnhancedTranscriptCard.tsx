@@ -123,21 +123,27 @@ export function EnhancedTranscriptCard({
   };
 
   return (
-    <Card className="relative overflow-hidden transition-all duration-200 hover:shadow-md max-w-full">
-      <Button
-        variant="ghost"
-        onClick={toggle}
-        className="w-full justify-between p-4 sm:p-6 h-auto text-left hover:bg-gray-50 transition-colors max-w-full"
-        style={{
-          whiteSpace: "normal",
-          wordBreak: "break-word",
-          overflowWrap: "anywhere",
-        }}
-      >
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between w-full gap-3 sm:gap-4">
-          {/* Main Content Area */}
-          <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0 overflow-hidden">
-            <Avatar className="h-10 w-10 sm:h-12 sm:w-12 mt-1 shrink-0">
+    <div className="space-y-2">
+      {/* Verification Status - positioned above the transcript card */}
+      <div className="flex justify-start pl-1">
+        <VerificationStatus />
+      </div>
+
+      <Card className="overflow-hidden transition-all duration-200 hover:shadow-md max-w-full">
+        <Button
+          variant="ghost"
+          onClick={toggle}
+          className="w-full justify-between p-4 sm:p-6 h-auto text-left hover:bg-gray-50 transition-colors max-w-full"
+          style={{
+            whiteSpace: "normal",
+            wordBreak: "break-word",
+            overflowWrap: "anywhere",
+          }}
+        >
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between w-full gap-3 sm:gap-4">
+            {/* Main Content Area */}
+            <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0 overflow-hidden">
+              <Avatar className="h-10 w-10 sm:h-12 sm:w-12 mt-1 shrink-0">
               <AvatarImage
                 src={transcript.speakerPhoto}
                 alt={transcript.speakerName}
