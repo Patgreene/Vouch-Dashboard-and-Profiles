@@ -51,7 +51,7 @@ export default function Profile() {
           setProfile(profileData);
 
           // Load transcripts given by this person (where they are the speaker)
-          const givenData = await dataProvider.getGivenTranscripts(profileData.name);
+          const givenData = await dataProvider.getGivenTranscripts(profileData.email);
           setGivenTranscripts(givenData);
         } else {
           setProfile(null);
