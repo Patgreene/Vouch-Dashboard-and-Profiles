@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { AlertCircle, CheckCircle, Mail, Database, Save, Edit } from "lucide-react";
 import { dataProvider } from "@/lib/dataProvider";
 import { Profile } from "@/lib/data";
+import { runSafeEmailMigration } from "@/utils/safeEmailMigration";
 
 interface EmailMappings {
   profiles: Record<string, string>;
@@ -114,78 +115,32 @@ export function EmailMigrationButton() {
     setMigrationResult(null);
 
     try {
-      const errors: string[] = [];
-      let updatedProfiles = 0;
+      console.log("🔄 Starting safe email migration with mappings:", {
+        profiles: emailMappings.profiles,
+        speakers: emailMappings.speakers
+      });
 
-      for (const profile of profiles) {
-        let needsUpdate = false;
-        let updatedProfile = { ...profile };
-
-        // 1. Add email to profile if missing
-        if (!profile.email || profile.email === "") {
-          const mappedEmail = emailMappings.profiles[profile.id];
-          if (mappedEmail && mappedEmail.trim()) {
-            updatedProfile.email = mappedEmail.trim();
-            needsUpdate = true;
-            console.log(`✅ Added email ${mappedEmail} to profile ${profile.name}`);
-          } else {
-            errors.push(`❌ No email provided for profile: ${profile.name} (ID: ${profile.id})`);
-            continue;
-          }
-        }
-
-        // 2. Add speaker emails to transcripts if missing
-        updatedProfile.transcripts = profile.transcripts.map(transcript => {
-          if (!transcript.speakerEmail || transcript.speakerEmail === "") {
-            const mappedEmail = emailMappings.speakers[transcript.speakerName];
-            if (mappedEmail && mappedEmail.trim()) {
-              console.log(`✅ Added speaker email ${mappedEmail} for ${transcript.speakerName}`);
-              needsUpdate = true;
-              return { ...transcript, speakerEmail: mappedEmail.trim() };
-            } else {
-              errors.push(`❌ No email provided for speaker: ${transcript.speakerName}`);
-              return transcript;
-            }
-          }
-          return transcript;
-        });
-
-        // Save updated profile if changes were made
-        if (needsUpdate) {
-          try {
-            console.log(`🔄 Attempting to save profile: ${profile.name}`, updatedProfile);
-            const success = await dataProvider.saveProfile(updatedProfile);
-            if (success) {
-              updatedProfiles++;
-              console.log(`✅ Updated profile: ${profile.name}`);
-            } else {
-              console.error(`❌ Save returned false for profile: ${profile.name}`);
-              errors.push(`❌ Failed to save profile: ${profile.name} (save returned false)`);
-            }
-          } catch (error) {
-            console.error(`❌ Exception saving profile ${profile.name}:`, error);
-            errors.push(`❌ Error saving profile ${profile.name}: ${error instanceof Error ? error.message : 'Unknown error'}`);
-          }
-        }
-      }
-
-      const result: MigrationResult = {
-        success: errors.length === 0,
-        message: `Migration completed. Updated ${updatedProfiles} profiles.`,
-        updatedProfiles,
-        errors
-      };
+      const result = await runSafeEmailMigration(
+        emailMappings.profiles,
+        emailMappings.speakers
+      );
 
       setMigrationResult(result);
 
       // Reload profiles to reflect changes
-      if (updatedProfiles > 0) {
-        const refreshedProfiles = await dataProvider.getAllProfiles();
-        setProfiles(refreshedProfiles);
+      if (result.updatedProfiles > 0) {
+        try {
+          const refreshedProfiles = await dataProvider.getAllProfiles();
+          setProfiles(refreshedProfiles);
+          console.log("✅ Refreshed profiles after migration");
+        } catch (refreshError) {
+          console.error("⚠️ Failed to refresh profiles:", refreshError);
+        }
       }
 
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      console.error("❌ Migration failed:", error);
       setMigrationResult({
         success: false,
         message: `Migration failed: ${errorMessage}`,
