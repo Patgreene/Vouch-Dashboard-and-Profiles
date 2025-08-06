@@ -50,17 +50,8 @@ export default function Profile() {
           setProfile(profileData);
 
           // Load transcripts given by this person (where they are the speaker)
-          const allProfiles = await dataProvider.getAllProfiles();
-          const given: Transcript[] = [];
-
-          allProfiles.forEach(otherProfile => {
-            otherProfile.transcripts.forEach(transcript => {
-              if (transcript.speakerName === profileData.name) {
-                given.push(transcript);
-              }
-            });
-          });
-
+          const givenData = await dataProvider.getGivenTranscripts(profileData.name);
+          const given = givenData.map(item => item.transcript);
           setGivenTranscripts(given);
         } else {
           setProfile(null);
