@@ -47,16 +47,20 @@ export default function Profile() {
 
       try {
         setLoading(true);
+
+        // Load profile first
         const profileData = await dataProvider.getProfileById(id);
 
         if (profileData) {
           setProfile(profileData);
 
-          // Load transcripts given by this person (where they are the speaker)
-          const givenData = await dataProvider.getGivenTranscripts(
-            profileData.email,
-          );
-          setGivenTranscripts(givenData);
+          // Load given transcripts in parallel (non-blocking)
+          dataProvider.getGivenTranscripts(profileData.email)
+            .then(setGivenTranscripts)
+            .catch((error) => {
+              console.error("Error loading given transcripts:", error);
+              setGivenTranscripts([]);
+            });
         } else {
           setProfile(null);
         }
