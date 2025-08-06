@@ -107,17 +107,15 @@ export function EnhancedTranscriptCard({
             variant="outline"
             size="sm"
             className="h-6 px-2 text-xs text-blue-600 border-blue-200 hover:bg-blue-50"
-            onClick={(e) => {
-              console.log("=== VERIFY BUTTON CLICKED ===");
+            onMouseUp={(e) => {
+              console.log("=== VERIFY BUTTON MOUSE UP - OPENING MODAL ===");
               e.preventDefault();
               e.stopPropagation();
               console.log("Transcript ID:", transcript.id);
               console.log("Before state change - showPaymentModal:", showPaymentModal);
-              setShowPaymentModal(!showPaymentModal); // Toggle for testing
-              console.log("After setting to:", !showPaymentModal);
+              setShowPaymentModal(true);
+              console.log("Modal should now be open!");
             }}
-            onMouseDown={() => console.log("Mouse down on verify button")}
-            onMouseUp={() => console.log("Mouse up on verify button")}
           >
             <Shield className="h-3 w-3 mr-1" />
             Verify
