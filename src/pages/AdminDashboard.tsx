@@ -472,9 +472,7 @@ export default function AdminDashboard() {
                     );
                   }
 
-                  const profileStats = liveAnalytics.profileStats.find(
-                    (stat: any) => stat.profileId === profile.id,
-                  );
+                  // Profile stats removed for faster loading
 
                   return (
                     <Card
@@ -531,15 +529,10 @@ export default function AdminDashboard() {
                               </div>
                             </div>
 
-                            {/* Stats */}
+                            {/* Quick Info */}
                             <div className="flex gap-4 text-xs text-gray-500 mb-3">
-                              <span>Views: {profileStats?.pageViews || 0}</span>
-                              <span>
-                                Quotes: {profileStats?.quoteViews || 0}
-                              </span>
-                              <span>
-                                Visitors: {profileStats?.uniqueVisitors || 0}
-                              </span>
+                              <span>Transcripts: {profile.transcripts?.length || 0}</span>
+                              <span>Email: {profile.email || 'None'}</span>
                             </div>
 
                             {/* Actions */}
