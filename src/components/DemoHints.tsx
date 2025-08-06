@@ -72,6 +72,7 @@ export function DemoHints() {
   const [completedHints, setCompletedHints] = useState<Set<string>>(new Set());
   const [hintPositions, setHintPositions] = useState<Record<string, { x: number; y: number }>>({});
   const [showTutorial, setShowTutorial] = useState(false);
+  const [isReceivedTabActive, setIsReceivedTabActive] = useState(true);
 
   // Calculate positions based on target elements
   const updatePositions = () => {
