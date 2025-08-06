@@ -202,6 +202,11 @@ export function EnhancedTranscriptCard({
 
           {/* Right side - Metadata and expand icon */}
           <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 sm:gap-2 shrink-0">
+            {/* Verification Status */}
+            <div className="flex items-center">
+              <VerificationStatus />
+            </div>
+
             {/* Interview Metadata */}
             {transcript.interviewDate && (
               <div className="flex flex-row sm:flex-col items-center sm:items-end gap-1 sm:gap-1 text-xs text-gray-400">
