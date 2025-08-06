@@ -195,8 +195,6 @@ export default function DemoProfile() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-
-
       {/* Profile Header */}
       <ProfileHeader profile={demoProfile} />
 
