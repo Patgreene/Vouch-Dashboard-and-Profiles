@@ -31,7 +31,7 @@ const hints: Hint[] = [
   {
     id: "verification",
     title: "Verification System",
-    description: "Green badges show professionally verified testimonials. Others can be verified for $19.",
+    description: "Green badges have been professionally verified by Vouch. Companies or users can pay for verification.",
     targetSelector: 'button:has(svg.lucide-shield)',
     offsetX: -10,
     offsetY: -15,
