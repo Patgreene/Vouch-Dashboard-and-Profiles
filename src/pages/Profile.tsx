@@ -24,7 +24,9 @@ export default function Profile() {
   const [expandedTranscripts, setExpandedTranscripts] = useState<Set<string>>(
     new Set(),
   );
-  const [givenTranscripts, setGivenTranscripts] = useState<Array<{ transcript: Transcript; recipientProfile: Profile }>>([]);
+  const [givenTranscripts, setGivenTranscripts] = useState<
+    Array<{ transcript: Transcript; recipientProfile: Profile }>
+  >([]);
 
   // All hooks must be called before any conditional logic
   const {
@@ -51,7 +53,9 @@ export default function Profile() {
           setProfile(profileData);
 
           // Load transcripts given by this person (where they are the speaker)
-          const givenData = await dataProvider.getGivenTranscripts(profileData.email);
+          const givenData = await dataProvider.getGivenTranscripts(
+            profileData.email,
+          );
           setGivenTranscripts(givenData);
         } else {
           setProfile(null);

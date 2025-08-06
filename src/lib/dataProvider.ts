@@ -49,14 +49,17 @@ export class DataProvider {
 
   async getGivenTranscripts(speakerEmail: string) {
     const allProfiles = await this.getAllProfiles();
-    const givenTranscripts: Array<{ transcript: any; recipientProfile: Profile }> = [];
+    const givenTranscripts: Array<{
+      transcript: any;
+      recipientProfile: Profile;
+    }> = [];
 
-    allProfiles.forEach(profile => {
-      profile.transcripts.forEach(transcript => {
+    allProfiles.forEach((profile) => {
+      profile.transcripts.forEach((transcript) => {
         if (transcript.speakerEmail === speakerEmail) {
           givenTranscripts.push({
             transcript,
-            recipientProfile: profile
+            recipientProfile: profile,
           });
         }
       });

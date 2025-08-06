@@ -99,20 +99,22 @@ export function ProfileForm({
         keyTakeaways: {
           strengths: editingProfile.keyTakeaways?.strengths || [],
           weaknesses: editingProfile.keyTakeaways?.weaknesses || [],
-          communicationStyle: editingProfile.keyTakeaways?.communicationStyle || [],
-          waysToBringOutBest: editingProfile.keyTakeaways?.waysToBringOutBest || [],
+          communicationStyle:
+            editingProfile.keyTakeaways?.communicationStyle || [],
+          waysToBringOutBest:
+            editingProfile.keyTakeaways?.waysToBringOutBest || [],
           customTitle1: editingProfile.keyTakeaways?.customTitle1 || "",
           customTitle2: editingProfile.keyTakeaways?.customTitle2 || "",
         },
         transcripts: editingProfile.transcripts?.length
-          ? editingProfile.transcripts.map(t => ({
+          ? editingProfile.transcripts.map((t) => ({
               id: t.id || "",
               speakerName: t.speakerName || "",
               speakerRole: t.speakerRole || "",
               speakerEmail: t.speakerEmail || "",
               speakerPhoto: t.speakerPhoto || "",
               content: t.content || "",
-              interviewDate: t.interviewDate || ""
+              interviewDate: t.interviewDate || "",
             }))
           : initialFormData.transcripts,
       };
@@ -256,7 +258,11 @@ export function ProfileForm({
     let validTranscripts = [];
     if (mode === "full") {
       validTranscripts = formData.transcripts.filter(
-        (t) => t.speakerName.trim() && t.speakerRole.trim() && t.speakerEmail.trim() && t.content.trim(),
+        (t) =>
+          t.speakerName.trim() &&
+          t.speakerRole.trim() &&
+          t.speakerEmail.trim() &&
+          t.content.trim(),
       );
 
       if (validTranscripts.length === 0) {
@@ -271,33 +277,47 @@ export function ProfileForm({
 
     try {
       // Prepare final transcript data
-      const finalTranscripts = mode === "full" ? validTranscripts.map((transcript) => ({
-        ...transcript,
-        id: transcript.id || `transcript-${Date.now()}-${Math.random()}`,
-      })) : [];
+      const finalTranscripts =
+        mode === "full"
+          ? validTranscripts.map((transcript) => ({
+              ...transcript,
+              id: transcript.id || `transcript-${Date.now()}-${Math.random()}`,
+            }))
+          : [];
 
       const profile: Profile = {
         ...formData,
         // Ensure ID is set (use existing ID for edits, or generated ID for new profiles)
         id: editingProfile ? editingProfile.id : formData.id,
         transcripts: finalTranscripts,
-        keyTakeaways: mode === "full" ? {
-          strengths: formData.keyTakeaways.strengths.filter((s) => s.trim()),
-          weaknesses: formData.keyTakeaways.weaknesses.filter((w) => w.trim()),
-          communicationStyle: formData.keyTakeaways.communicationStyle.filter(
-            (c) => c.trim(),
-          ),
-          waysToBringOutBest: formData.keyTakeaways.waysToBringOutBest.filter(
-            (w) => w.trim(),
-          ),
-          customTitle1: formData.keyTakeaways.customTitle1?.trim() || undefined,
-          customTitle2: formData.keyTakeaways.customTitle2?.trim() || undefined,
-        } : {
-          strengths: [],
-          weaknesses: [],
-          communicationStyle: [],
-          waysToBringOutBest: [],
-        },
+        keyTakeaways:
+          mode === "full"
+            ? {
+                strengths: formData.keyTakeaways.strengths.filter((s) =>
+                  s.trim(),
+                ),
+                weaknesses: formData.keyTakeaways.weaknesses.filter((w) =>
+                  w.trim(),
+                ),
+                communicationStyle:
+                  formData.keyTakeaways.communicationStyle.filter((c) =>
+                    c.trim(),
+                  ),
+                waysToBringOutBest:
+                  formData.keyTakeaways.waysToBringOutBest.filter((w) =>
+                    w.trim(),
+                  ),
+                customTitle1:
+                  formData.keyTakeaways.customTitle1?.trim() || undefined,
+                customTitle2:
+                  formData.keyTakeaways.customTitle2?.trim() || undefined,
+              }
+            : {
+                strengths: [],
+                weaknesses: [],
+                communicationStyle: [],
+                waysToBringOutBest: [],
+              },
       };
 
       // Call the onSave function and wait for it
@@ -572,407 +592,435 @@ export function ProfileForm({
           {/* Key Takeaways - Only show in full mode */}
           {mode === "full" && (
             <Card>
-            <CardHeader>
-              <CardTitle>Key Takeaways</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Custom Section Titles */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+              <CardHeader>
+                <CardTitle>Key Takeaways</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Custom Section Titles */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <Label
+                      htmlFor="customTitle1"
+                      className="text-sm font-medium"
+                    >
+                      Section 3 Title (default: "Custom Section 1")
+                    </Label>
+                    <Input
+                      id="customTitle1"
+                      value={formData.keyTakeaways.customTitle1 || ""}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          keyTakeaways: {
+                            ...prev.keyTakeaways,
+                            customTitle1: e.target.value,
+                          },
+                        }))
+                      }
+                      placeholder="e.g., Communication Style, Leadership, Technical Skills"
+                    />
+                  </div>
+                  <div>
+                    <Label
+                      htmlFor="customTitle2"
+                      className="text-sm font-medium"
+                    >
+                      Section 4 Title (default: "Custom Section 2")
+                    </Label>
+                    <Input
+                      id="customTitle2"
+                      value={formData.keyTakeaways.customTitle2 || ""}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          keyTakeaways: {
+                            ...prev.keyTakeaways,
+                            customTitle2: e.target.value,
+                          },
+                        }))
+                      }
+                      placeholder="e.g., Ways to Bring Out Their Best, Work Style"
+                    />
+                  </div>
+                </div>
+
+                {/* Fixed Sections */}
                 <div>
-                  <Label htmlFor="customTitle1" className="text-sm font-medium">
-                    Section 3 Title (default: "Custom Section 1")
-                  </Label>
-                  <Input
-                    id="customTitle1"
-                    value={formData.keyTakeaways.customTitle1 || ""}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        keyTakeaways: {
-                          ...prev.keyTakeaways,
-                          customTitle1: e.target.value,
-                        },
-                      }))
-                    }
-                    placeholder="e.g., Communication Style, Leadership, Technical Skills"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="customTitle2" className="text-sm font-medium">
-                    Section 4 Title (default: "Custom Section 2")
-                  </Label>
-                  <Input
-                    id="customTitle2"
-                    value={formData.keyTakeaways.customTitle2 || ""}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        keyTakeaways: {
-                          ...prev.keyTakeaways,
-                          customTitle2: e.target.value,
-                        },
-                      }))
-                    }
-                    placeholder="e.g., Ways to Bring Out Their Best, Work Style"
-                  />
-                </div>
-              </div>
-
-              {/* Fixed Sections */}
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <Label className="text-base font-semibold">Strengths</Label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => addTakeawayItem("strengths")}
-                  >
-                    <Plus className="h-4 w-4 mr-1" />
-                    Add
-                  </Button>
-                </div>
-                <div className="space-y-2">
-                  {formData.keyTakeaways.strengths.map((item, index) => (
-                    <div key={index} className="flex gap-2">
-                      <Textarea
-                        value={item}
-                        onChange={(e) =>
-                          updateTakeawaySection(
-                            "strengths",
-                            index,
-                            e.target.value,
-                          )
-                        }
-                        placeholder="Enter strength..."
-                      />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeTakeawayItem("strengths", index)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <Label className="text-base font-semibold">Challenges</Label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => addTakeawayItem("weaknesses")}
-                  >
-                    <Plus className="h-4 w-4 mr-1" />
-                    Add
-                  </Button>
-                </div>
-                <div className="space-y-2">
-                  {formData.keyTakeaways.weaknesses.map((item, index) => (
-                    <div key={index} className="flex gap-2">
-                      <Textarea
-                        value={item}
-                        onChange={(e) =>
-                          updateTakeawaySection(
-                            "weaknesses",
-                            index,
-                            e.target.value,
-                          )
-                        }
-                        placeholder="Enter challenge..."
-                      />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeTakeawayItem("weaknesses", index)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <Label className="text-base font-semibold">
-                    {formData.keyTakeaways.customTitle1 || "Custom Section 1"}
-                  </Label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => addTakeawayItem("communicationStyle")}
-                  >
-                    <Plus className="h-4 w-4 mr-1" />
-                    Add
-                  </Button>
-                </div>
-                <div className="space-y-2">
-                  {formData.keyTakeaways.communicationStyle.map(
-                    (item, index) => (
+                  <div className="flex items-center justify-between mb-3">
+                    <Label className="text-base font-semibold">Strengths</Label>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => addTakeawayItem("strengths")}
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add
+                    </Button>
+                  </div>
+                  <div className="space-y-2">
+                    {formData.keyTakeaways.strengths.map((item, index) => (
                       <div key={index} className="flex gap-2">
                         <Textarea
                           value={item}
                           onChange={(e) =>
                             updateTakeawaySection(
-                              "communicationStyle",
+                              "strengths",
                               index,
                               e.target.value,
                             )
                           }
-                          placeholder={`Enter ${formData.keyTakeaways.customTitle1 || "custom section 1"} item...`}
+                          placeholder="Enter strength..."
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => removeTakeawayItem("strengths", index)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <Label className="text-base font-semibold">
+                      Challenges
+                    </Label>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => addTakeawayItem("weaknesses")}
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add
+                    </Button>
+                  </div>
+                  <div className="space-y-2">
+                    {formData.keyTakeaways.weaknesses.map((item, index) => (
+                      <div key={index} className="flex gap-2">
+                        <Textarea
+                          value={item}
+                          onChange={(e) =>
+                            updateTakeawaySection(
+                              "weaknesses",
+                              index,
+                              e.target.value,
+                            )
+                          }
+                          placeholder="Enter challenge..."
                         />
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
                           onClick={() =>
-                            removeTakeawayItem("communicationStyle", index)
+                            removeTakeawayItem("weaknesses", index)
                           }
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
-                    ),
-                  )}
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <Label className="text-base font-semibold">
-                    {formData.keyTakeaways.customTitle2 || "Custom Section 2"}
-                  </Label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => addTakeawayItem("waysToBringOutBest")}
-                  >
-                    <Plus className="h-4 w-4 mr-1" />
-                    Add
-                  </Button>
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <Label className="text-base font-semibold">
+                      {formData.keyTakeaways.customTitle1 || "Custom Section 1"}
+                    </Label>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => addTakeawayItem("communicationStyle")}
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add
+                    </Button>
+                  </div>
+                  <div className="space-y-2">
+                    {formData.keyTakeaways.communicationStyle.map(
+                      (item, index) => (
+                        <div key={index} className="flex gap-2">
+                          <Textarea
+                            value={item}
+                            onChange={(e) =>
+                              updateTakeawaySection(
+                                "communicationStyle",
+                                index,
+                                e.target.value,
+                              )
+                            }
+                            placeholder={`Enter ${formData.keyTakeaways.customTitle1 || "custom section 1"} item...`}
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              removeTakeawayItem("communicationStyle", index)
+                            }
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ),
+                    )}
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  {formData.keyTakeaways.waysToBringOutBest.map(
-                    (item, index) => (
-                      <div key={index} className="flex gap-2">
-                        <Textarea
-                          value={item}
-                          onChange={(e) =>
-                            updateTakeawaySection(
-                              "waysToBringOutBest",
-                              index,
-                              e.target.value,
-                            )
-                          }
-                          placeholder={`Enter ${formData.keyTakeaways.customTitle2 || "custom section 2"} item...`}
-                        />
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() =>
-                            removeTakeawayItem("waysToBringOutBest", index)
-                          }
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ),
-                  )}
+
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <Label className="text-base font-semibold">
+                      {formData.keyTakeaways.customTitle2 || "Custom Section 2"}
+                    </Label>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => addTakeawayItem("waysToBringOutBest")}
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add
+                    </Button>
+                  </div>
+                  <div className="space-y-2">
+                    {formData.keyTakeaways.waysToBringOutBest.map(
+                      (item, index) => (
+                        <div key={index} className="flex gap-2">
+                          <Textarea
+                            value={item}
+                            onChange={(e) =>
+                              updateTakeawaySection(
+                                "waysToBringOutBest",
+                                index,
+                                e.target.value,
+                              )
+                            }
+                            placeholder={`Enter ${formData.keyTakeaways.customTitle2 || "custom section 2"} item...`}
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              removeTakeawayItem("waysToBringOutBest", index)
+                            }
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ),
+                    )}
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
           )}
 
           {/* Transcripts - Only show in full mode */}
           {mode === "full" && (
             <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle>Reference Transcripts</CardTitle>
-                <Button type="button" variant="outline" onClick={addTranscript}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Transcript
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {formData.transcripts.map((transcript, index) => (
-                <div
-                  key={index}
-                  className="border border-gray-200 rounded-lg p-4 space-y-4"
-                >
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-semibold">
-                      Transcript {index + 1}
-                      {transcript.speakerName && ` - ${transcript.speakerName}`}
-                    </h4>
-                    {formData.transcripts.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeTranscript(index)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label>Speaker Name *</Label>
-                      <Input
-                        value={transcript.speakerName}
-                        onChange={(e) =>
-                          updateTranscript(index, "speakerName", e.target.value)
-                        }
-                        placeholder="John Smith"
-                      />
-                    </div>
-                    <div>
-                      <Label>Speaker Role *</Label>
-                      <Input
-                        value={transcript.speakerRole}
-                        onChange={(e) =>
-                          updateTranscript(index, "speakerRole", e.target.value)
-                        }
-                        placeholder="Senior Manager at Company"
-                      />
-                    </div>
-                    <div className="md:col-span-2">
-                      <Label>Speaker Email *</Label>
-                      <Input
-                        type="email"
-                        value={transcript.speakerEmail}
-                        onChange={(e) =>
-                          updateTranscript(index, "speakerEmail", e.target.value)
-                        }
-                        placeholder="john.smith@company.com"
-                        required
-                      />
-                      <p className="text-xs text-gray-500 mt-1">
-                        Used to match transcripts across profiles (not shown publicly)
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Speaker Photo Upload */}
-                  <div>
-                    <Label>Speaker Photo</Label>
-                    <div className="flex items-center gap-4">
-                      {transcript.speakerPhoto ? (
-                        <Avatar className="h-12 w-12">
-                          <AvatarImage
-                            src={transcript.speakerPhoto}
-                            alt={transcript.speakerName}
-                            className="object-cover object-center"
-                          />
-                          <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
-                            {getInitials(transcript.speakerName)}
-                          </AvatarFallback>
-                        </Avatar>
-                      ) : (
-                        <div className="h-12 w-12 bg-gray-100 rounded-full flex items-center justify-center">
-                          <User className="h-6 w-6 text-gray-400" />
-                        </div>
-                      )}
-                      <div className="flex-1">
-                        <Input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleSpeakerPhotoUpload(e, index)}
-                          className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-vouch-50 file:text-vouch-700 hover:file:bg-vouch-100"
-                        />
-                      </div>
-                      {transcript.speakerPhoto && (
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Reference Transcripts</CardTitle>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={addTranscript}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Transcript
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {formData.transcripts.map((transcript, index) => (
+                  <div
+                    key={index}
+                    className="border border-gray-200 rounded-lg p-4 space-y-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold">
+                        Transcript {index + 1}
+                        {transcript.speakerName &&
+                          ` - ${transcript.speakerName}`}
+                      </h4>
+                      {formData.transcripts.length > 1 && (
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={() =>
-                            updateTranscript(index, "speakerPhoto", "")
-                          }
+                          onClick={() => removeTranscript(index)}
                         >
-                          Remove
+                          <Trash2 className="h-4 w-4" />
                         </Button>
                       )}
                     </div>
-                  </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label>Speaker Name *</Label>
+                        <Input
+                          value={transcript.speakerName}
+                          onChange={(e) =>
+                            updateTranscript(
+                              index,
+                              "speakerName",
+                              e.target.value,
+                            )
+                          }
+                          placeholder="John Smith"
+                        />
+                      </div>
+                      <div>
+                        <Label>Speaker Role *</Label>
+                        <Input
+                          value={transcript.speakerRole}
+                          onChange={(e) =>
+                            updateTranscript(
+                              index,
+                              "speakerRole",
+                              e.target.value,
+                            )
+                          }
+                          placeholder="Senior Manager at Company"
+                        />
+                      </div>
+                      <div className="md:col-span-2">
+                        <Label>Speaker Email *</Label>
+                        <Input
+                          type="email"
+                          value={transcript.speakerEmail}
+                          onChange={(e) =>
+                            updateTranscript(
+                              index,
+                              "speakerEmail",
+                              e.target.value,
+                            )
+                          }
+                          placeholder="john.smith@company.com"
+                          required
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Used to match transcripts across profiles (not shown
+                          publicly)
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Speaker Photo Upload */}
                     <div>
-                      <Label>Interview Date</Label>
-                      <Input
-                        type="date"
-                        value={transcript.interviewDate}
+                      <Label>Speaker Photo</Label>
+                      <div className="flex items-center gap-4">
+                        {transcript.speakerPhoto ? (
+                          <Avatar className="h-12 w-12">
+                            <AvatarImage
+                              src={transcript.speakerPhoto}
+                              alt={transcript.speakerName}
+                              className="object-cover object-center"
+                            />
+                            <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
+                              {getInitials(transcript.speakerName)}
+                            </AvatarFallback>
+                          </Avatar>
+                        ) : (
+                          <div className="h-12 w-12 bg-gray-100 rounded-full flex items-center justify-center">
+                            <User className="h-6 w-6 text-gray-400" />
+                          </div>
+                        )}
+                        <div className="flex-1">
+                          <Input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleSpeakerPhotoUpload(e, index)}
+                            className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-vouch-50 file:text-vouch-700 hover:file:bg-vouch-100"
+                          />
+                        </div>
+                        {transcript.speakerPhoto && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              updateTranscript(index, "speakerPhoto", "")
+                            }
+                          >
+                            Remove
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label>Interview Date</Label>
+                        <Input
+                          type="date"
+                          value={transcript.interviewDate}
+                          onChange={(e) =>
+                            updateTranscript(
+                              index,
+                              "interviewDate",
+                              e.target.value,
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label>Transcript Content *</Label>
+                      <Textarea
+                        value={transcript.content}
                         onChange={(e) =>
-                          updateTranscript(
-                            index,
-                            "interviewDate",
-                            e.target.value,
-                          )
+                          updateTranscript(index, "content", e.target.value)
                         }
+                        placeholder="Enter the full transcript content here. Use double line breaks to separate paragraphs..."
+                        className="min-h-[200px]"
                       />
                     </div>
-                  </div>
-                  <div>
-                    <Label>Transcript Content *</Label>
-                    <Textarea
-                      value={transcript.content}
-                      onChange={(e) =>
-                        updateTranscript(index, "content", e.target.value)
-                      }
-                      placeholder="Enter the full transcript content here. Use double line breaks to separate paragraphs..."
-                      className="min-h-[200px]"
-                    />
-                  </div>
 
-                  {/* Preview */}
-                  {transcript.speakerName && (
-                    <div className="p-3 bg-gray-50 rounded-lg">
-                      <div className="flex items-center gap-3 mb-2">
-                        <Avatar className="h-10 w-10">
-                          <AvatarImage
-                            src={transcript.speakerPhoto}
-                            alt={transcript.speakerName}
-                            className="object-cover object-center"
-                          />
-                          <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
-                            {getInitials(transcript.speakerName)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <div className="font-semibold text-sm">
-                            {transcript.speakerName}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            {transcript.speakerRole}
+                    {/* Preview */}
+                    {transcript.speakerName && (
+                      <div className="p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-3 mb-2">
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage
+                              src={transcript.speakerPhoto}
+                              alt={transcript.speakerName}
+                              className="object-cover object-center"
+                            />
+                            <AvatarFallback className="text-xs font-semibold bg-vouch-100 text-vouch-600">
+                              {getInitials(transcript.speakerName)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="font-semibold text-sm">
+                              {transcript.speakerName}
+                            </div>
+                            <div className="text-xs text-gray-600">
+                              {transcript.speakerRole}
+                            </div>
                           </div>
                         </div>
+                        {transcript.content && (
+                          <p className="text-sm text-gray-700 leading-relaxed">
+                            {transcript.content.substring(0, 200)}
+                            {transcript.content.length > 200 && "..."}
+                          </p>
+                        )}
                       </div>
-                      {transcript.content && (
-                        <p className="text-sm text-gray-700 leading-relaxed">
-                          {transcript.content.substring(0, 200)}
-                          {transcript.content.length > 200 && "..."}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+                    )}
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
           )}
 
           {/* Form Actions */}

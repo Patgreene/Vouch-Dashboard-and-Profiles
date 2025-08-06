@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { X, Save, User, MessageSquare, CheckCircle, AlertCircle } from "lucide-react";
+import {
+  X,
+  Save,
+  User,
+  MessageSquare,
+  CheckCircle,
+  AlertCircle,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,7 +30,11 @@ interface FormData {
   interviewDate: string;
 }
 
-export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProps) {
+export function TranscriptForm({
+  onClose,
+  onSave,
+  profiles,
+}: TranscriptFormProps) {
   const [formData, setFormData] = useState<FormData>({
     voucherEmail: "",
     voucheeEmail: "",
@@ -34,13 +45,18 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
   const [voucherProfile, setVoucherProfile] = useState<Profile | null>(null);
   const [voucheeProfile, setVoucheeProfile] = useState<Profile | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
   // Find profiles by email when emails change
   useEffect(() => {
     if (formData.voucherEmail.trim()) {
-      const profile = profiles.find(p => p.email.toLowerCase() === formData.voucherEmail.toLowerCase().trim());
+      const profile = profiles.find(
+        (p) =>
+          p.email.toLowerCase() === formData.voucherEmail.toLowerCase().trim(),
+      );
       setVoucherProfile(profile || null);
     } else {
       setVoucherProfile(null);
@@ -49,7 +65,10 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
 
   useEffect(() => {
     if (formData.voucheeEmail.trim()) {
-      const profile = profiles.find(p => p.email.toLowerCase() === formData.voucheeEmail.toLowerCase().trim());
+      const profile = profiles.find(
+        (p) =>
+          p.email.toLowerCase() === formData.voucheeEmail.toLowerCase().trim(),
+      );
       setVoucheeProfile(profile || null);
     } else {
       setVoucheeProfile(null);
@@ -57,7 +76,7 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
   }, [formData.voucheeEmail, profiles]);
 
   const updateField = (field: keyof FormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const getInitials = (name: string) => {
@@ -75,9 +94,15 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
     setErrorMessage("");
 
     // Validation
-    if (!formData.voucherEmail.trim() || !formData.voucheeEmail.trim() || !formData.content.trim()) {
+    if (
+      !formData.voucherEmail.trim() ||
+      !formData.voucheeEmail.trim() ||
+      !formData.content.trim()
+    ) {
       setSubmitStatus("error");
-      setErrorMessage("Please fill in all required fields (Voucher Email, Vouchee Email, and Content).");
+      setErrorMessage(
+        "Please fill in all required fields (Voucher Email, Vouchee Email, and Content).",
+      );
       return;
     }
 
@@ -93,7 +118,10 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
       return;
     }
 
-    if (formData.voucherEmail.toLowerCase() === formData.voucheeEmail.toLowerCase()) {
+    if (
+      formData.voucherEmail.toLowerCase() ===
+      formData.voucheeEmail.toLowerCase()
+    ) {
       setSubmitStatus("error");
       setErrorMessage("Voucher and Vouchee must be different people.");
       return;
@@ -106,7 +134,9 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
       const newTranscript: Transcript = {
         id: `transcript-${Date.now()}-${Math.random()}`,
         speakerName: voucherProfile.name,
-        speakerRole: voucherProfile.title + (voucherProfile.company ? ` at ${voucherProfile.company}` : ""),
+        speakerRole:
+          voucherProfile.title +
+          (voucherProfile.company ? ` at ${voucherProfile.company}` : ""),
         speakerEmail: voucherProfile.email,
         speakerPhoto: voucherProfile.photo || "",
         content: formData.content.trim(),
@@ -137,7 +167,7 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "An unexpected error occurred. Please try again."
+          : "An unexpected error occurred. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -209,7 +239,9 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
                     id="voucherEmail"
                     type="email"
                     value={formData.voucherEmail}
-                    onChange={(e) => updateField("voucherEmail", e.target.value)}
+                    onChange={(e) =>
+                      updateField("voucherEmail", e.target.value)
+                    }
                     placeholder="voucher@company.com"
                     required
                   />
@@ -232,8 +264,12 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <div className="font-semibold text-sm">{voucherProfile.name}</div>
-                      <div className="text-xs text-gray-600">{voucherProfile.title}</div>
+                      <div className="font-semibold text-sm">
+                        {voucherProfile.name}
+                      </div>
+                      <div className="text-xs text-gray-600">
+                        {voucherProfile.title}
+                      </div>
                       {voucherProfile.company && (
                         <Badge variant="outline" className="text-xs mt-1">
                           {voucherProfile.company}
@@ -268,7 +304,9 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
                     id="voucheeEmail"
                     type="email"
                     value={formData.voucheeEmail}
-                    onChange={(e) => updateField("voucheeEmail", e.target.value)}
+                    onChange={(e) =>
+                      updateField("voucheeEmail", e.target.value)
+                    }
                     placeholder="vouchee@company.com"
                     required
                   />
@@ -291,8 +329,12 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <div className="font-semibold text-sm">{voucheeProfile.name}</div>
-                      <div className="text-xs text-gray-600">{voucheeProfile.title}</div>
+                      <div className="font-semibold text-sm">
+                        {voucheeProfile.name}
+                      </div>
+                      <div className="text-xs text-gray-600">
+                        {voucheeProfile.title}
+                      </div>
                       {voucheeProfile.company && (
                         <Badge variant="outline" className="text-xs mt-1">
                           {voucheeProfile.company}
@@ -334,12 +376,16 @@ export function TranscriptForm({ onClose, onSave, profiles }: TranscriptFormProp
                 </div>
 
                 <div>
-                  <Label htmlFor="interviewDate">Interview Date (optional)</Label>
+                  <Label htmlFor="interviewDate">
+                    Interview Date (optional)
+                  </Label>
                   <Input
                     id="interviewDate"
                     type="date"
                     value={formData.interviewDate}
-                    onChange={(e) => updateField("interviewDate", e.target.value)}
+                    onChange={(e) =>
+                      updateField("interviewDate", e.target.value)
+                    }
                   />
                 </div>
               </CardContent>
