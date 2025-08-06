@@ -291,6 +291,7 @@ export function EnhancedTranscriptCard({
         transcriptId={transcript.id}
         speakerName={transcript.speakerName}
       />
-    </Card>
+      </Card>
+    </div>
   );
 }
