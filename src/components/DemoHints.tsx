@@ -275,7 +275,7 @@ export function DemoHints() {
                           onClick={() => handleAction(hint)}
                           className="
                             flex items-center gap-2 px-3 py-1.5
-                            bg-blue-600 hover:bg-blue-700
+                            bg-orange-600 hover:bg-orange-700
                             text-white text-xs font-medium rounded-lg
                             transition-colors duration-200
                           "
