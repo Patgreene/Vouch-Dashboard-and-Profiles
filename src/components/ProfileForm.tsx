@@ -925,20 +925,6 @@ export function ProfileForm({
                         }
                       />
                     </div>
-                    <div>
-                      <Label>Interviewed By</Label>
-                      <Input
-                        value={transcript.interviewedBy}
-                        onChange={(e) =>
-                          updateTranscript(
-                            index,
-                            "interviewedBy",
-                            e.target.value,
-                          )
-                        }
-                        placeholder="e.g., Sarah Johnson, HR Partner"
-                      />
-                    </div>
                   </div>
                   <div>
                     <Label>Transcript Content *</Label>
