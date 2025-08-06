@@ -26,7 +26,6 @@ interface EnhancedTranscriptCardProps {
   processHighlightFromUrl: (transcriptId: string) => void;
   mode: "received" | "given";
   recipientProfile?: Profile; // Only used for "given" mode
-  onVerificationChange?: (transcriptId: string, newStatus: "verified" | "pending" | "not_started") => void;
 }
 
 export function EnhancedTranscriptCard({
@@ -38,7 +37,6 @@ export function EnhancedTranscriptCard({
   processHighlightFromUrl,
   mode,
   recipientProfile,
-  onVerificationChange,
 }: EnhancedTranscriptCardProps) {
   const [internalExpanded, setInternalExpanded] = useState(isExpanded);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
