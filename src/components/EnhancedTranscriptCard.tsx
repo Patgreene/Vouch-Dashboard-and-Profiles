@@ -84,12 +84,7 @@ export function EnhancedTranscriptCard({
     }
   }, [expanded, transcript.id, processHighlightFromUrl]);
 
-  // Handle payment success
-  const handlePaymentSuccess = () => {
-    if (onVerificationChange) {
-      onVerificationChange(transcript.id, "pending");
-    }
-  };
+  // No payment processing - just show price modal
 
   // Verification status component
   const VerificationStatus = () => {
@@ -289,7 +284,6 @@ export function EnhancedTranscriptCard({
       <PaymentModal
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
-        onSuccess={handlePaymentSuccess}
         transcriptId={transcript.id}
         speakerName={transcript.speakerName}
       />
