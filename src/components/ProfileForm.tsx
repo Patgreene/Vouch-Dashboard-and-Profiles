@@ -572,9 +572,25 @@ export function ProfileForm({
           {mode === "full" && (
             <Card>
               <CardHeader>
-                <CardTitle>Key Takeaways</CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Key Takeaways</CardTitle>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsKeyTakeawaysExpanded(!isKeyTakeawaysExpanded)}
+                    className="h-8 w-8 p-0"
+                  >
+                    {isKeyTakeawaysExpanded ? (
+                      <ChevronUp className="h-4 w-4" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
               </CardHeader>
-              <CardContent className="space-y-6">
+              {isKeyTakeawaysExpanded && (
+                <CardContent className="space-y-6">
                 {/* Custom Section Titles */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
                   <div>
