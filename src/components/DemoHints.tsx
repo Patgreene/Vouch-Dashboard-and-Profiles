@@ -59,21 +59,6 @@ const hints: Hint[] = [
     offsetX: -50,
     offsetY: 10,
     icon: Users,
-    action: () => {
-      // Find the Given tab button by looking for the one with "Given" in the text
-      const allTabs = document.querySelectorAll('button[role="tab"]');
-      const givenTab = Array.from(allTabs).find(tab =>
-        tab.textContent?.trim().startsWith('Given')
-      ) as HTMLButtonElement;
-
-      if (givenTab) {
-        givenTab.click();
-        console.log('Clicked Given tab');
-      } else {
-        console.log('Given tab not found');
-      }
-    },
-    actionText: "View given testimonials",
   },
 ];
 
