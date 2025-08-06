@@ -19,32 +19,33 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
   return (
     <div className="bg-white border-b border-gray-200">
       <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col space-y-4">
-          {/* Top section with avatar and "What is Vouch?" */}
-          <div className="flex items-start justify-between">
-            <Avatar className="h-20 w-20 sm:h-24 sm:w-24 md:h-32 md:w-32 ring-2 ring-white shadow-lg profile-avatar-large">
-              <AvatarImage
-                src={profile.photo}
-                alt={profile.name}
-                className="object-cover object-center"
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
-              />
-              <AvatarFallback className="text-lg sm:text-xl font-semibold bg-gradient-to-br from-vouch-500 to-vouch-600 text-white">
-                {getInitials(profile.name)}
-              </AvatarFallback>
-            </Avatar>
-
+        <div className="flex flex-col items-center text-center space-y-4">
+          {/* "What is Vouch?" link - positioned absolutely for centering layout */}
+          <div className="relative w-full">
             <a
               href="https://www.vouchprofile.com/"
-              className="text-vouch-600 hover:text-vouch-700 text-sm font-medium shrink-0"
+              className="absolute top-0 right-0 text-vouch-600 hover:text-vouch-700 text-sm font-medium"
             >
               What is Vouch?
             </a>
           </div>
 
-          {/* Profile Info */}
+          {/* Centered Avatar */}
+          <Avatar className="h-20 w-20 sm:h-24 sm:w-24 md:h-32 md:w-32 ring-2 ring-white shadow-lg profile-avatar-large">
+            <AvatarImage
+              src={profile.photo}
+              alt={profile.name}
+              className="object-cover object-center"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+            />
+            <AvatarFallback className="text-lg sm:text-xl font-semibold bg-gradient-to-br from-vouch-500 to-vouch-600 text-white">
+              {getInitials(profile.name)}
+            </AvatarFallback>
+          </Avatar>
+
+          {/* Centered Profile Info */}
           <div className="space-y-3">
             <div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 tracking-tight leading-tight">
@@ -55,8 +56,8 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
               </p>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap gap-2 sm:gap-3">
+            {/* Centered Action Buttons */}
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
               {profile.linkedIn && (
                 <Button
                   variant="outline"
