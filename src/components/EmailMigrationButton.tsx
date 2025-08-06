@@ -27,7 +27,7 @@ export function EmailMigrationButton() {
   const [editMode, setEditMode] = useState(false);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [allSpeakers, setAllSpeakers] = useState<string[]>([]);
-  
+
   // Editable email mappings
   const [emailMappings, setEmailMappings] = useState<EmailMappings>({
     profiles: {
@@ -36,7 +36,7 @@ export function EmailMigrationButton() {
     },
     speakers: {
       "John Smith": "john.smith@meta.com",
-      "Sarah Chen": "sarah.chen@meta.com", 
+      "Sarah Chen": "sarah.chen@meta.com",
       "Mike Rodriguez": "mike.rodriguez@meta.com",
       "Emma Wilson": "emma.wilson@spotify.com",
     }
@@ -48,7 +48,7 @@ export function EmailMigrationButton() {
       try {
         const profilesData = await dataProvider.getAllProfiles();
         setProfiles(profilesData);
-        
+
         // Extract all unique speakers
         const speakers = new Set<string>();
         profilesData.forEach(profile => {
@@ -61,7 +61,7 @@ export function EmailMigrationButton() {
         // Initialize mappings for existing profiles that don't have emails
         const newProfileMappings = { ...emailMappings.profiles };
         const newSpeakerMappings = { ...emailMappings.speakers };
-        
+
         profilesData.forEach(profile => {
           if (!profile.email && !newProfileMappings[profile.id]) {
             // Generate suggested email
@@ -112,7 +112,7 @@ export function EmailMigrationButton() {
   const runMigration = async () => {
     setIsLoading(true);
     setMigrationResult(null);
-    
+
     try {
       const errors: string[] = [];
       let updatedProfiles = 0;
@@ -212,7 +212,17 @@ export function EmailMigrationButton() {
 
   const profilesNeedingEmails = getProfilesNeedingEmails();
   const speakersNeedingEmails = getSpeakersNeedingEmails();
-  const isReady = profilesNeedingEmails.length === 0 && speakersNeedingEmails.length === 0;
+
+  // Check if all emails are configured in the form (not just in the database)
+  const allProfileEmailsConfigured = profilesNeedingEmails.every(profile =>
+    emailMappings.profiles[profile.id] && emailMappings.profiles[profile.id].trim() !== ""
+  );
+
+  const allSpeakerEmailsConfigured = speakersNeedingEmails.every(speaker =>
+    emailMappings.speakers[speaker] && emailMappings.speakers[speaker].trim() !== ""
+  );
+
+  const isReady = allProfileEmailsConfigured && allSpeakerEmailsConfigured;
 
   return (
     <Card className="mb-6">
@@ -270,7 +280,7 @@ export function EmailMigrationButton() {
         {editMode && (
           <div className="space-y-4 border rounded-lg p-4 bg-gray-50">
             <h4 className="font-medium">Configure Email Addresses</h4>
-            
+
             {/* Profiles needing emails */}
             {profilesNeedingEmails.length > 0 && (
               <div>
@@ -344,7 +354,7 @@ export function EmailMigrationButton() {
                 })}
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-medium text-sm mb-2">All Speaker Emails:</h4>
               <div className="space-y-1 max-h-40 overflow-y-auto">
@@ -362,8 +372,8 @@ export function EmailMigrationButton() {
         )}
 
         {/* Migration Button */}
-        <Button 
-          onClick={runMigration} 
+        <Button
+          onClick={runMigration}
           disabled={isLoading || !isReady}
           className="w-full"
         >
@@ -383,8 +393,8 @@ export function EmailMigrationButton() {
         {/* Migration Result */}
         {migrationResult && (
           <div className={`p-3 rounded-lg ${
-            migrationResult.success 
-              ? 'bg-green-50 border border-green-200' 
+            migrationResult.success
+              ? 'bg-green-50 border border-green-200'
               : 'bg-red-50 border border-red-200'
           }`}>
             <div className="flex items-center gap-2 mb-2">
@@ -399,13 +409,13 @@ export function EmailMigrationButton() {
                 {migrationResult.message}
               </span>
             </div>
-            
+
             {migrationResult.errors.length > 0 && (
               <div className="mt-2">
                 <p className="text-sm font-medium text-red-700 mb-1">Issues:</p>
                 <ul className="text-xs text-red-600 space-y-1 max-h-40 overflow-y-auto">
                   {migrationResult.errors.map((error, index) => (
-                    <li key={index}>• {error}</li>
+                    <li key={index}>��� {error}</li>
                   ))}
                 </ul>
               </div>
