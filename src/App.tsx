@@ -120,6 +120,9 @@ function App() {
           {/* Profile routes - more specific matching */}
           <Route path="/profile/:id" element={<Profile />} />
 
+          {/* Demo profile - standalone example */}
+          <Route path="/demo" element={<DemoProfile />} />
+
           {/* Protected admin route - obfuscated URL with guard */}
           <Route path="/admin-stats-d1g3Yt9" element={<AdminRouteGuard />} />
 
