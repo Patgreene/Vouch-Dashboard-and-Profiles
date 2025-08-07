@@ -93,8 +93,14 @@ export function DemoHints() {
         const scrollLeft =
           window.pageXOffset || document.documentElement.scrollLeft;
 
+        // Adjust offsetX for mobile to keep hints inside screen
+        const isMobile = window.innerWidth < 640; // sm breakpoint
+        const adjustedOffsetX = isMobile && (hint.offsetX || 0) < 0
+          ? Math.abs(hint.offsetX || 0) + 10 // Move inside with 10px padding
+          : (hint.offsetX || 0);
+
         newPositions[hint.id] = {
-          x: rect.left + scrollLeft + (hint.offsetX || 0),
+          x: rect.left + scrollLeft + adjustedOffsetX,
           y: rect.top + scrollTop + (hint.offsetY || 0),
         };
       }
