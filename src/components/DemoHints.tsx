@@ -217,15 +217,19 @@ export function DemoHints() {
                 className={`
                   group relative
                   w-8 h-8 rounded-full
-                  bg-gradient-to-r from-orange-500 to-orange-600
-                  hover:from-orange-600 hover:to-orange-700
                   text-white shadow-lg hover:shadow-xl
                   transition-all duration-200 ease-out
                   transform hover:scale-110
                   border-2 border-white
                   flex items-center justify-center
-                  ${isActive ? "ring-4 ring-orange-200" : ""}
+                  ${isActive ? "ring-4" : ""}
                 `}
+                style={{
+                  background: 'linear-gradient(to right, #FF7A56, #E55E41)',
+                  ...(isActive && { boxShadow: '0 0 0 4px rgba(255, 122, 86, 0.3)' })
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #E55E41, #CC4E32)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #FF7A56, #E55E41)'}
               >
                 <HelpCircle className="w-4 h-4" />
 
