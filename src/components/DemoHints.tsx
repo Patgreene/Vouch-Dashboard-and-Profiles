@@ -258,7 +258,7 @@ export function DemoHints() {
               {/* Expanded Hint Card */}
               {isActive && (
                 <div
-                  className="absolute mt-2 w-72 bg-white rounded-xl shadow-2xl border border-gray-200 transform transition-all duration-300 ease-out left-0 z-10"
+                  className="absolute mt-2 w-72 bg-white rounded-xl shadow-2xl border border-gray-200 transform transition-all duration-300 ease-out left-0 sm:left-0 -left-6 z-10"
                   style={{
                     animation: "fadeInUp 0.3s ease-out",
                   }}
