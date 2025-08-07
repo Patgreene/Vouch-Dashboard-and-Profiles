@@ -225,11 +225,11 @@ export function DemoHints() {
                   ${isActive ? "ring-4" : ""}
                 `}
                 style={{
-                  background: 'linear-gradient(to right, #FF7A56, #E55E41)',
-                  ...(isActive && { boxShadow: '0 0 0 4px rgba(255, 122, 86, 0.3)' })
+                  background: 'linear-gradient(to right, #7FB5C5, #4C7B8A)',
+                  ...(isActive && { boxShadow: '0 0 0 4px rgba(127, 181, 197, 0.3)' })
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #E55E41, #CC4E32)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #FF7A56, #E55E41)'}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #4C7B8A, #3A6B7A)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #7FB5C5, #4C7B8A)'}
               >
                 <HelpCircle className="w-4 h-4" />
 
