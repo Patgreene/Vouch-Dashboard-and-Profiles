@@ -24,7 +24,10 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
           <div className="relative w-full">
             <a
               href="https://calling-20test.vercel.app/"
-              className="absolute top-0 left-0 inline-flex items-center gap-2 px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+              className="absolute top-0 left-0 inline-flex items-center gap-2 px-3 py-1.5 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+              style={{ backgroundColor: '#FF7A56' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E55E41'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FF7A56'}
             >
               <svg
                 className="w-4 h-4"
