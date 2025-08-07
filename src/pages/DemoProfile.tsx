@@ -162,6 +162,7 @@ export default function DemoProfile() {
   const [expandedTranscripts, setExpandedTranscripts] = useState<Set<string>>(
     new Set(),
   );
+  const [showPrivacyPopup, setShowPrivacyPopup] = useState(true);
 
   // Check URL parameters on load to expand highlighted transcript
   useEffect(() => {
