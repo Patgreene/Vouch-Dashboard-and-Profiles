@@ -234,7 +234,7 @@ export function DemoHints() {
                 <HelpCircle className="w-4 h-4" />
 
                 {/* Subtle pulse animation */}
-                <div className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ backgroundColor: '#FF7A56' }} />
+                <div className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ backgroundColor: '#7FB5C5' }} />
               </button>
 
               {/* Expanded Hint Card */}
