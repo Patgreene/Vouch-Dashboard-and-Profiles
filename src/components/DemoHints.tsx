@@ -252,8 +252,8 @@ export function DemoHints() {
                     {/* Header */}
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                          <hint.icon className="w-4 h-4 text-orange-600" />
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#F5F5F5' }}>
+                          <hint.icon className="w-4 h-4" style={{ color: '#FF7A56' }} />
                         </div>
                         <h3 className="font-semibold text-gray-900 text-sm">
                           {hint.title}
