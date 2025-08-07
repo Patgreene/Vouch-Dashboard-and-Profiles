@@ -55,9 +55,9 @@ export function KeyTakeaways({ takeaways }: KeyTakeawaysProps) {
     },
     {
       title: "Challenges",
-      icon: <AlertTriangle className="h-5 w-5 text-orange-600" />,
+      icon: <AlertTriangle className="h-5 w-5" style={{ color: '#FF7A56' }} />,
       items: takeaways.weaknesses,
-      color: "bg-orange-100",
+      color: "bg-gray-100",
     },
     {
       title: takeaways.customTitle1 || "Custom Section 1",
@@ -74,10 +74,7 @@ export function KeyTakeaways({ takeaways }: KeyTakeawaysProps) {
   ];
 
   return (
-    <div
-      className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
-      style={{ padding: "24px 32px 11px" }}
-    >
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8" style={{ padding: "24px 32px 11px" }}>
       <Card className="overflow-hidden">
         <div className="bg-gradient-to-r from-vouch-50 to-blue-50 border-b">
           <Button
