@@ -449,21 +449,7 @@ export function DemoHints() {
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t">
-              <button
-                onClick={() => setShowTutorial(false)}
-                className="w-full text-white font-medium py-2 px-4 rounded-lg transition-colors"
-                style={{ backgroundColor: "#FF7A56" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#E55E41")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#FF7A56")
-                }
-              >
-                Close
-              </button>
-            </div>
+            <div className="p-4 border-t" />
           </div>
         </div>
       )}
