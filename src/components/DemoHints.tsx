@@ -225,16 +225,27 @@ export function DemoHints() {
                   ${isActive ? "ring-4" : ""}
                 `}
                 style={{
-                  background: 'linear-gradient(to right, #7FB5C5, #4C7B8A)',
-                  ...(isActive && { boxShadow: '0 0 0 4px rgba(127, 181, 197, 0.3)' })
+                  background: "linear-gradient(to right, #7FB5C5, #4C7B8A)",
+                  ...(isActive && {
+                    boxShadow: "0 0 0 4px rgba(127, 181, 197, 0.3)",
+                  }),
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #4C7B8A, #3A6B7A)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, #7FB5C5, #4C7B8A)'}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background =
+                    "linear-gradient(to right, #4C7B8A, #3A6B7A)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background =
+                    "linear-gradient(to right, #7FB5C5, #4C7B8A)")
+                }
               >
                 <HelpCircle className="w-4 h-4" />
 
                 {/* Subtle pulse animation */}
-                <div className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ backgroundColor: '#7FB5C5' }} />
+                <div
+                  className="absolute inset-0 rounded-full animate-ping opacity-20"
+                  style={{ backgroundColor: "#7FB5C5" }}
+                />
               </button>
 
               {/* Expanded Hint Card */}
@@ -252,8 +263,14 @@ export function DemoHints() {
                     {/* Header */}
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#F5F5F5' }}>
-                          <hint.icon className="w-4 h-4" style={{ color: '#FF7A56' }} />
+                        <div
+                          className="w-8 h-8 rounded-lg flex items-center justify-center"
+                          style={{ backgroundColor: "#F5F5F5" }}
+                        >
+                          <hint.icon
+                            className="w-4 h-4"
+                            style={{ color: "#FF7A56" }}
+                          />
                         </div>
                         <h3 className="font-semibold text-gray-900 text-sm">
                           {hint.title}
@@ -282,9 +299,13 @@ export function DemoHints() {
                             text-white text-xs font-medium rounded-lg
                             transition-colors duration-200
                           "
-                          style={{ backgroundColor: '#FF7A56' }}
-                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E55E41'}
-                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FF7A56'}
+                          style={{ backgroundColor: "#FF7A56" }}
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.backgroundColor = "#E55E41")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.backgroundColor = "#FF7A56")
+                          }
                         >
                           {hint.actionText}
                         </button>
@@ -432,9 +453,13 @@ export function DemoHints() {
               <button
                 onClick={() => setShowTutorial(false)}
                 className="w-full text-white font-medium py-2 px-4 rounded-lg transition-colors"
-                style={{ backgroundColor: '#FF7A56' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E55E41'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FF7A56'}
+                style={{ backgroundColor: "#FF7A56" }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#E55E41")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#FF7A56")
+                }
               >
                 Close
               </button>

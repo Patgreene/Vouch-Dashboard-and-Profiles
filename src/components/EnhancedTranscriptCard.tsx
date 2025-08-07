@@ -96,7 +96,10 @@ export function EnhancedTranscriptCard({
         );
       case "pending":
         return (
-          <div className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium" style={{ color: '#FF7A56', backgroundColor: '#F5F5F5' }}>
+          <div
+            className="flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium"
+            style={{ color: "#FF7A56", backgroundColor: "#F5F5F5" }}
+          >
             <Clock className="h-3 w-3" />
             <span>Pending</span>
           </div>

@@ -25,9 +25,13 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
             <a
               href="https://calling-20test.vercel.app/"
               className="absolute top-0 left-0 inline-flex items-center gap-2 px-3 py-1.5 text-white text-sm font-medium rounded-lg transition-colors duration-200"
-              style={{ backgroundColor: '#7FB5C5' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4C7B8A'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#7FB5C5'}
+              style={{ backgroundColor: "#7FB5C5" }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.backgroundColor = "#4C7B8A")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.backgroundColor = "#7FB5C5")
+              }
             >
               <svg
                 className="w-4 h-4"
