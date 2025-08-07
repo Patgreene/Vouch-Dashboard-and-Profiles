@@ -338,6 +338,11 @@ export function DemoHints() {
 
             {/* Content - Only Animation */}
             <div className="p-6">
+              {/* Caption */}
+              <p className="text-center text-gray-600 text-sm mb-4">
+                Highlight any piece of a transcript with your mouse to quote!
+              </p>
+
               {/* Animated Demo */}
               <div className="bg-gray-50 rounded-lg p-4 relative overflow-hidden">
                 {/* Mini Demo Container */}
