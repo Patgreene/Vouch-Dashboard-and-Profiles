@@ -97,7 +97,7 @@ export function DemoHints() {
         const isMobile = window.innerWidth < 640; // sm breakpoint
         const adjustedOffsetX =
           isMobile && (hint.offsetX || 0) < 0
-            ? Math.abs(hint.offsetX || 0) + 10 // Move inside with 10px padding
+            ? Math.abs(hint.offsetX || 0) - 15 // Move inside but 25px further left (10 - 25 = -15)
             : hint.offsetX || 0;
 
         newPositions[hint.id] = {
