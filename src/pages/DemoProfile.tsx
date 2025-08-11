@@ -92,6 +92,66 @@ const demoProfile = {
         "Lara was instrumental in helping us design our mobile app from the ground up. As a non-technical founder, I was worried about the complexity of translating our vision into a user-friendly mobile experience. Lara not only understood our vision but helped refine and improve it through her design process.\n\nShe has this wonderful ability to balance user needs with business objectives. Every design recommendation came with clear reasoning about how it would impact user experience and, ultimately, our bottom line. She helped us prioritize features based on user value and implementation complexity, which was incredibly valuable for a resource-constrained startup.\n\nThe app Lara designed for us launched to fantastic user reviews, with particular praise for its intuitive interface and smooth user experience. Six months post-launch, we're seeing strong user retention and minimal support requests related to usability issues. Lara's work laid the foundation for our product's success.",
       verificationStatus: "pending" as const,
     },
+    {
+      id: "demo-transcript-5",
+      speakerName: "Maya Patel",
+      speakerRole: "Product Manager",
+      speakerEmail: "maya@example.com",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      interviewDate: "2024-04-18",
+      content:
+        "Lara came into our chaotic startup environment and somehow made everything make sense. We were drowning in user feedback, feature requests, and technical debt, but she had this incredible ability to cut through the noise and identify what actually mattered. Her approach to user research was methodical yet agile – she'd validate assumptions quickly without getting bogged down in analysis paralysis.\n\nWhat I loved most was how she translated complex user insights into actionable design decisions. She didn't just tell us what users wanted; she showed us exactly how to deliver it in a way that aligned with our business goals and technical constraints. Her wireframes were so clear that our developers could start building immediately without endless clarification meetings.\n\nThe redesign she led increased our conversion rate by 65% and reduced our customer support tickets by half. But beyond the metrics, she fundamentally changed how our team thinks about users. She embedded user-centered thinking into our DNA, and that impact will last long after the project ended.",
+      verificationStatus: "verified" as const,
+    },
+    {
+      id: "demo-transcript-6",
+      speakerName: "James Rodriguez",
+      speakerRole: "Engineering Manager",
+      speakerEmail: "james@example.com",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      interviewDate: "2024-11-02",
+      content:
+        "As an engineering manager, I've worked with many designers, but Lara stands out for how she bridges the gap between design vision and technical reality. She doesn't just hand over beautiful mockups – she sits with the engineering team, understands our constraints, and iterates on solutions that are both elegant and buildable.\n\nHer component-based thinking was invaluable. She designed our design system in a way that made perfect sense to developers, with consistent patterns, clear documentation, and realistic edge cases. This wasn't just good design; it was strategic thinking that saved us months of development time and technical debt.\n\nLara also has exceptional problem-solving skills. When we hit performance issues with her initial designs, instead of being defensive, she immediately jumped into finding solutions. She researched optimization techniques, worked with our team to understand the bottlenecks, and redesigned components to be both beautiful and performant. That level of ownership and technical curiosity is rare.",
+      verificationStatus: "verified" as const,
+    },
+    {
+      id: "demo-transcript-7",
+      speakerName: "Sophie Chen",
+      speakerRole: "CEO at GreenTech Solutions",
+      speakerEmail: "sophie@example.com",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      interviewDate: "2024-09-28",
+      content:
+        "Bringing Lara onto our sustainability platform project was one of the best decisions we made as a company. She immediately grasped the complexity of making environmental data engaging and actionable for everyday users. Her research into user motivations around sustainability was thorough and insightful – she understood that people want to help the planet but need simple, clear ways to take action.\n\nWhat impressed me most was her ability to simplify without dumbing down. The dashboard she designed made complex carbon footprint data feel approachable and actionable. User engagement with our sustainability features increased by 150% after her redesign, and we started getting organic social shares from users proud of their environmental impact.\n\nLara also understood the business implications of her design decisions. She helped us identify new revenue opportunities through her user research and designed features that not only served users better but also drove business growth. As a CEO, having a designer who thinks strategically about the intersection of user needs and business objectives is invaluable.",
+      verificationStatus: "not_started" as const,
+    },
+    {
+      id: "demo-transcript-8",
+      speakerName: "Alex Thompson",
+      speakerRole: "Creative Director",
+      speakerEmail: "alex@example.com",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      interviewDate: "2024-07-14",
+      content:
+        "Working with Lara on our creative agency's website redesign was an eye-opening experience. Even though we're a team of designers, Lara brought a level of UX thinking and systematic approach that elevated everyone's work. She helped us see our own blind spots and challenged us to think beyond just visual appeal to actual user outcomes.\n\nHer process was incredibly collaborative. She facilitated workshops that got our entire creative team aligned on user goals, not just aesthetic preferences. The way she structured our design critique sessions made our feedback more constructive and actionable. She taught us to defend design decisions with user data rather than personal taste.\n\nThe final website not only looked stunning but performed exceptionally. Our lead generation increased by 80%, and client feedback consistently mentioned how easy and enjoyable the site was to navigate. Lara proved that great UX design enhances rather than constrains creativity.",
+      verificationStatus: "pending" as const,
+    },
+    {
+      id: "demo-transcript-9",
+      speakerName: "Rachel Kim",
+      speakerRole: "VP of User Experience",
+      speakerEmail: "rachel@example.com",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      interviewDate: "2024-05-22",
+      content:
+        "Lara joined our team during a critical transformation period as we were scaling from a small product to an enterprise platform. Her ability to design for scalability – both in terms of user experience and design systems – was exceptional. She didn't just solve immediate design problems; she built foundations that could grow with our business.\n\nWhat set her apart was her strategic thinking about information architecture. Our product had evolved organically and become quite complex, but Lara methodically mapped user journeys, identified pain points, and restructured the entire experience to be intuitive and logical. The navigation system she designed reduced user confusion by 70% and support tickets related to 'how do I find...' practically disappeared.\n\nLara also mentored our junior designers beautifully. She shared her systematic approach to design thinking, taught them to validate assumptions with data, and helped them develop confident design voices. The team's overall skill level improved significantly during her time with us, and those improvements continued long after her contract ended.",
+      verificationStatus: "verified" as const,
+    },
   ],
 };
 
