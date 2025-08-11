@@ -314,7 +314,7 @@ const demoGivenTranscripts = [
       speakerEmail: "lara@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
-      interviewDate: "2022-06-11",
+      interviewDate: "2019-12-07",
       content:
         "Working with Kevin on our design system implementation was one of the most educational experiences of my career. His approach to frontend architecture is both pragmatic and forward-thinking. He didn't just implement the components I designed – he thoughtfully structured them in a way that made the entire system more maintainable and scalable.\n\nKevin has an exceptional understanding of how design decisions impact code quality and performance. He'd regularly suggest modifications to my designs that would improve loading times or maintainability without compromising the user experience. His technical insights often led to better design solutions.\n\nWhat impressed me most was his collaborative approach to problem-solving. When we encountered complex interaction design challenges, Kevin would prototype multiple solutions, showing me exactly how each would perform in production. This partnership between design and development resulted in components that were not only visually polished but also technically excellent. The design system we built together is still being used and expanded upon today.",
       verificationStatus: "not_started" as const,
