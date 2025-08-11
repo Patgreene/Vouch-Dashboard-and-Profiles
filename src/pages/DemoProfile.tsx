@@ -99,7 +99,7 @@ const demoProfile = {
       speakerEmail: "maya@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
-      interviewDate: "2024-04-18",
+      interviewDate: "2021-01-17",
       content:
         "Lara came into our chaotic startup environment and somehow made everything make sense. We were drowning in user feedback, feature requests, and technical debt, but she had this incredible ability to cut through the noise and identify what actually mattered. Her approach to user research was methodical yet agile – she'd validate assumptions quickly without getting bogged down in analysis paralysis.\n\nWhat I loved most was how she translated complex user insights into actionable design decisions. She didn't just tell us what users wanted; she showed us exactly how to deliver it in a way that aligned with our business goals and technical constraints. Her wireframes were so clear that our developers could start building immediately without endless clarification meetings.\n\nThe redesign she led increased our conversion rate by 65% and reduced our customer support tickets by half. But beyond the metrics, she fundamentally changed how our team thinks about users. She embedded user-centered thinking into our DNA, and that impact will last long after the project ended.",
       verificationStatus: "verified" as const,
