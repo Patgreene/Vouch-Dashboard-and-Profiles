@@ -44,7 +44,7 @@ export function PaymentModal({
           </div>
 
           <div className="py-2">
-            <div className="text-3xl font-bold text-blue-600 mb-1">$19</div>
+            <div className="text-3xl font-bold text-blue-600 mb-1">$39</div>
             <p className="text-sm text-gray-600">One-time payment</p>
           </div>
 
