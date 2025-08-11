@@ -224,7 +224,7 @@ const demoGivenTranscripts = [
       speakerEmail: "lara@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
-      interviewDate: "2024-08-30",
+      interviewDate: "2019-12-07",
       content:
         "Elena is one of those rare marketers who truly understands the connection between user experience and conversion. Working with her on our product launch campaign was incredibly smooth because she approached marketing from a user-first perspective, not just a metrics-driven one. She took time to understand our users' pain points and crafted messaging that genuinely resonated.\n\nWhat impressed me most was her data-driven approach to creative decisions. She'd run A/B tests on everything – copy, visuals, user flows – and then use those insights to refine not just the marketing but also inform product improvements. Her feedback often helped us identify UX issues we hadn't considered.\n\nElena also has exceptional project management skills. She coordinated between design, development, and sales teams seamlessly, ensuring everyone stayed aligned on messaging and user positioning. The campaign she led generated our highest conversion rates to date, but more importantly, it attracted users who were genuinely the right fit for our product.",
       verificationStatus: "verified" as const,
