@@ -344,7 +344,7 @@ const demoGivenTranscripts = [
       speakerEmail: "lara@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
-      interviewDate: "2024-01-25",
+      interviewDate: "2023-01-28",
       content:
         "Natasha is the kind of product manager every designer hopes to work with. She has a rare combination of strategic vision and tactical execution that makes collaboration incredibly productive. During our work on the healthcare app, she skillfully balanced user needs, business requirements, and technical constraints while keeping the team focused on what truly mattered.\n\nWhat sets Natasha apart is her deep empathy for both users and team members. She spent time understanding not just what users needed, but why they needed it and how it fit into their daily lives. This user-centric approach influenced every product decision and helped us avoid feature creep while still delivering meaningful value.\n\nNatasha also excels at stakeholder communication. She translated complex design decisions into business terms that resonated with executives, while also ensuring that user needs weren't compromised in the process. Her roadmap planning was realistic yet ambitious, and she created an environment where the design team felt supported and empowered to do our best work. The product we launched exceeded all engagement targets and received outstanding user satisfaction scores.",
       verificationStatus: "verified" as const,
