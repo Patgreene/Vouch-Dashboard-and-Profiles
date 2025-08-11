@@ -51,7 +51,7 @@ const demoProfile = {
       speakerEmail: "clara@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
-      interviewDate: "2017-03-22",
+      interviewDate: "2024-07-08",
       content:
         "Lara joined our team on what was meant to be a short-term contract, just six months to support a product refresh, but from day one, it was clear she brought something different. She has this rare ability to not only see problems others miss, but to approach them with fresh, user-centred solutions that actually move the needle. She is one of the most creative people I've ever worked with.\n\nWhat really blew me away was her ability to connect with people. Whether it was a developer, a stakeholder, or a user in a research session, she just knows how to listen, empathise, and bring people with her. It made working with her feel effortless – like everyone naturally did better work when she was in the room. She made us more thoughtful as a team.\n\nHer designs helped increase engagement by 40% and dramatically reduced support tickets, but more than the numbers, she raised the standard for what good looks like. If I had to be honest about one thing, it's that she can be incredibly hard on herself. She sets the bar so high, and sometimes pushes past the point of \"good enough.\" But that drive? That's also what makes her exceptional. If I could build a team from scratch, she's one of the first people I'd call.",
       verificationStatus: "verified" as const,
