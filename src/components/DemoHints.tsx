@@ -211,7 +211,7 @@ export function DemoHints() {
         return (
           <div
             key={hint.id}
-            className="absolute z-50 hidden sm:block"
+            className={`absolute z-50 ${hint.id === 'text-highlighting' ? 'block' : 'hidden sm:block'}`}
             style={{
               left: `${position.x}px`,
               top: `${position.y}px`,
