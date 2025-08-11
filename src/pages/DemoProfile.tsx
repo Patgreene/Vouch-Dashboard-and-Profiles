@@ -254,7 +254,7 @@ const demoGivenTranscripts = [
       speakerEmail: "lara@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
-      interviewDate: "2024-06-08",
+      interviewDate: "2020-02-23",
       content:
         "Jordan brought a level of technical sophistication to our mobile app development that I hadn't experienced before. As the designer, I was initially worried about how my complex interactive designs would translate to mobile, but Jordan made it look effortless. He has this incredible ability to take design concepts and not just implement them, but enhance them with thoughtful micro-interactions and performance optimizations.\n\nWhat really stood out was his proactive communication about technical constraints and opportunities. Instead of just saying 'this can't be done,' he'd come back with alternative solutions that often ended up being better than my original ideas. He helped me understand mobile design patterns more deeply, which made me a better designer.\n\nJordan also has excellent attention to detail. Every animation timing, every loading state, every edge case was handled with care. The app we built together consistently received praise from users for its smooth, polished feel. He's the kind of developer every designer dreams of working with.",
       verificationStatus: "pending" as const,
