@@ -123,7 +123,7 @@ const demoProfile = {
       speakerEmail: "sophie@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
-      interviewDate: "2023-04-12",
+      interviewDate: "2019-06-15",
       content:
         "Bringing Lara onto our sustainability platform project was one of the best decisions we made as a company. She immediately grasped the complexity of making environmental data engaging and actionable for everyday users. Her research into user motivations around sustainability was thorough and insightful – she understood that people want to help the planet but need simple, clear ways to take action.\n\nWhat impressed me most was her ability to simplify without dumbing down. The dashboard she designed made complex carbon footprint data feel approachable and actionable. User engagement with our sustainability features increased by 150% after her redesign, and we started getting organic social shares from users proud of their environmental impact.\n\nLara also understood the business implications of her design decisions. She helped us identify new revenue opportunities through her user research and designed features that not only served users better but also drove business growth. As a CEO, having a designer who thinks strategically about the intersection of user needs and business objectives is invaluable.",
       verificationStatus: "not_started" as const,
