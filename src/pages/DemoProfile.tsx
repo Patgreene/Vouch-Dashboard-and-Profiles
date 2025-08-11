@@ -284,7 +284,7 @@ const demoGivenTranscripts = [
       speakerEmail: "lara@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
-      interviewDate: "2024-03-15",
+      interviewDate: "2021-09-16",
       content:
         "Priya's user research skills are absolutely world-class. She has this unique ability to uncover insights that completely shift how you think about your users. Working with her on our e-commerce platform redesign, she identified user behavior patterns that our entire team had missed, despite months of internal analysis.\n\nWhat I admire most about Priya is how she balances quantitative rigor with qualitative empathy. Her user interviews revealed emotional drivers behind purchasing decisions that our analytics couldn't capture, while her data analysis provided the statistical backing we needed to convince stakeholders. She bridges the gap between human insight and business metrics beautifully.\n\nPriya is also an excellent collaborator. She included me in key research sessions, which helped me understand users more deeply and design with greater confidence. Her research reports weren't just informative – they were actionable blueprints that guided every design decision. The insights she provided led to a 45% increase in our checkout completion rate.",
       verificationStatus: "verified" as const,
