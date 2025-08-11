@@ -111,7 +111,7 @@ const demoProfile = {
       speakerEmail: "james@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
-      interviewDate: "2024-11-02",
+      interviewDate: "2022-08-29",
       content:
         "As an engineering manager, I've worked with many designers, but Lara stands out for how she bridges the gap between design vision and technical reality. She doesn't just hand over beautiful mockups – she sits with the engineering team, understands our constraints, and iterates on solutions that are both elegant and buildable.\n\nHer component-based thinking was invaluable. She designed our design system in a way that made perfect sense to developers, with consistent patterns, clear documentation, and realistic edge cases. This wasn't just good design; it was strategic thinking that saved us months of development time and technical debt.\n\nLara also has exceptional problem-solving skills. When we hit performance issues with her initial designs, instead of being defensive, she immediately jumped into finding solutions. She researched optimization techniques, worked with our team to understand the bottlenecks, and redesigned components to be both beautiful and performant. That level of ownership and technical curiosity is rare.",
       verificationStatus: "verified" as const,
