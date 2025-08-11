@@ -216,6 +216,156 @@ const demoGivenTranscripts = [
       transcripts: [],
     },
   },
+  {
+    transcript: {
+      id: "demo-given-3",
+      speakerName: "Lara Rosu",
+      speakerRole: "UX/UI Designer",
+      speakerEmail: "lara@example.com",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
+      interviewDate: "2024-08-30",
+      content:
+        "Elena is one of those rare marketers who truly understands the connection between user experience and conversion. Working with her on our product launch campaign was incredibly smooth because she approached marketing from a user-first perspective, not just a metrics-driven one. She took time to understand our users' pain points and crafted messaging that genuinely resonated.\n\nWhat impressed me most was her data-driven approach to creative decisions. She'd run A/B tests on everything – copy, visuals, user flows – and then use those insights to refine not just the marketing but also inform product improvements. Her feedback often helped us identify UX issues we hadn't considered.\n\nElena also has exceptional project management skills. She coordinated between design, development, and sales teams seamlessly, ensuring everyone stayed aligned on messaging and user positioning. The campaign she led generated our highest conversion rates to date, but more importantly, it attracted users who were genuinely the right fit for our product.",
+      verificationStatus: "verified" as const,
+    },
+    recipientProfile: {
+      id: "elena-garcia",
+      name: "Elena Garcia",
+      title: "Growth Marketing Manager",
+      email: "elena@example.com",
+      photo:
+        "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      company: "SaaS Platform",
+      keyTakeaways: {
+        strengths: [],
+        weaknesses: [],
+        communicationStyle: [],
+        waysToBringOutBest: [],
+      },
+      transcripts: [],
+    },
+  },
+  {
+    transcript: {
+      id: "demo-given-4",
+      speakerName: "Lara Rosu",
+      speakerRole: "UX/UI Designer",
+      speakerEmail: "lara@example.com",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
+      interviewDate: "2024-06-08",
+      content:
+        "Jordan brought a level of technical sophistication to our mobile app development that I hadn't experienced before. As the designer, I was initially worried about how my complex interactive designs would translate to mobile, but Jordan made it look effortless. He has this incredible ability to take design concepts and not just implement them, but enhance them with thoughtful micro-interactions and performance optimizations.\n\nWhat really stood out was his proactive communication about technical constraints and opportunities. Instead of just saying 'this can't be done,' he'd come back with alternative solutions that often ended up being better than my original ideas. He helped me understand mobile design patterns more deeply, which made me a better designer.\n\nJordan also has excellent attention to detail. Every animation timing, every loading state, every edge case was handled with care. The app we built together consistently received praise from users for its smooth, polished feel. He's the kind of developer every designer dreams of working with.",
+      verificationStatus: "pending" as const,
+    },
+    recipientProfile: {
+      id: "jordan-williams",
+      name: "Jordan Williams",
+      title: "Senior iOS Developer",
+      email: "jordan@example.com",
+      photo:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      company: "Mobile App Studio",
+      keyTakeaways: {
+        strengths: [],
+        weaknesses: [],
+        communicationStyle: [],
+        waysToBringOutBest: [],
+      },
+      transcripts: [],
+    },
+  },
+  {
+    transcript: {
+      id: "demo-given-5",
+      speakerName: "Lara Rosu",
+      speakerRole: "UX/UI Designer",
+      speakerEmail: "lara@example.com",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
+      interviewDate: "2024-03-15",
+      content:
+        "Priya's user research skills are absolutely world-class. She has this unique ability to uncover insights that completely shift how you think about your users. Working with her on our e-commerce platform redesign, she identified user behavior patterns that our entire team had missed, despite months of internal analysis.\n\nWhat I admire most about Priya is how she balances quantitative rigor with qualitative empathy. Her user interviews revealed emotional drivers behind purchasing decisions that our analytics couldn't capture, while her data analysis provided the statistical backing we needed to convince stakeholders. She bridges the gap between human insight and business metrics beautifully.\n\nPriya is also an excellent collaborator. She included me in key research sessions, which helped me understand users more deeply and design with greater confidence. Her research reports weren't just informative – they were actionable blueprints that guided every design decision. The insights she provided led to a 45% increase in our checkout completion rate.",
+      verificationStatus: "verified" as const,
+    },
+    recipientProfile: {
+      id: "priya-sharma",
+      name: "Priya Sharma",
+      title: "Senior UX Researcher",
+      email: "priya@example.com",
+      photo:
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      company: "E-commerce Platform",
+      keyTakeaways: {
+        strengths: [],
+        weaknesses: [],
+        communicationStyle: [],
+        waysToBringOutBest: [],
+      },
+      transcripts: [],
+    },
+  },
+  {
+    transcript: {
+      id: "demo-given-6",
+      speakerName: "Lara Rosu",
+      speakerRole: "UX/UI Designer",
+      speakerEmail: "lara@example.com",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
+      interviewDate: "2024-10-12",
+      content:
+        "Working with Kevin on our design system implementation was one of the most educational experiences of my career. His approach to frontend architecture is both pragmatic and forward-thinking. He didn't just implement the components I designed – he thoughtfully structured them in a way that made the entire system more maintainable and scalable.\n\nKevin has an exceptional understanding of how design decisions impact code quality and performance. He'd regularly suggest modifications to my designs that would improve loading times or maintainability without compromising the user experience. His technical insights often led to better design solutions.\n\nWhat impressed me most was his collaborative approach to problem-solving. When we encountered complex interaction design challenges, Kevin would prototype multiple solutions, showing me exactly how each would perform in production. This partnership between design and development resulted in components that were not only visually polished but also technically excellent. The design system we built together is still being used and expanded upon today.",
+      verificationStatus: "not_started" as const,
+    },
+    recipientProfile: {
+      id: "kevin-lee",
+      name: "Kevin Lee",
+      title: "Lead Frontend Engineer",
+      email: "kevin@example.com",
+      photo:
+        "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      company: "Design System Team",
+      keyTakeaways: {
+        strengths: [],
+        weaknesses: [],
+        communicationStyle: [],
+        waysToBringOutBest: [],
+      },
+      transcripts: [],
+    },
+  },
+  {
+    transcript: {
+      id: "demo-given-7",
+      speakerName: "Lara Rosu",
+      speakerRole: "UX/UI Designer",
+      speakerEmail: "lara@example.com",
+      speakerPhoto:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=761&q=80",
+      interviewDate: "2024-01-25",
+      content:
+        "Natasha is the kind of product manager every designer hopes to work with. She has a rare combination of strategic vision and tactical execution that makes collaboration incredibly productive. During our work on the healthcare app, she skillfully balanced user needs, business requirements, and technical constraints while keeping the team focused on what truly mattered.\n\nWhat sets Natasha apart is her deep empathy for both users and team members. She spent time understanding not just what users needed, but why they needed it and how it fit into their daily lives. This user-centric approach influenced every product decision and helped us avoid feature creep while still delivering meaningful value.\n\nNatasha also excels at stakeholder communication. She translated complex design decisions into business terms that resonated with executives, while also ensuring that user needs weren't compromised in the process. Her roadmap planning was realistic yet ambitious, and she created an environment where the design team felt supported and empowered to do our best work. The product we launched exceeded all engagement targets and received outstanding user satisfaction scores.",
+      verificationStatus: "verified" as const,
+    },
+    recipientProfile: {
+      id: "natasha-volkov",
+      name: "Natasha Volkov",
+      title: "Senior Product Manager",
+      email: "natasha@example.com",
+      photo:
+        "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
+      company: "Healthcare Technology",
+      keyTakeaways: {
+        strengths: [],
+        weaknesses: [],
+        communicationStyle: [],
+        waysToBringOutBest: [],
+      },
+      transcripts: [],
+    },
+  },
 ];
 
 export default function DemoProfile() {
