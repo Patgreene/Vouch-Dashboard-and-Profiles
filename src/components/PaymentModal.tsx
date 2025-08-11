@@ -32,7 +32,9 @@ export function PaymentModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle className="sr-only">Verify Transcript Payment</DialogTitle>
+          <DialogTitle className="sr-only">
+            Verify Transcript Payment
+          </DialogTitle>
         </DialogHeader>
         <div className="text-center space-y-4 py-2">
           <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
