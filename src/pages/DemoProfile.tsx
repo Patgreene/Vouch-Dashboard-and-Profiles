@@ -87,7 +87,7 @@ const demoProfile = {
       speakerEmail: "amira@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
-      interviewDate: "2024-08-05",
+      interviewDate: "2020-09-03",
       content:
         "Lara was instrumental in helping us design our mobile app from the ground up. As a non-technical founder, I was worried about the complexity of translating our vision into a user-friendly mobile experience. Lara not only understood our vision but helped refine and improve it through her design process.\n\nShe has this wonderful ability to balance user needs with business objectives. Every design recommendation came with clear reasoning about how it would impact user experience and, ultimately, our bottom line. She helped us prioritize features based on user value and implementation complexity, which was incredibly valuable for a resource-constrained startup.\n\nThe app Lara designed for us launched to fantastic user reviews, with particular praise for its intuitive interface and smooth user experience. Six months post-launch, we're seeing strong user retention and minimal support requests related to usability issues. Lara's work laid the foundation for our product's success.",
       verificationStatus: "pending" as const,
