@@ -135,7 +135,7 @@ const demoProfile = {
       speakerEmail: "alex@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
-      interviewDate: "2024-07-14",
+      interviewDate: "2023-10-26",
       content:
         "Working with Lara on our creative agency's website redesign was an eye-opening experience. Even though we're a team of designers, Lara brought a level of UX thinking and systematic approach that elevated everyone's work. She helped us see our own blind spots and challenged us to think beyond just visual appeal to actual user outcomes.\n\nHer process was incredibly collaborative. She facilitated workshops that got our entire creative team aligned on user goals, not just aesthetic preferences. The way she structured our design critique sessions made our feedback more constructive and actionable. She taught us to defend design decisions with user data rather than personal taste.\n\nThe final website not only looked stunning but performed exceptionally. Our lead generation increased by 80%, and client feedback consistently mentioned how easy and enjoyable the site was to navigate. Lara proved that great UX design enhances rather than constrains creativity.",
       verificationStatus: "pending" as const,
