@@ -147,7 +147,7 @@ const demoProfile = {
       speakerEmail: "rachel@example.com",
       speakerPhoto:
         "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80",
-      interviewDate: "2024-05-22",
+      interviewDate: "2024-07-08",
       content:
         "Lara joined our team during a critical transformation period as we were scaling from a small product to an enterprise platform. Her ability to design for scalability – both in terms of user experience and design systems – was exceptional. She didn't just solve immediate design problems; she built foundations that could grow with our business.\n\nWhat set her apart was her strategic thinking about information architecture. Our product had evolved organically and become quite complex, but Lara methodically mapped user journeys, identified pain points, and restructured the entire experience to be intuitive and logical. The navigation system she designed reduced user confusion by 70% and support tickets related to 'how do I find...' practically disappeared.\n\nLara also mentored our junior designers beautifully. She shared her systematic approach to design thinking, taught them to validate assumptions with data, and helped them develop confident design voices. The team's overall skill level improved significantly during her time with us, and those improvements continued long after her contract ended.",
       verificationStatus: "verified" as const,
