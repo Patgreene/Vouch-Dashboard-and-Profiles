@@ -491,7 +491,7 @@ export default function DemoProfile() {
 
       {/* Privacy Popup */}
       {showPrivacyPopup && (
-        <div className="absolute top-96 left-1/2 transform -translate-x-1/2 z-50 max-w-sm sm:max-w-lg w-full mx-4">
+        <div className="absolute top-96 left-0 right-0 z-50 mx-4 sm:left-1/2 sm:right-auto sm:transform sm:-translate-x-1/2 sm:max-w-lg sm:mx-4">
           <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4">
             <div className="flex items-start justify-between">
               <div className="flex items-start">
