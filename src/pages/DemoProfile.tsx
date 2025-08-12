@@ -394,6 +394,15 @@ export default function DemoProfile() {
     processHighlightFromUrl,
   } = useDemoHighlight();
 
+  // Show privacy popup after 7 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPrivacyPopup(true);
+    }, 7000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const toggleTranscript = (transcriptId: string) => {
     const newExpanded = new Set(expandedTranscripts);
     if (newExpanded.has(transcriptId)) {
