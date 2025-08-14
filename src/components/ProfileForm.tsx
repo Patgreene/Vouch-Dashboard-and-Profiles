@@ -277,8 +277,6 @@ export function ProfileForm({
           t.speakerEmail.trim() &&
           t.content.trim(),
       );
-
-
     }
 
     // Start loading state
