@@ -23,30 +23,10 @@ export function ProfileHeader({ profile }: ProfileHeaderProps) {
           {/* Back button - positioned absolutely for centering layout */}
           <div className="relative w-full">
             <a
-              href="https://calling-20test.vercel.app/"
-              className="absolute top-0 left-0 inline-flex items-center gap-2 px-3 py-1.5 text-white text-sm font-medium rounded-lg transition-colors duration-200"
-              style={{ backgroundColor: "#7FB5C5" }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = "#4C7B8A")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.backgroundColor = "#7FB5C5")
-              }
+              href="https://www.vouchprofile.com/"
+              className="absolute top-0 left-0 text-gray-500 hover:text-gray-700 text-xs font-normal transition-colors duration-200"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
-              Back
+              What is Vouch?
             </a>
           </div>
 
