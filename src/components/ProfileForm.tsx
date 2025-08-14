@@ -278,11 +278,7 @@ export function ProfileForm({
           t.content.trim(),
       );
 
-      if (validTranscripts.length === 0) {
-        setSubmitStatus("error");
-        setErrorMessage("Please add at least one complete transcript.");
-        return;
-      }
+
     }
 
     // Start loading state
