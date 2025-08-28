@@ -36,7 +36,7 @@
 ## Your Admin Dashboard URL
 
 After deployment, access your admin at:
-`https://your-site-url.com/admin-stats-d1g3Yt9`
+`https://your-site-url.com/sys-admin-x9K2mP8qL5nW`
 
 ## Need Help?
 
@@ -46,7 +46,7 @@ After deployment, access your admin at:
 
 ## Files Included
 
-- ✅ All React components
+- �� All React components
 - ✅ Styling (Tailwind CSS)
 - ✅ Routing configuration
 - ✅ Deployment configs (vercel.json, \_redirects)

@@ -56,7 +56,7 @@ npm run performance:audit  # Full performance audit
 - **Total Bundle Size**: ~30% smaller
 - **Time to Interactive**: ~45% faster
 
-## 🎯 Specific Optimizations by Page
+## ��� Specific Optimizations by Page
 
 ### **Profile Pages (/profile/:id)**
 
@@ -65,7 +65,7 @@ npm run performance:audit  # Full performance audit
 - Transcript lazy expansion
 - Critical CSS inlined
 
-### **Admin Dashboard (/admin-stats-d1g3Yt9)**
+### **Admin Dashboard (/sys-admin-x9K2mP8qL5nW)**
 
 - Lazy-loaded ProfileForm (heavy component)
 - Deferred analytics loading
@@ -108,7 +108,7 @@ npm run performance:audit  # Full performance audit
 - ⚠️ **Consider**: Self-hosting fonts for even better performance
 - ✅ **No Bloat**: Clean from unnecessary third-party scripts
 
-## 📱 Mobile Optimizations
+## �� Mobile Optimizations
 
 ### **Implemented**
 
@@ -124,7 +124,7 @@ npm run performance:audit  # Full performance audit
 - 📊 **Data**: Efficient mobile data usage
 - ⚡ **Performance**: Fast mobile network loading
 
-## 🎛️ Development Commands
+## ��️ Development Commands
 
 ```bash
 # Performance testing
