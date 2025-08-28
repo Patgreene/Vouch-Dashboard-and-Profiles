@@ -115,7 +115,8 @@ export function debugCurrentState(): void {
   const isOn404 =
     document.body.textContent?.includes("Profile Not Found") ||
     document.title.includes("404");
-  const shouldBeOnAdmin = window.location.pathname === "/sys-admin-x9K2mP8qL5nW";
+  const shouldBeOnAdmin =
+    window.location.pathname === "/sys-admin-x9K2mP8qL5nW";
 
   if (isOn404 && shouldBeOnAdmin) {
     console.error("🚨 PROBLEM DETECTED: On admin path but showing 404");
