@@ -28,19 +28,31 @@ export function EmailAutocomplete({
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Get unique emails from profiles
-  const uniqueEmails = profiles.filter(
-    (profile, index, arr) =>
-      arr.findIndex(p => p.email.toLowerCase() === profile.email.toLowerCase()) === index
-  );
+  // Get unique emails from profiles (filter out profiles without valid emails)
+  const uniqueEmails = profiles
+    .filter(profile => profile && profile.email && typeof profile.email === 'string' && profile.email.trim() !== '')
+    .filter((profile, index, arr) =>
+      arr.findIndex(p =>
+        p.email && profile.email &&
+        p.email.toLowerCase() === profile.email.toLowerCase()
+      ) === index
+    );
 
   // Filter emails based on input value
   useEffect(() => {
-    if (value.length > 0) {
-      const filtered = uniqueEmails.filter(profile =>
-        profile.email.toLowerCase().includes(value.toLowerCase()) ||
-        profile.name.toLowerCase().includes(value.toLowerCase())
-      );
+    if (value && value.length > 0) {
+      const searchTerm = value.toLowerCase();
+      const filtered = uniqueEmails.filter(profile => {
+        const email = profile.email?.toLowerCase() || '';
+        const name = profile.name?.toLowerCase() || '';
+        const title = profile.title?.toLowerCase() || '';
+        const company = profile.company?.toLowerCase() || '';
+
+        return email.includes(searchTerm) ||
+               name.includes(searchTerm) ||
+               title.includes(searchTerm) ||
+               company.includes(searchTerm);
+      });
       setFilteredEmails(filtered);
       setIsOpen(filtered.length > 0 && value !== "");
     } else {
@@ -48,7 +60,7 @@ export function EmailAutocomplete({
       setIsOpen(false);
     }
     setHighlightedIndex(-1);
-  }, [value, profiles]);
+  }, [value, uniqueEmails]);
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,10 +70,12 @@ export function EmailAutocomplete({
 
   // Handle option selection
   const handleOptionSelect = (email: string) => {
-    onChange(email);
-    setIsOpen(false);
-    setHighlightedIndex(-1);
-    inputRef.current?.blur();
+    if (email && typeof email === 'string') {
+      onChange(email);
+      setIsOpen(false);
+      setHighlightedIndex(-1);
+      inputRef.current?.blur();
+    }
   };
 
   // Handle keyboard navigation
@@ -170,32 +184,39 @@ export function EmailAutocomplete({
           ref={dropdownRef}
           className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto"
         >
-          {filteredEmails.map((profile, index) => (
-            <div
-              key={profile.id}
-              className={`px-3 py-2 cursor-pointer transition-colors flex items-center justify-between ${
-                index === highlightedIndex
-                  ? "bg-vouch-50 text-vouch-900"
-                  : "text-gray-900 hover:bg-gray-50"
-              }`}
-              onClick={() => handleOptionSelect(profile.email)}
-              onMouseEnter={() => setHighlightedIndex(index)}
-            >
-              <div className="flex-1 min-w-0">
-                <div className="font-medium text-sm truncate">
-                  {profile.email}
+          {filteredEmails.map((profile, index) => {
+            const profileEmail = profile.email || '';
+            const profileName = profile.name || 'Unknown';
+            const profileTitle = profile.title || '';
+            const profileCompany = profile.company || '';
+
+            return (
+              <div
+                key={profile.id || index}
+                className={`px-3 py-2 cursor-pointer transition-colors flex items-center justify-between ${
+                  index === highlightedIndex
+                    ? "bg-vouch-50 text-vouch-900"
+                    : "text-gray-900 hover:bg-gray-50"
+                }`}
+                onClick={() => handleOptionSelect(profileEmail)}
+                onMouseEnter={() => setHighlightedIndex(index)}
+              >
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium text-sm truncate">
+                    {profileEmail}
+                  </div>
+                  <div className="text-xs text-gray-500 truncate">
+                    {profileName}
+                    {profileTitle && ` • ${profileTitle}`}
+                    {profileCompany && ` • ${profileCompany}`}
+                  </div>
                 </div>
-                <div className="text-xs text-gray-500 truncate">
-                  {profile.name}
-                  {profile.title && ` • ${profile.title}`}
-                  {profile.company && ` • ${profile.company}`}
-                </div>
+                {value && profileEmail && value.toLowerCase() === profileEmail.toLowerCase() && (
+                  <Check className="h-4 w-4 text-vouch-600 ml-2 flex-shrink-0" />
+                )}
               </div>
-              {value.toLowerCase() === profile.email.toLowerCase() && (
-                <Check className="h-4 w-4 text-vouch-600 ml-2 flex-shrink-0" />
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
