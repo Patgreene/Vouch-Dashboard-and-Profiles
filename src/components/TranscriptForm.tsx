@@ -23,6 +23,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Profile, Transcript } from "@/lib/data";
 import { dataProvider } from "@/lib/dataProvider";
+import { EmailAutocomplete } from "./EmailAutocomplete";
 
 interface TranscriptFormProps {
   onClose: () => void;
@@ -245,15 +246,14 @@ export function TranscriptForm({
               <CardContent className="space-y-4">
                 <div>
                   <Label htmlFor="voucherEmail">Voucher Email *</Label>
-                  <Input
+                  <EmailAutocomplete
                     id="voucherEmail"
-                    type="email"
                     value={formData.voucherEmail}
-                    onChange={(e) =>
-                      updateField("voucherEmail", e.target.value)
-                    }
-                    placeholder="voucher@company.com"
+                    onChange={(value) => updateField("voucherEmail", value)}
+                    profiles={profiles}
+                    placeholder="Search for voucher email..."
                     required
+                    disabled={isSubmitting}
                   />
                   <p className="text-xs text-gray-500 mt-1">
                     Must match an existing profile email
@@ -310,15 +310,14 @@ export function TranscriptForm({
               <CardContent className="space-y-4">
                 <div>
                   <Label htmlFor="voucheeEmail">Vouchee Email *</Label>
-                  <Input
+                  <EmailAutocomplete
                     id="voucheeEmail"
-                    type="email"
                     value={formData.voucheeEmail}
-                    onChange={(e) =>
-                      updateField("voucheeEmail", e.target.value)
-                    }
-                    placeholder="vouchee@company.com"
+                    onChange={(value) => updateField("voucheeEmail", value)}
+                    profiles={profiles}
+                    placeholder="Search for vouchee email..."
                     required
+                    disabled={isSubmitting}
                   />
                   <p className="text-xs text-gray-500 mt-1">
                     Must match an existing profile email
