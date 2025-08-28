@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { ChevronDown, Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Profile } from "@/lib/data";
@@ -29,23 +29,25 @@ export function EmailAutocomplete({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Get unique emails from profiles (filter out profiles without valid emails)
-  const uniqueEmails = profiles
-    .filter(
-      (profile) =>
-        profile &&
-        profile.email &&
-        typeof profile.email === "string" &&
-        profile.email.trim() !== "",
-    )
-    .filter(
-      (profile, index, arr) =>
-        arr.findIndex(
-          (p) =>
-            p.email &&
-            profile.email &&
-            p.email.toLowerCase() === profile.email.toLowerCase(),
-        ) === index,
-    );
+  const uniqueEmails = useMemo(() => {
+    return profiles
+      .filter(
+        (profile) =>
+          profile &&
+          profile.email &&
+          typeof profile.email === "string" &&
+          profile.email.trim() !== "",
+      )
+      .filter(
+        (profile, index, arr) =>
+          arr.findIndex(
+            (p) =>
+              p.email &&
+              profile.email &&
+              p.email.toLowerCase() === profile.email.toLowerCase(),
+          ) === index,
+      );
+  }, [profiles]);
 
   // Filter emails based on input value
   useEffect(() => {

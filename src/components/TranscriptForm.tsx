@@ -62,9 +62,11 @@ export function TranscriptForm({
 
   // Find profiles by email when emails change
   useEffect(() => {
-    if (formData.voucherEmail.trim()) {
+    if (formData.voucherEmail && formData.voucherEmail.trim()) {
       const profile = profiles.find(
         (p) =>
+          p.email &&
+          typeof p.email === 'string' &&
           p.email.toLowerCase() === formData.voucherEmail.toLowerCase().trim(),
       );
       setVoucherProfile(profile || null);
@@ -74,9 +76,11 @@ export function TranscriptForm({
   }, [formData.voucherEmail, profiles]);
 
   useEffect(() => {
-    if (formData.voucheeEmail.trim()) {
+    if (formData.voucheeEmail && formData.voucheeEmail.trim()) {
       const profile = profiles.find(
         (p) =>
+          p.email &&
+          typeof p.email === 'string' &&
           p.email.toLowerCase() === formData.voucheeEmail.toLowerCase().trim(),
       );
       setVoucheeProfile(profile || null);
