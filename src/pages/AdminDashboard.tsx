@@ -390,21 +390,19 @@ export default function AdminDashboard() {
               .toString()}
             icon={FileText}
           />
-          <Card className="hover:shadow-md transition-shadow cursor-pointer">
-            <Link to="/admin/analytics" className="block h-full">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  View Analytics
-                </CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">📊</div>
-                <p className="text-xs text-muted-foreground">
-                  Page views, quotes & more
-                </p>
-              </CardContent>
-            </Link>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Page Views
+              </CardTitle>
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{liveAnalytics.totalPageViews}</div>
+              <p className="text-xs text-muted-foreground">
+                Total page views tracked
+              </p>
+            </CardContent>
           </Card>
           <Card className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
