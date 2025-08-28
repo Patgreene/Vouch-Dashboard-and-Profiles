@@ -30,28 +30,39 @@ export function EmailAutocomplete({
 
   // Get unique emails from profiles (filter out profiles without valid emails)
   const uniqueEmails = profiles
-    .filter(profile => profile && profile.email && typeof profile.email === 'string' && profile.email.trim() !== '')
-    .filter((profile, index, arr) =>
-      arr.findIndex(p =>
-        p.email && profile.email &&
-        p.email.toLowerCase() === profile.email.toLowerCase()
-      ) === index
+    .filter(
+      (profile) =>
+        profile &&
+        profile.email &&
+        typeof profile.email === "string" &&
+        profile.email.trim() !== "",
+    )
+    .filter(
+      (profile, index, arr) =>
+        arr.findIndex(
+          (p) =>
+            p.email &&
+            profile.email &&
+            p.email.toLowerCase() === profile.email.toLowerCase(),
+        ) === index,
     );
 
   // Filter emails based on input value
   useEffect(() => {
     if (value && value.length > 0) {
       const searchTerm = value.toLowerCase();
-      const filtered = uniqueEmails.filter(profile => {
-        const email = profile.email?.toLowerCase() || '';
-        const name = profile.name?.toLowerCase() || '';
-        const title = profile.title?.toLowerCase() || '';
-        const company = profile.company?.toLowerCase() || '';
+      const filtered = uniqueEmails.filter((profile) => {
+        const email = profile.email?.toLowerCase() || "";
+        const name = profile.name?.toLowerCase() || "";
+        const title = profile.title?.toLowerCase() || "";
+        const company = profile.company?.toLowerCase() || "";
 
-        return email.includes(searchTerm) ||
-               name.includes(searchTerm) ||
-               title.includes(searchTerm) ||
-               company.includes(searchTerm);
+        return (
+          email.includes(searchTerm) ||
+          name.includes(searchTerm) ||
+          title.includes(searchTerm) ||
+          company.includes(searchTerm)
+        );
       });
       setFilteredEmails(filtered);
       setIsOpen(filtered.length > 0 && value !== "");
@@ -70,7 +81,7 @@ export function EmailAutocomplete({
 
   // Handle option selection
   const handleOptionSelect = (email: string) => {
-    if (email && typeof email === 'string') {
+    if (email && typeof email === "string") {
       onChange(email);
       setIsOpen(false);
       setHighlightedIndex(-1);
@@ -91,14 +102,14 @@ export function EmailAutocomplete({
 
     switch (e.key) {
       case "ArrowDown":
-        setHighlightedIndex(prev => 
-          prev < filteredEmails.length - 1 ? prev + 1 : 0
+        setHighlightedIndex((prev) =>
+          prev < filteredEmails.length - 1 ? prev + 1 : 0,
         );
         e.preventDefault();
         break;
       case "ArrowUp":
-        setHighlightedIndex(prev => 
-          prev > 0 ? prev - 1 : filteredEmails.length - 1
+        setHighlightedIndex((prev) =>
+          prev > 0 ? prev - 1 : filteredEmails.length - 1,
         );
         e.preventDefault();
         break;
@@ -144,7 +155,9 @@ export function EmailAutocomplete({
   // Scroll highlighted item into view
   useEffect(() => {
     if (highlightedIndex >= 0 && dropdownRef.current) {
-      const highlightedElement = dropdownRef.current.children[highlightedIndex] as HTMLElement;
+      const highlightedElement = dropdownRef.current.children[
+        highlightedIndex
+      ] as HTMLElement;
       if (highlightedElement) {
         highlightedElement.scrollIntoView({
           block: "nearest",
@@ -171,7 +184,7 @@ export function EmailAutocomplete({
           className="pr-8"
           autoComplete="off"
         />
-        <ChevronDown 
+        <ChevronDown
           className={`absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 transition-transform ${
             isOpen ? "rotate-180" : ""
           }`}
@@ -185,10 +198,10 @@ export function EmailAutocomplete({
           className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto"
         >
           {filteredEmails.map((profile, index) => {
-            const profileEmail = profile.email || '';
-            const profileName = profile.name || 'Unknown';
-            const profileTitle = profile.title || '';
-            const profileCompany = profile.company || '';
+            const profileEmail = profile.email || "";
+            const profileName = profile.name || "Unknown";
+            const profileTitle = profile.title || "";
+            const profileCompany = profile.company || "";
 
             return (
               <div
@@ -211,9 +224,11 @@ export function EmailAutocomplete({
                     {profileCompany && ` • ${profileCompany}`}
                   </div>
                 </div>
-                {value && profileEmail && value.toLowerCase() === profileEmail.toLowerCase() && (
-                  <Check className="h-4 w-4 text-vouch-600 ml-2 flex-shrink-0" />
-                )}
+                {value &&
+                  profileEmail &&
+                  value.toLowerCase() === profileEmail.toLowerCase() && (
+                    <Check className="h-4 w-4 text-vouch-600 ml-2 flex-shrink-0" />
+                  )}
               </div>
             );
           })}
