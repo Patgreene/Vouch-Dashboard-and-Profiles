@@ -63,7 +63,7 @@ export function forceAdminDashboard(): void {
     clearNavigationState();
 
     // Force navigation to admin dashboard
-    const adminUrl = "/admin-stats-d1g3Yt9";
+    const adminUrl = "/sys-admin-x9K2mP8qL5nW";
 
     if (window.location.pathname !== adminUrl) {
       console.log(
@@ -115,7 +115,7 @@ export function debugCurrentState(): void {
   const isOn404 =
     document.body.textContent?.includes("Profile Not Found") ||
     document.title.includes("404");
-  const shouldBeOnAdmin = window.location.pathname === "/admin-stats-d1g3Yt9";
+  const shouldBeOnAdmin = window.location.pathname === "/sys-admin-x9K2mP8qL5nW";
 
   if (isOn404 && shouldBeOnAdmin) {
     console.error("🚨 PROBLEM DETECTED: On admin path but showing 404");
@@ -132,7 +132,7 @@ export function autoFixNavigation(): void {
   const currentPath = window.location.pathname;
 
   // If we're on admin path but seeing 404, fix it
-  if (currentPath === "/admin-stats-d1g3Yt9") {
+  if (currentPath === "/sys-admin-x9K2mP8qL5nW") {
     const isOn404 = document.body.textContent?.includes("Profile Not Found");
     if (isOn404) {
       console.log("🔧 Detected admin 404 issue, fixing...");

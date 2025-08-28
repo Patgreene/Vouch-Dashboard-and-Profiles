@@ -30,7 +30,7 @@ export function testDeploymentRouting(): void {
   console.log("Route Testing:");
   const routes = [
     "/",
-    "/admin-stats-d1g3Yt9",
+    "/sys-admin-x9K2mP8qL5nW",
     "/profile/test-id",
     "/not-found",
   ];
@@ -46,7 +46,7 @@ export function testDeploymentRouting(): void {
 export function forceAdminNavigation(): void {
   console.log("🚀 Force navigating to admin dashboard...");
 
-  const adminPath = "/admin-stats-d1g3Yt9";
+  const adminPath = "/sys-admin-x9K2mP8qL5nW";
   const currentPath = window.location.pathname;
 
   if (currentPath !== adminPath) {
@@ -77,7 +77,7 @@ export function forceAdminNavigation(): void {
 export function testAdminAccess(): void {
   console.log("🔐 Testing admin access...");
 
-  const adminUrl = window.location.origin + "/admin-stats-d1g3Yt9";
+  const adminUrl = window.location.origin + "/sys-admin-x9K2mP8qL5nW";
 
   // Create a temporary link to test the URL
   const testLink = document.createElement("a");
@@ -88,7 +88,7 @@ export function testAdminAccess(): void {
   console.log("Admin URL components:");
   console.log("  - Full URL:", testLink.href);
   console.log("  - Pathname:", testLink.pathname);
-  console.log("  - Valid:", testLink.href.includes("admin-stats-d1g3Yt9"));
+  console.log("  - Valid:", testLink.href.includes("sys-admin-x9K2mP8qL5nW"));
 
   document.body.removeChild(testLink);
 

@@ -38,7 +38,7 @@ export async function forceLoadAdminWithLocalStorage() {
     console.groupEnd();
 
     // Use replace to avoid going back to loading state
-    window.location.replace("/admin-stats-d1g3Yt9");
+    window.location.replace("/sys-admin-x9K2mP8qL5nW");
   } catch (error) {
     console.error("❌ Emergency fix failed:", error);
     console.groupEnd();

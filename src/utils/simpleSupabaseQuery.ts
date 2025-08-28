@@ -151,7 +151,7 @@ export async function emergencyAdminReload() {
       sessionStorage.clear();
 
       // Reload the page
-      window.location.href = "/admin-stats-d1g3Yt9";
+      window.location.href = "/sys-admin-x9K2mP8qL5nW";
     } else {
       console.error("❌ No profiles found - check Supabase data");
     }
