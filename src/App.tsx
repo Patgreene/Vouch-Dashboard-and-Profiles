@@ -121,17 +121,14 @@ function App() {
     <ErrorBoundary>
       <BrowserRouter>
         <Routes>
-          {/* Home/Welcome route */}
-          <Route path="/" element={<Welcome />} />
+          {/* Admin dashboard as default landing page */}
+          <Route path="/" element={<AdminRouteGuard />} />
 
           {/* Profile routes - more specific matching */}
           <Route path="/profile/:id" element={<Profile />} />
 
           {/* Demo profile - standalone example */}
           <Route path="/demo" element={<DemoProfile />} />
-
-          {/* Protected admin route - obfuscated URL with guard */}
-          <Route path="/admin-stats-d1g3Yt9" element={<AdminRouteGuard />} />
 
           {/* Explicit not-found route */}
           <Route path="/not-found" element={<NotFound />} />
