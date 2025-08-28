@@ -60,7 +60,6 @@ class ErrorBoundary extends Component<
   }
 }
 
-
 function App() {
   // Debug logging for routing
   React.useEffect(() => {
