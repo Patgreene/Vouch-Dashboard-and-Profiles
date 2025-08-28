@@ -60,30 +60,60 @@ class ErrorBoundary extends Component<
   }
 }
 
+// Simple landing page component
+function LandingPage() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="text-center">
+        <div className="mb-8">
+          <div className="w-24 h-24 gradient-bg rounded-full flex items-center justify-center mx-auto mb-6">
+            <span className="text-white font-bold text-4xl">V</span>
+          </div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Vouch Profiles
+          </h1>
+          <p className="text-gray-600 max-w-md mx-auto mb-8">
+            Professional profile showcase platform.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="https://www.vouchprofile.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-vouch-600 text-white px-6 py-3 rounded-lg hover:bg-vouch-700 transition-colors text-center"
+          >
+            Visit Main Site
+          </a>
+          <button
+            onClick={() => (window.location.href = "/demo")}
+            className="border border-vouch-600 text-vouch-600 px-6 py-3 rounded-lg hover:bg-vouch-50 transition-colors"
+          >
+            View Demo Profile
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
-  // Debug logging for routing
-  React.useEffect(() => {
-    console.log("🔄 App mounted, current path:", window.location.pathname);
-    console.log("🔄 Current URL:", window.location.href);
-
-    // Auto-redirect to admin if on root and no profiles to show
-    if (window.location.pathname === "/") {
-      console.log("📍 On root path - ready to navigate to admin or profiles");
-    }
-  }, []);
-
   return (
     <ErrorBoundary>
       <BrowserRouter>
         <Routes>
-          {/* Admin dashboard as default landing page */}
-          <Route path="/" element={<AdminRouteGuard />} />
+          {/* Public landing page */}
+          <Route path="/" element={<LandingPage />} />
 
-          {/* Profile routes - more specific matching */}
+          {/* Profile routes */}
           <Route path="/profile/:id" element={<Profile />} />
 
-          {/* Demo profile - standalone example */}
+          {/* Demo profile */}
           <Route path="/demo" element={<DemoProfile />} />
+
+          {/* Hidden admin dashboard with unique URL */}
+          <Route path="/sys-admin-x9K2mP8qL5nW" element={<AdminRouteGuard />} />
 
           {/* Explicit not-found route */}
           <Route path="/not-found" element={<NotFound />} />
