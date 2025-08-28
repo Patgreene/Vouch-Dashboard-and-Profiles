@@ -66,7 +66,7 @@ export function TranscriptForm({
       const profile = profiles.find(
         (p) =>
           p.email &&
-          typeof p.email === 'string' &&
+          typeof p.email === "string" &&
           p.email.toLowerCase() === formData.voucherEmail.toLowerCase().trim(),
       );
       setVoucherProfile(profile || null);
@@ -80,7 +80,7 @@ export function TranscriptForm({
       const profile = profiles.find(
         (p) =>
           p.email &&
-          typeof p.email === 'string' &&
+          typeof p.email === "string" &&
           p.email.toLowerCase() === formData.voucheeEmail.toLowerCase().trim(),
       );
       setVoucheeProfile(profile || null);
